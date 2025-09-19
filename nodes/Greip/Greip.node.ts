@@ -401,8 +401,12 @@ export class Greip implements INodeType {
 				displayName: 'Text',
 				name: 'text',
 				description: 'The text to check for profanity',
+				placeholder: 'Enter text here...',
 				type: 'string',
 				required: true,
+				typeOptions: {
+					rows: 4,
+				},
 				default: '',
 				displayOptions: {
 					show: {
@@ -414,7 +418,7 @@ export class Greip implements INodeType {
 			{
 				displayName: 'Score Only',
 				name: 'scoreOnly',
-				description: 'Return only the score and safety status (yes/no)',
+				description: 'Return only the scoring of the text',
 				type: 'options',
 				options: [
 					{ name: 'Yes', value: 'yes' },
@@ -429,9 +433,9 @@ export class Greip implements INodeType {
 				},
 			},
 			{
-				displayName: 'List Bad Words',
+				displayName: 'List Profane Words',
 				name: 'listBadWords',
-				description: 'List the bad words in the response (yes/no)',
+				description: 'List the profane words in the response',
 				type: 'options',
 				options: [
 					{ name: 'Yes', value: 'yes' },
@@ -448,7 +452,8 @@ export class Greip implements INodeType {
 			{
 				displayName: 'Phone Number',
 				name: 'phone',
-				description: 'The phone number to validate and score',
+				description: 'The phone number to validate and score (in international format)',
+				placeholder: '+96612345678',
 				type: 'string',
 				required: true,
 				default: '',
@@ -463,6 +468,7 @@ export class Greip implements INodeType {
 				displayName: 'Country Code',
 				name: 'countryCode',
 				description: 'The ISO 3166-1 alpha-2 country code (e.g. US, GB)',
+				placeholder: 'US',
 				type: 'string',
 				required: true,
 				default: '',
@@ -477,10 +483,10 @@ export class Greip implements INodeType {
 				displayName: 'Email',
 				name: 'email',
 				description: 'The email address to validate and score',
+				placeholder: 'name@email.com',
 				type: 'string',
 				required: true,
 				default: '',
-				placeholder: 'name@email.com',
 				displayOptions: {
 					show: {
 						resource: ['emailAddress'],
@@ -492,6 +498,7 @@ export class Greip implements INodeType {
 				displayName: 'IP Address',
 				name: 'ip',
 				description: 'The IP address to check for threats (IPv4 or IPv6)',
+				placeholder: '1.1.1.1',
 				type: 'string',
 				required: true,
 				default: '',
@@ -505,7 +512,8 @@ export class Greip implements INodeType {
 			{
 				displayName: 'Domain',
 				name: 'domain',
-				description: 'The fully qualified domain name (e.g. example.com)',
+				description: 'The fully qualified domain name',
+				placeholder: 'example.com',
 				type: 'string',
 				required: true,
 				default: '',
@@ -519,7 +527,8 @@ export class Greip implements INodeType {
 			{
 				displayName: 'Country Code',
 				name: 'CountryCode',
-				description: 'The ISO 3166-1 alpha-2 country code (e.g. US, GB)',
+				description: 'The ISO 3166-1 alpha-2 country code',
+				placeholder: 'US',
 				type: 'string',
 				required: true,
 				default: '',
@@ -533,7 +542,8 @@ export class Greip implements INodeType {
 			{
 				displayName: 'BIN/IIN',
 				name: 'bin',
-				description: 'The BIN/IIN of the card (min: 6 digits)',
+				description: 'The BIN/IIN of the card (first 6-11 digits)',
+				placeholder: '424242',
 				type: 'string',
 				required: true,
 				default: '',
@@ -547,7 +557,8 @@ export class Greip implements INodeType {
 			{
 				displayName: 'IBAN',
 				name: 'iban',
-				description: 'The IBAN to validate or lookup (e.g. BE71096123456769)',
+				description: 'The IBAN to validate or lookup',
+				placeholder: 'AL35202111090000000001234567',
 				type: 'string',
 				required: true,
 				default: '',
@@ -561,7 +572,8 @@ export class Greip implements INodeType {
 			{
 				displayName: 'ASN',
 				name: 'asn',
-				description: 'The AS Number to lookup (e.g. AS6167 or 6167)',
+				description: 'The AS Number to lookup',
+				placeholder: 'AS9112',
 				type: 'string',
 				required: true,
 				default: '',
@@ -575,7 +587,8 @@ export class Greip implements INodeType {
 			{
 				displayName: 'IP Address',
 				name: 'ip',
-				description: 'IP address to lookup (leave empty for requester IP)',
+				description: 'IP address to lookup',
+				placeholder: '1.1.1.1',
 				type: 'string',
 				default: '',
 				required: true,
@@ -625,7 +638,8 @@ export class Greip implements INodeType {
 			{
 				displayName: 'Mode',
 				name: 'mode',
-				description: 'Environment mode (live or test)',
+				description: 'Environment mode',
+				hint: 'Enable this option to protect your account credits while testing the integration',
 				type: 'options',
 				options: [
 					{ name: 'Live', value: 'live' },
@@ -664,7 +678,8 @@ export class Greip implements INodeType {
 			{
 				displayName: 'User ID',
 				name: 'userID',
-				description: 'User identifier (email, phone, etc.)',
+				description: 'User identifier',
+				placeholder: 'email@example.com, phone, ID, etc.',
 				type: 'string',
 				default: '',
 				displayOptions: {
