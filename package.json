@@ -3,7 +3,11 @@
 	"version": "0.1.0",
 	"description": "N8N nodes for Greip API, a fraud prevention service.",
 	"keywords": [
-		"n8n-community-node-package"
+		"n8n-community-node-package",
+		"greip",
+		"fraud prevention",
+		"bin lookup",
+		"data scoring"
 	],
 	"license": "MIT",
 	"homepage": "https://greip.io",
