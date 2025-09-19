@@ -16,18 +16,24 @@ export class Greip implements INodeType {
 		outputs: [NodeConnectionType.Main],
 		credentials: [
 			{
-				name: 'GreipApi',
+				displayName: 'Greip API Key',
+				name: 'greipApi',
 				required: true,
 			},
 		],
 		requestDefaults: {
 			baseURL: 'https://greipapi.com',
+			url: '',
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
+				Authorization: '=Bearer {{$credentials.greipApi.apiKey}}',
 			},
 		},
 		properties: [
+			// ----------------------------------
+			//         Resources
+			// ----------------------------------
 			{
 				displayName: 'Resource',
 				name: 'resource',
@@ -59,7 +65,7 @@ export class Greip implements INodeType {
 						name: 'Lookup',
 						value: 'ipLookup',
 						action: 'IP Lookup',
-						description: 'Lookup IP address details (new endpoint)',
+						description: 'Retrieve comprehensive information about a given IP address',
 						displayOptions: { show: { resource: ['ipAddress'] } },
 						routing: {
 							request: {
@@ -69,7 +75,6 @@ export class Greip implements INodeType {
 								qs: {
 									ip: '={{$parameter["ip"]}}',
 									params: '={{$parameter["params"]}}',
-									format: '={{$parameter["format"]}}',
 									lang: '={{$parameter["lang"]}}',
 									mode: '={{$parameter["mode"]}}',
 									userID: '={{$parameter["userID"]}}',
@@ -90,7 +95,6 @@ export class Greip implements INodeType {
 								url: '/lookup/ip/threats',
 								qs: {
 									ip: '={{$parameter["ip"]}}',
-									format: '={{$parameter["format"]}}',
 									mode: '={{$parameter["mode"]}}',
 									userID: '={{$parameter["userID"]}}',
 								},
@@ -112,7 +116,7 @@ export class Greip implements INodeType {
 						name: 'Lookup',
 						value: 'asnLookup',
 						action: 'ASN Lookup',
-						description: 'Lookup Autonomous System Number (ASN) details',
+						description: 'Lookup Autonomous System Number (ASN) data',
 						displayOptions: { show: { resource: ['asn'] } },
 						routing: {
 							request: {
@@ -121,7 +125,6 @@ export class Greip implements INodeType {
 								url: '/lookup/asn',
 								qs: {
 									asn: '={{$parameter["asn"]}}',
-									format: '={{$parameter["format"]}}',
 									mode: '={{$parameter["mode"]}}',
 								},
 							},
@@ -142,7 +145,8 @@ export class Greip implements INodeType {
 						name: 'Lookup',
 						value: 'ibanLookup',
 						action: 'IBAN Lookup',
-						description: 'Validate and lookup IBAN details',
+						description:
+							'Validate a given IBAN and obtain essential information about the issuing country',
 						displayOptions: { show: { resource: ['iban'] } },
 						routing: {
 							request: {
@@ -151,7 +155,6 @@ export class Greip implements INodeType {
 								url: '/lookup/iban',
 								qs: {
 									iban: '={{$parameter["iban"]}}',
-									format: '={{$parameter["format"]}}',
 									mode: '={{$parameter["mode"]}}',
 									userID: '={{$parameter["userID"]}}',
 								},
@@ -173,7 +176,8 @@ export class Greip implements INodeType {
 						name: 'Lookup',
 						value: 'binLookup',
 						action: 'BIN Lookup',
-						description: 'Lookup and validate card BIN/IIN details',
+						description:
+							'Retrieve comprehensive information associated with a debit or credit card',
 						displayOptions: { show: { resource: ['bin'] } },
 						routing: {
 							request: {
@@ -182,7 +186,6 @@ export class Greip implements INodeType {
 								url: '/lookup/bin',
 								qs: {
 									bin: '={{$parameter["bin"]}}',
-									format: '={{$parameter["format"]}}',
 									mode: '={{$parameter["mode"]}}',
 									userID: '={{$parameter["userID"]}}',
 								},
@@ -204,7 +207,7 @@ export class Greip implements INodeType {
 						name: 'Lookup',
 						value: 'countryLookup',
 						action: 'Country lookup',
-						description: 'Lookup country details by country code',
+						description: 'Retrieve detailed information about a given country',
 						displayOptions: { show: { resource: ['country'] } },
 						routing: {
 							request: {
@@ -214,7 +217,6 @@ export class Greip implements INodeType {
 								qs: {
 									CountryCode: '={{$parameter["CountryCode"]}}',
 									params: '={{$parameter["params"]}}',
-									format: '={{$parameter["format"]}}',
 									mode: '={{$parameter["mode"]}}',
 								},
 							},
@@ -235,7 +237,8 @@ export class Greip implements INodeType {
 						name: 'Lookup',
 						value: 'domainLookup',
 						action: 'Domain lookup',
-						description: 'Lookup domain details and risk metrics',
+						description:
+							'Lookup any domain name and retrieve associated data and risk evaluation metrics',
 						displayOptions: { show: { resource: ['domain'] } },
 						routing: {
 							request: {
@@ -244,7 +247,6 @@ export class Greip implements INodeType {
 								url: '/lookup/domain',
 								qs: {
 									domain: '={{$parameter["domain"]}}',
-									format: '={{$parameter["format"]}}',
 									mode: '={{$parameter["mode"]}}',
 								},
 							},
@@ -265,7 +267,7 @@ export class Greip implements INodeType {
 						name: 'Scoring',
 						value: 'emailScoring',
 						action: 'Email scoring',
-						description: 'Validate and score an email address',
+						description: 'Score any email address and retrieve its risk evaluation metrics',
 						displayOptions: { show: { resource: ['emailAddress'] } },
 						routing: {
 							request: {
@@ -274,7 +276,6 @@ export class Greip implements INodeType {
 								url: '/scoring/email',
 								qs: {
 									email: '={{$parameter["email"]}}',
-									format: '={{$parameter["format"]}}',
 									mode: '={{$parameter["mode"]}}',
 									userID: '={{$parameter["userID"]}}',
 								},
@@ -296,7 +297,7 @@ export class Greip implements INodeType {
 						name: 'Scoring',
 						value: 'phoneScoring',
 						action: 'Phone number scoring',
-						description: 'Validate and score a phone number',
+						description: 'Score any phone number and retrieve its risk evaluation metrics',
 						displayOptions: { show: { resource: ['phoneNumber'] } },
 						routing: {
 							request: {
@@ -306,7 +307,6 @@ export class Greip implements INodeType {
 								qs: {
 									phone: '={{$parameter["phone"]}}',
 									countryCode: '={{$parameter["countryCode"]}}',
-									format: '={{$parameter["format"]}}',
 									mode: '={{$parameter["mode"]}}',
 									userID: '={{$parameter["userID"]}}',
 								},
@@ -328,7 +328,7 @@ export class Greip implements INodeType {
 						name: 'Scoring',
 						value: 'profanityDetection',
 						action: 'Profanity detection',
-						description: 'Detect offensive or inappropriate language in text',
+						description: 'Detect offensive or inappropriate language in a given text',
 						displayOptions: { show: { resource: ['text'] } },
 						routing: {
 							request: {
@@ -339,7 +339,6 @@ export class Greip implements INodeType {
 									text: '={{$parameter["text"]}}',
 									scoreOnly: '={{$parameter["scoreOnly"]}}',
 									listBadWords: '={{$parameter["listBadWords"]}}',
-									format: '={{$parameter["format"]}}',
 									mode: '={{$parameter["mode"]}}',
 								},
 							},
@@ -372,7 +371,6 @@ export class Greip implements INodeType {
 								},
 								body: {
 									data: '={{$parameter["data"]}}',
-									format: '={{$parameter["format"]}}',
 									mode: '={{$parameter["mode"]}}',
 									userID: '={{$parameter["userID"]}}',
 								},
@@ -388,7 +386,7 @@ export class Greip implements INodeType {
 			{
 				displayName: 'Transaction Data',
 				name: 'data',
-				description: 'Transaction and customer data as JSON object',
+				description: 'Transaction, shipment and customer data as JSON object',
 				type: 'json',
 				required: true,
 				default: '{}',
@@ -419,10 +417,10 @@ export class Greip implements INodeType {
 				description: 'Return only the score and safety status (yes/no)',
 				type: 'options',
 				options: [
-					{ name: 'No', value: 'no' },
 					{ name: 'Yes', value: 'yes' },
+					{ name: 'No', value: 'no' },
 				],
-				default: 'no',
+				default: 'yes',
 				displayOptions: {
 					show: {
 						resource: ['text'],
@@ -436,10 +434,10 @@ export class Greip implements INodeType {
 				description: 'List the bad words in the response (yes/no)',
 				type: 'options',
 				options: [
-					{ name: 'No', value: 'no' },
 					{ name: 'Yes', value: 'yes' },
+					{ name: 'No', value: 'no' },
 				],
-				default: 'no',
+				default: 'yes',
 				displayOptions: {
 					show: {
 						resource: ['text'],
@@ -598,48 +596,6 @@ export class Greip implements INodeType {
 					show: {
 						resource: ['country', 'ipAddress'],
 						operation: ['get', 'ipLookup', 'countryLookup'],
-					},
-				},
-			},
-			{
-				displayName: 'Format',
-				name: 'format',
-				description: 'Response format (JSON, XML, CSV, Newline)',
-				type: 'options',
-				options: [
-					{ name: 'JSON', value: 'JSON' },
-					{ name: 'XML', value: 'XML' },
-					{ name: 'CSV', value: 'CSV' },
-					{ name: 'Newline', value: 'Newline' },
-				],
-				default: 'JSON',
-				displayOptions: {
-					show: {
-						resource: [
-							'payment',
-							'text',
-							'phoneNumber',
-							'emailAddress',
-							'ipAddress',
-							'domain',
-							'country',
-							'iban',
-							'asn',
-						],
-						operation: [
-							'get',
-							'ipLookup',
-							'asnLookup',
-							'ibanLookup',
-							'binLookup',
-							'countryLookup',
-							'domainLookup',
-							'ipThreats',
-							'emailScoring',
-							'phoneScoring',
-							'profanityDetection',
-							'paymentFraudDetection',
-						],
 					},
 				},
 			},
