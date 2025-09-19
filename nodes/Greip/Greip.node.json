@@ -2,9 +2,7 @@
 	"node": "n8n-nodes-base.Greip",
 	"nodeVersion": "1.0",
 	"codexVersion": "1.0",
-	"categories": [
-		"Miscellaneous"
-	],
+	"categories": ["Miscellaneous"],
 	"resources": {
 		"credentialDocumentation": [
 			{
@@ -13,7 +11,7 @@
 		],
 		"primaryDocumentation": [
 			{
-				"url": ""
+				"url": "https://docs.greip.io/"
 			}
 		]
 	}
