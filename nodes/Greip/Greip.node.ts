@@ -437,7 +437,7 @@ export class Greip implements INodeType {
 					{ name: 'Yes', value: 'yes' },
 					{ name: 'No', value: 'no' },
 				],
-				default: 'yes',
+				default: 'no',
 				displayOptions: {
 					show: {
 						resource: ['text'],
