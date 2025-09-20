@@ -36,83 +36,30 @@ export class Greip implements INodeType {
 			//         Resources
 			// ----------------------------------
 			{
-				displayName: 'Resource',
+				displayName: 'Category',
 				name: 'resource',
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'ASN', value: 'asn' },
-					{ name: 'BIN', value: 'bin' },
-					{ name: 'Country', value: 'country' },
-					{ name: 'Domain', value: 'domain' },
-					{ name: 'Email Address', value: 'emailAddress' },
-					{ name: 'IBAN', value: 'iban' },
-					{ name: 'IP Address', value: 'ipAddress' },
-					{ name: 'Payment', value: 'payment' },
-					{ name: 'Phone Number', value: 'phoneNumber' },
-					{ name: 'Text', value: 'text' },
+					{ name: 'Data Lookup', value: 'dataLookup' },
+					{ name: 'Risk Scoring', value: 'riskScoring' },
 				],
 
-				default: 'ipAddress',
+				default: 'dataLookup',
 			},
+			// Consolidated operations by category
 			{
 				displayName: 'Operation',
 				name: 'operation',
 				type: 'options',
 				noDataExpression: true,
-				displayOptions: { show: { resource: ['ipAddress'] } },
+				displayOptions: { show: { resource: ['dataLookup'] } },
 				options: [
 					{
-						name: 'Lookup',
-						value: 'ipLookup',
-						action: 'IP Lookup',
-						description: 'Retrieve comprehensive information about a given IP address',
-						displayOptions: { show: { resource: ['ipAddress'] } },
-						routing: {
-							request: {
-								baseURL: 'https://greipapi.com',
-								method: 'GET',
-								url: '/lookup/ip',
-								qs: {
-									ip: '={{$parameter["ip"]}}',
-								},
-							},
-						},
-					},
-					{
-						name: 'Scoring',
-						value: 'ipThreats',
-						action: 'IP Scoring',
-						description: 'Get threat intelligence and risk scoring for an IP address',
-						displayOptions: { show: { resource: ['ipAddress'] } },
-						routing: {
-							request: {
-								baseURL: 'https://greipapi.com',
-								method: 'GET',
-								url: '/lookup/ip/threats',
-								qs: {
-									ip: '={{$parameter["ip"]}}',
-								},
-							},
-						},
-					},
-				],
-				default: 'ipLookup',
-			},
-
-			{
-				displayName: 'Operation',
-				name: 'operation',
-				type: 'options',
-				noDataExpression: true,
-				displayOptions: { show: { resource: ['asn'] } },
-				options: [
-					{
-						name: 'Lookup',
+						name: 'ASN Lookup',
 						value: 'asnLookup',
 						action: 'ASN Lookup',
 						description: 'Lookup Autonomous System Number (ASN) data',
-						displayOptions: { show: { resource: ['asn'] } },
 						routing: {
 							request: {
 								baseURL: 'https://greipapi.com',
@@ -124,53 +71,12 @@ export class Greip implements INodeType {
 							},
 						},
 					},
-				],
-				default: 'asnLookup',
-			},
-
-			{
-				displayName: 'Operation',
-				name: 'operation',
-				type: 'options',
-				noDataExpression: true,
-				displayOptions: { show: { resource: ['iban'] } },
-				options: [
 					{
-						name: 'Lookup',
-						value: 'ibanLookup',
-						action: 'IBAN Lookup',
-						description:
-							'Validate a given IBAN and obtain essential information about the issuing country',
-						displayOptions: { show: { resource: ['iban'] } },
-						routing: {
-							request: {
-								baseURL: 'https://greipapi.com',
-								method: 'GET',
-								url: '/lookup/iban',
-								qs: {
-									iban: '={{$parameter["iban"]}}',
-								},
-							},
-						},
-					},
-				],
-				default: 'ibanLookup',
-			},
-
-			{
-				displayName: 'Operation',
-				name: 'operation',
-				type: 'options',
-				noDataExpression: true,
-				displayOptions: { show: { resource: ['bin'] } },
-				options: [
-					{
-						name: 'Lookup',
+						name: 'BIN Lookup',
 						value: 'binLookup',
 						action: 'BIN Lookup',
 						description:
 							'Retrieve comprehensive information associated with a debit or credit card',
-						displayOptions: { show: { resource: ['bin'] } },
 						routing: {
 							request: {
 								baseURL: 'https://greipapi.com',
@@ -182,23 +88,11 @@ export class Greip implements INodeType {
 							},
 						},
 					},
-				],
-				default: 'binLookup',
-			},
-
-			{
-				displayName: 'Operation',
-				name: 'operation',
-				type: 'options',
-				noDataExpression: true,
-				displayOptions: { show: { resource: ['country'] } },
-				options: [
 					{
-						name: 'Lookup',
+						name: 'Country Lookup',
 						value: 'countryLookup',
 						action: 'Country lookup',
 						description: 'Retrieve detailed information about a given country',
-						displayOptions: { show: { resource: ['country'] } },
 						routing: {
 							request: {
 								baseURL: 'https://greipapi.com',
@@ -210,24 +104,12 @@ export class Greip implements INodeType {
 							},
 						},
 					},
-				],
-				default: 'countryLookup',
-			},
-
-			{
-				displayName: 'Operation',
-				name: 'operation',
-				type: 'options',
-				noDataExpression: true,
-				displayOptions: { show: { resource: ['domain'] } },
-				options: [
 					{
-						name: 'Lookup',
+						name: 'Domain Lookup',
 						value: 'domainLookup',
 						action: 'Domain lookup',
 						description:
 							'Lookup any domain name and retrieve associated data and risk evaluation metrics',
-						displayOptions: { show: { resource: ['domain'] } },
 						routing: {
 							request: {
 								baseURL: 'https://greipapi.com',
@@ -239,23 +121,54 @@ export class Greip implements INodeType {
 							},
 						},
 					},
+					{
+						name: 'IBAN Lookup',
+						value: 'ibanLookup',
+						action: 'IBAN Lookup',
+						description:
+							'Validate a given IBAN and obtain essential information about the issuing country',
+						routing: {
+							request: {
+								baseURL: 'https://greipapi.com',
+								method: 'GET',
+								url: '/lookup/iban',
+								qs: {
+									iban: '={{$parameter["iban"]}}',
+								},
+							},
+						},
+					},
+					{
+						name: 'IP Lookup',
+						value: 'ipLookup',
+						action: 'IP Lookup',
+						description: 'Retrieve comprehensive information about a given IP address',
+						routing: {
+							request: {
+								baseURL: 'https://greipapi.com',
+								method: 'GET',
+								url: '/lookup/ip',
+								qs: {
+									ip: '={{$parameter["ip"]}}',
+								},
+							},
+						},
+					},
 				],
-				default: 'domainLookup',
+				default: 'ipLookup',
 			},
-
 			{
 				displayName: 'Operation',
 				name: 'operation',
 				type: 'options',
 				noDataExpression: true,
-				displayOptions: { show: { resource: ['emailAddress'] } },
+				displayOptions: { show: { resource: ['riskScoring'] } },
 				options: [
 					{
-						name: 'Scoring',
+						name: 'Email Scoring',
 						value: 'emailScoring',
 						action: 'Email scoring',
 						description: 'Score any email address and retrieve its risk evaluation metrics',
-						displayOptions: { show: { resource: ['emailAddress'] } },
 						routing: {
 							request: {
 								baseURL: 'https://greipapi.com',
@@ -267,80 +180,27 @@ export class Greip implements INodeType {
 							},
 						},
 					},
-				],
-				default: 'emailScoring',
-			},
-
-			{
-				displayName: 'Operation',
-				name: 'operation',
-				type: 'options',
-				noDataExpression: true,
-				displayOptions: { show: { resource: ['phoneNumber'] } },
-				options: [
 					{
-						name: 'Scoring',
-						value: 'phoneScoring',
-						action: 'Phone number scoring',
-						description: 'Score any phone number and retrieve its risk evaluation metrics',
-						displayOptions: { show: { resource: ['phoneNumber'] } },
+						name: 'IP Scoring',
+						value: 'ipThreats',
+						action: 'IP Scoring',
+						description: 'Get threat intelligence and risk scoring for an IP address',
 						routing: {
 							request: {
 								baseURL: 'https://greipapi.com',
 								method: 'GET',
-								url: '/scoring/phone',
+								url: '/lookup/ip/threats',
 								qs: {
-									phone: '={{$parameter["phone"]}}',
-									countryCode: '={{$parameter["countryCode"]}}',
+									ip: '={{$parameter["ip"]}}',
 								},
 							},
 						},
 					},
-				],
-				default: 'phoneScoring',
-			},
-
-			{
-				displayName: 'Operation',
-				name: 'operation',
-				type: 'options',
-				noDataExpression: true,
-				displayOptions: { show: { resource: ['text'] } },
-				options: [
 					{
-						name: 'Scoring',
-						value: 'profanityDetection',
-						action: 'Profanity detection',
-						description: 'Detect offensive or inappropriate language in a given text',
-						displayOptions: { show: { resource: ['text'] } },
-						routing: {
-							request: {
-								baseURL: 'https://greipapi.com',
-								method: 'GET',
-								url: '/scoring/profanity',
-								qs: {
-									text: '={{$parameter["text"]}}',
-								},
-							},
-						},
-					},
-				],
-				default: 'profanityDetection',
-			},
-
-			{
-				displayName: 'Operation',
-				name: 'operation',
-				type: 'options',
-				noDataExpression: true,
-				displayOptions: { show: { resource: ['payment'] } },
-				options: [
-					{
-						name: 'Scoring',
+						name: 'Payment Fraud Detection',
 						value: 'paymentFraudDetection',
 						action: 'Payment fraud detection',
 						description: 'Detect and score payment fraud risk for a transaction',
-						displayOptions: { show: { resource: ['payment'] } },
 						routing: {
 							request: {
 								baseURL: 'https://greipapi.com',
@@ -356,8 +216,41 @@ export class Greip implements INodeType {
 							},
 						},
 					},
+					{
+						name: 'Phone Scoring',
+						value: 'phoneScoring',
+						action: 'Phone number scoring',
+						description: 'Score any phone number and retrieve its risk evaluation metrics',
+						routing: {
+							request: {
+								baseURL: 'https://greipapi.com',
+								method: 'GET',
+								url: '/scoring/phone',
+								qs: {
+									phone: '={{$parameter["phone"]}}',
+									countryCode: '={{$parameter["countryCode"]}}',
+								},
+							},
+						},
+					},
+					{
+						name: 'Profanity Detection',
+						value: 'profanityDetection',
+						action: 'Profanity detection',
+						description: 'Detect offensive or inappropriate language in a given text',
+						routing: {
+							request: {
+								baseURL: 'https://greipapi.com',
+								method: 'GET',
+								url: '/scoring/profanity',
+								qs: {
+									text: '={{$parameter["text"]}}',
+								},
+							},
+						},
+					},
 				],
-				default: 'paymentFraudDetection',
+				default: 'ipThreats',
 			},
 
 			// --------------------  Management --------------------
@@ -370,7 +263,7 @@ export class Greip implements INodeType {
 				default: '{}',
 				displayOptions: {
 					show: {
-						resource: ['payment'],
+						resource: ['riskScoring'],
 						operation: ['paymentFraudDetection'],
 					},
 				},
@@ -388,7 +281,7 @@ export class Greip implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
-						resource: ['text'],
+						resource: ['riskScoring'],
 						operation: ['profanityDetection'],
 					},
 				},
@@ -404,7 +297,7 @@ export class Greip implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
-						resource: ['phoneNumber'],
+						resource: ['riskScoring'],
 						operation: ['phoneScoring'],
 					},
 				},
@@ -419,7 +312,7 @@ export class Greip implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
-						resource: ['phoneNumber'],
+						resource: ['riskScoring'],
 						operation: ['phoneScoring'],
 					},
 				},
@@ -434,7 +327,7 @@ export class Greip implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
-						resource: ['emailAddress'],
+						resource: ['riskScoring'],
 						operation: ['emailScoring'],
 					},
 				},
@@ -449,7 +342,7 @@ export class Greip implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
-						resource: ['ipAddress'],
+						resource: ['riskScoring'],
 						operation: ['ipThreats'],
 					},
 				},
@@ -464,7 +357,7 @@ export class Greip implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
-						resource: ['domain'],
+						resource: ['dataLookup'],
 						operation: ['domainLookup'],
 					},
 				},
@@ -479,7 +372,7 @@ export class Greip implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
-						resource: ['country'],
+						resource: ['dataLookup'],
 						operation: ['countryLookup'],
 					},
 				},
@@ -494,7 +387,7 @@ export class Greip implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
-						resource: ['bin'],
+						resource: ['dataLookup'],
 						operation: ['binLookup'],
 					},
 				},
@@ -509,7 +402,7 @@ export class Greip implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
-						resource: ['iban'],
+						resource: ['dataLookup'],
 						operation: ['ibanLookup'],
 					},
 				},
@@ -524,7 +417,7 @@ export class Greip implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
-						resource: ['asn'],
+						resource: ['dataLookup'],
 						operation: ['asnLookup'],
 					},
 				},
@@ -539,7 +432,7 @@ export class Greip implements INodeType {
 				required: true,
 				displayOptions: {
 					show: {
-						resource: ['ipAddress'],
+						resource: ['dataLookup'],
 						operation: ['ipLookup'],
 					},
 				},
@@ -556,7 +449,7 @@ export class Greip implements INodeType {
 				placeholder: 'Add Field',
 				displayOptions: {
 					show: {
-						resource: ['ipAddress'],
+						resource: ['dataLookup'],
 						operation: ['ipLookup'],
 					},
 				},
@@ -644,7 +537,7 @@ export class Greip implements INodeType {
 				placeholder: 'Add Field',
 				displayOptions: {
 					show: {
-						resource: ['ipAddress'],
+						resource: ['riskScoring'],
 						operation: ['ipThreats'],
 					},
 				},
@@ -696,7 +589,7 @@ export class Greip implements INodeType {
 				placeholder: 'Add Field',
 				displayOptions: {
 					show: {
-						resource: ['asn'],
+						resource: ['dataLookup'],
 						operation: ['asnLookup'],
 					},
 				},
@@ -732,7 +625,7 @@ export class Greip implements INodeType {
 				placeholder: 'Add Field',
 				displayOptions: {
 					show: {
-						resource: ['iban'],
+						resource: ['dataLookup'],
 						operation: ['ibanLookup'],
 					},
 				},
@@ -784,7 +677,7 @@ export class Greip implements INodeType {
 				placeholder: 'Add Field',
 				displayOptions: {
 					show: {
-						resource: ['bin'],
+						resource: ['dataLookup'],
 						operation: ['binLookup'],
 					},
 				},
@@ -836,7 +729,7 @@ export class Greip implements INodeType {
 				placeholder: 'Add Field',
 				displayOptions: {
 					show: {
-						resource: ['country'],
+						resource: ['dataLookup'],
 						operation: ['countryLookup'],
 					},
 				},
@@ -886,7 +779,7 @@ export class Greip implements INodeType {
 				placeholder: 'Add Field',
 				displayOptions: {
 					show: {
-						resource: ['domain'],
+						resource: ['dataLookup'],
 						operation: ['domainLookup'],
 					},
 				},
@@ -922,7 +815,7 @@ export class Greip implements INodeType {
 				placeholder: 'Add Field',
 				displayOptions: {
 					show: {
-						resource: ['emailAddress'],
+						resource: ['riskScoring'],
 						operation: ['emailScoring'],
 					},
 				},
@@ -974,7 +867,7 @@ export class Greip implements INodeType {
 				placeholder: 'Add Field',
 				displayOptions: {
 					show: {
-						resource: ['phoneNumber'],
+						resource: ['riskScoring'],
 						operation: ['phoneScoring'],
 					},
 				},
@@ -1026,7 +919,7 @@ export class Greip implements INodeType {
 				placeholder: 'Add Field',
 				displayOptions: {
 					show: {
-						resource: ['text'],
+						resource: ['riskScoring'],
 						operation: ['profanityDetection'],
 					},
 				},
@@ -1098,7 +991,7 @@ export class Greip implements INodeType {
 				placeholder: 'Add Field',
 				displayOptions: {
 					show: {
-						resource: ['payment'],
+						resource: ['riskScoring'],
 						operation: ['paymentFraudDetection'],
 					},
 				},
