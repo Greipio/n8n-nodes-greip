@@ -75,10 +75,6 @@ export class Greip implements INodeType {
 								url: '/lookup/ip',
 								qs: {
 									ip: '={{$parameter["ip"]}}',
-									params: '={{$parameter["params"]}}',
-									lang: '={{$parameter["lang"]}}',
-									mode: '={{$parameter["mode"]}}',
-									userID: '={{$parameter["userID"]}}',
 								},
 							},
 						},
@@ -96,8 +92,6 @@ export class Greip implements INodeType {
 								url: '/lookup/ip/threats',
 								qs: {
 									ip: '={{$parameter["ip"]}}',
-									mode: '={{$parameter["mode"]}}',
-									userID: '={{$parameter["userID"]}}',
 								},
 							},
 						},
@@ -126,7 +120,6 @@ export class Greip implements INodeType {
 								url: '/lookup/asn',
 								qs: {
 									asn: '={{$parameter["asn"]}}',
-									mode: '={{$parameter["mode"]}}',
 								},
 							},
 						},
@@ -156,8 +149,6 @@ export class Greip implements INodeType {
 								url: '/lookup/iban',
 								qs: {
 									iban: '={{$parameter["iban"]}}',
-									mode: '={{$parameter["mode"]}}',
-									userID: '={{$parameter["userID"]}}',
 								},
 							},
 						},
@@ -187,8 +178,6 @@ export class Greip implements INodeType {
 								url: '/lookup/bin',
 								qs: {
 									bin: '={{$parameter["bin"]}}',
-									mode: '={{$parameter["mode"]}}',
-									userID: '={{$parameter["userID"]}}',
 								},
 							},
 						},
@@ -217,8 +206,6 @@ export class Greip implements INodeType {
 								url: '/lookup/country',
 								qs: {
 									CountryCode: '={{$parameter["CountryCode"]}}',
-									params: '={{$parameter["params"]}}',
-									mode: '={{$parameter["mode"]}}',
 								},
 							},
 						},
@@ -248,7 +235,6 @@ export class Greip implements INodeType {
 								url: '/lookup/domain',
 								qs: {
 									domain: '={{$parameter["domain"]}}',
-									mode: '={{$parameter["mode"]}}',
 								},
 							},
 						},
@@ -277,8 +263,6 @@ export class Greip implements INodeType {
 								url: '/scoring/email',
 								qs: {
 									email: '={{$parameter["email"]}}',
-									mode: '={{$parameter["mode"]}}',
-									userID: '={{$parameter["userID"]}}',
 								},
 							},
 						},
@@ -308,8 +292,6 @@ export class Greip implements INodeType {
 								qs: {
 									phone: '={{$parameter["phone"]}}',
 									countryCode: '={{$parameter["countryCode"]}}',
-									mode: '={{$parameter["mode"]}}',
-									userID: '={{$parameter["userID"]}}',
 								},
 							},
 						},
@@ -338,9 +320,6 @@ export class Greip implements INodeType {
 								url: '/scoring/profanity',
 								qs: {
 									text: '={{$parameter["text"]}}',
-									scoreOnly: '={{$parameter["scoreOnly"]}}',
-									listBadWords: '={{$parameter["listBadWords"]}}',
-									mode: '={{$parameter["mode"]}}',
 								},
 							},
 						},
@@ -372,8 +351,6 @@ export class Greip implements INodeType {
 								},
 								body: {
 									data: '={{$parameter["data"]}}',
-									mode: '={{$parameter["mode"]}}',
-									userID: '={{$parameter["userID"]}}',
 								},
 								json: true,
 							},
@@ -416,40 +393,7 @@ export class Greip implements INodeType {
 					},
 				},
 			},
-			{
-				displayName: 'Score Only',
-				name: 'scoreOnly',
-				description: 'Return only the scoring of the text',
-				type: 'options',
-				options: [
-					{ name: 'Yes', value: 'yes' },
-					{ name: 'No', value: 'no' },
-				],
-				default: 'yes',
-				displayOptions: {
-					show: {
-						resource: ['text'],
-						operation: ['profanityDetection'],
-					},
-				},
-			},
-			{
-				displayName: 'List Profane Words',
-				name: 'listBadWords',
-				description: 'List the profane words in the response',
-				type: 'options',
-				options: [
-					{ name: 'Yes', value: 'yes' },
-					{ name: 'No', value: 'no' },
-				],
-				default: 'no',
-				displayOptions: {
-					show: {
-						resource: ['text'],
-						operation: ['profanityDetection'],
-					},
-				},
-			},
+
 			{
 				displayName: 'Phone Number',
 				name: 'phone',
@@ -550,7 +494,7 @@ export class Greip implements INodeType {
 				default: '',
 				displayOptions: {
 					show: {
-						resource: ['iban'],
+						resource: ['bin'],
 						operation: ['binLookup'],
 					},
 				},
@@ -600,104 +544,601 @@ export class Greip implements INodeType {
 					},
 				},
 			},
+
+			// ----------------------------------
+			//      Additional Fields
+			// ----------------------------------
 			{
-				displayName: 'Params',
-				name: 'params',
-				description: 'Specify required modules (e.g. security,timezone,currency)',
-				type: 'string',
-				default: '',
-				displayOptions: {
-					show: {
-						resource: ['country', 'ipAddress'],
-						operation: ['get', 'ipLookup', 'countryLookup'],
-					},
-				},
-			},
-			{
-				displayName: 'Language',
-				name: 'lang',
-				description: 'Response language',
-				type: 'options',
-				options: [
-					{ name: 'Arabic', value: 'AR' },
-					{ name: 'Chinese', value: 'ZH' },
-					{ name: 'English', value: 'EN' },
-					{ name: 'French', value: 'FR' },
-					{ name: 'German', value: 'DE' },
-					{ name: 'Japanese', value: 'JA' },
-					{ name: 'Russian', value: 'RU' },
-					{ name: 'Spanish', value: 'ES' },
-				],
-				default: 'EN',
+				displayName: 'Additional Fields',
+				name: 'additionalFields',
+				type: 'collection',
+				default: {},
+				placeholder: 'Add Field',
 				displayOptions: {
 					show: {
 						resource: ['ipAddress'],
-						operation: ['get', 'ipLookup'],
+						operation: ['ipLookup'],
 					},
 				},
-			},
-			{
-				displayName: 'Mode',
-				name: 'mode',
-				description: 'Environment mode',
-				hint: 'Enable this option to protect your account credits while testing the integration',
-				type: 'options',
 				options: [
-					{ name: 'Live', value: 'live' },
-					{ name: 'Test', value: 'test' },
-				],
-				default: 'live',
-				displayOptions: {
-					show: {
-						resource: [
-							'payment',
-							'phoneNumber',
-							'emailAddress',
-							'ipAddress',
-							'domain',
-							'country',
-							'iban',
-							'asn',
+					{
+						displayName: 'Language',
+						name: 'lang',
+						description: 'Response language',
+						type: 'options',
+						options: [
+							{ name: 'Arabic', value: 'AR' },
+							{ name: 'Chinese', value: 'ZH' },
+							{ name: 'English', value: 'EN' },
+							{ name: 'French', value: 'FR' },
+							{ name: 'German', value: 'DE' },
+							{ name: 'Japanese', value: 'JA' },
+							{ name: 'Russian', value: 'RU' },
+							{ name: 'Spanish', value: 'ES' },
 						],
-						operation: [
-							'get',
-							'ipLookup',
-							'asnLookup',
-							'ibanLookup',
-							'binLookup',
-							'countryLookup',
-							'domainLookup',
-							'ipThreats',
-							'emailScoring',
-							'phoneScoring',
-							'profanityDetection',
-							'paymentFraudDetection',
-						],
+						default: 'EN',
+						routing: {
+							request: {
+								qs: {
+									lang: '={{$value}}',
+								},
+							},
+						},
 					},
-				},
+					{
+						displayName: 'Mode',
+						name: 'mode',
+						description: 'Environment mode',
+						hint: 'Enable this option to protect your account credits while testing the integration',
+						type: 'options',
+						options: [
+							{ name: 'Live', value: 'live' },
+							{ name: 'Test', value: 'test' },
+						],
+						default: 'live',
+						routing: {
+							request: {
+								qs: {
+									mode: '={{$value}}',
+								},
+							},
+						},
+					},
+					{
+						displayName: 'Params',
+						name: 'params',
+						description: 'Specify required modules (e.g. security,timezone,currency)',
+						type: 'string',
+						default: '',
+						routing: {
+							request: {
+								qs: {
+									params: '={{$value}}',
+								},
+							},
+						},
+					},
+					{
+						displayName: 'User ID',
+						name: 'userID',
+						description:
+							'User identifier, used to link requests to a specific user in Greip dashboard',
+						placeholder: 'email@example.com, phone, ID, etc.',
+						type: 'string',
+						default: '',
+						routing: {
+							request: {
+								qs: {
+									userID: '={{$value}}',
+								},
+							},
+						},
+					},
+				],
 			},
 			{
-				displayName: 'User ID',
-				name: 'userID',
-				description: 'User identifier',
-				placeholder: 'email@example.com, phone, ID, etc.',
-				type: 'string',
-				default: '',
+				displayName: 'Additional Fields',
+				name: 'additionalFields',
+				type: 'collection',
+				default: {},
+				placeholder: 'Add Field',
 				displayOptions: {
 					show: {
-						resource: ['payment', 'phoneNumber', 'emailAddress', 'ipAddress', 'iban'],
-						operation: [
-							'get',
-							'ipLookup',
-							'ibanLookup',
-							'binLookup',
-							'ipThreats',
-							'emailScoring',
-							'phoneScoring',
-							'paymentFraudDetection',
-						],
+						resource: ['ipAddress'],
+						operation: ['ipThreats'],
 					},
 				},
+				options: [
+					{
+						displayName: 'Mode',
+						name: 'mode',
+						description: 'Environment mode',
+						hint: 'Enable this option to protect your account credits while testing the integration',
+						type: 'options',
+						options: [
+							{ name: 'Live', value: 'live' },
+							{ name: 'Test', value: 'test' },
+						],
+						default: 'live',
+						routing: {
+							request: {
+								qs: {
+									mode: '={{$value}}',
+								},
+							},
+						},
+					},
+					{
+						displayName: 'User ID',
+						name: 'userID',
+						description:
+							'User identifier, used to link requests to a specific user in Greip dashboard',
+						placeholder: 'email@example.com, phone, ID, etc.',
+						type: 'string',
+						default: '',
+						routing: {
+							request: {
+								qs: {
+									userID: '={{$value}}',
+								},
+							},
+						},
+					},
+				],
+			},
+
+			// Additional Fields for ASN Lookup
+			{
+				displayName: 'Additional Fields',
+				name: 'additionalFields',
+				type: 'collection',
+				default: {},
+				placeholder: 'Add Field',
+				displayOptions: {
+					show: {
+						resource: ['asn'],
+						operation: ['asnLookup'],
+					},
+				},
+				options: [
+					{
+						displayName: 'Mode',
+						name: 'mode',
+						description: 'Environment mode',
+						hint: 'Enable this option to protect your account credits while testing the integration',
+						type: 'options',
+						options: [
+							{ name: 'Live', value: 'live' },
+							{ name: 'Test', value: 'test' },
+						],
+						default: 'live',
+						routing: {
+							request: {
+								qs: {
+									mode: '={{$value}}',
+								},
+							},
+						},
+					},
+				],
+			},
+
+			// Additional Fields for IBAN Lookup
+			{
+				displayName: 'Additional Fields',
+				name: 'additionalFields',
+				type: 'collection',
+				default: {},
+				placeholder: 'Add Field',
+				displayOptions: {
+					show: {
+						resource: ['iban'],
+						operation: ['ibanLookup'],
+					},
+				},
+				options: [
+					{
+						displayName: 'Mode',
+						name: 'mode',
+						description: 'Environment mode',
+						hint: 'Enable this option to protect your account credits while testing the integration',
+						type: 'options',
+						options: [
+							{ name: 'Live', value: 'live' },
+							{ name: 'Test', value: 'test' },
+						],
+						default: 'live',
+						routing: {
+							request: {
+								qs: {
+									mode: '={{$value}}',
+								},
+							},
+						},
+					},
+					{
+						displayName: 'User ID',
+						name: 'userID',
+						description:
+							'User identifier, used to link requests to a specific user in Greip dashboard',
+						placeholder: 'email@example.com, phone, ID, etc.',
+						type: 'string',
+						default: '',
+						routing: {
+							request: {
+								qs: {
+									userID: '={{$value}}',
+								},
+							},
+						},
+					},
+				],
+			},
+
+			// Additional Fields for BIN Lookup
+			{
+				displayName: 'Additional Fields',
+				name: 'additionalFields',
+				type: 'collection',
+				default: {},
+				placeholder: 'Add Field',
+				displayOptions: {
+					show: {
+						resource: ['bin'],
+						operation: ['binLookup'],
+					},
+				},
+				options: [
+					{
+						displayName: 'Mode',
+						name: 'mode',
+						description: 'Environment mode',
+						hint: 'Enable this option to protect your account credits while testing the integration',
+						type: 'options',
+						options: [
+							{ name: 'Live', value: 'live' },
+							{ name: 'Test', value: 'test' },
+						],
+						default: 'live',
+						routing: {
+							request: {
+								qs: {
+									mode: '={{$value}}',
+								},
+							},
+						},
+					},
+					{
+						displayName: 'User ID',
+						name: 'userID',
+						description:
+							'User identifier, used to link requests to a specific user in Greip dashboard',
+						placeholder: 'email@example.com, phone, ID, etc.',
+						type: 'string',
+						default: '',
+						routing: {
+							request: {
+								qs: {
+									userID: '={{$value}}',
+								},
+							},
+						},
+					},
+				],
+			},
+
+			// Additional Fields for Country Lookup
+			{
+				displayName: 'Additional Fields',
+				name: 'additionalFields',
+				type: 'collection',
+				default: {},
+				placeholder: 'Add Field',
+				displayOptions: {
+					show: {
+						resource: ['country'],
+						operation: ['countryLookup'],
+					},
+				},
+				options: [
+					{
+						displayName: 'Params',
+						name: 'params',
+						description: 'Specify required modules (e.g. security,timezone,currency)',
+						type: 'string',
+						default: '',
+						routing: {
+							request: {
+								qs: {
+									params: '={{$value}}',
+								},
+							},
+						},
+					},
+					{
+						displayName: 'Mode',
+						name: 'mode',
+						description: 'Environment mode',
+						hint: 'Enable this option to protect your account credits while testing the integration',
+						type: 'options',
+						options: [
+							{ name: 'Live', value: 'live' },
+							{ name: 'Test', value: 'test' },
+						],
+						default: 'live',
+						routing: {
+							request: {
+								qs: {
+									mode: '={{$value}}',
+								},
+							},
+						},
+					},
+				],
+			},
+
+			// Additional Fields for Domain Lookup
+			{
+				displayName: 'Additional Fields',
+				name: 'additionalFields',
+				type: 'collection',
+				default: {},
+				placeholder: 'Add Field',
+				displayOptions: {
+					show: {
+						resource: ['domain'],
+						operation: ['domainLookup'],
+					},
+				},
+				options: [
+					{
+						displayName: 'Mode',
+						name: 'mode',
+						description: 'Environment mode',
+						hint: 'Enable this option to protect your account credits while testing the integration',
+						type: 'options',
+						options: [
+							{ name: 'Live', value: 'live' },
+							{ name: 'Test', value: 'test' },
+						],
+						default: 'live',
+						routing: {
+							request: {
+								qs: {
+									mode: '={{$value}}',
+								},
+							},
+						},
+					},
+				],
+			},
+
+			// Additional Fields for Email Scoring
+			{
+				displayName: 'Additional Fields',
+				name: 'additionalFields',
+				type: 'collection',
+				default: {},
+				placeholder: 'Add Field',
+				displayOptions: {
+					show: {
+						resource: ['emailAddress'],
+						operation: ['emailScoring'],
+					},
+				},
+				options: [
+					{
+						displayName: 'Mode',
+						name: 'mode',
+						description: 'Environment mode',
+						hint: 'Enable this option to protect your account credits while testing the integration',
+						type: 'options',
+						options: [
+							{ name: 'Live', value: 'live' },
+							{ name: 'Test', value: 'test' },
+						],
+						default: 'live',
+						routing: {
+							request: {
+								qs: {
+									mode: '={{$value}}',
+								},
+							},
+						},
+					},
+					{
+						displayName: 'User ID',
+						name: 'userID',
+						description:
+							'User identifier, used to link requests to a specific user in Greip dashboard',
+						placeholder: 'email@example.com, phone, ID, etc.',
+						type: 'string',
+						default: '',
+						routing: {
+							request: {
+								qs: {
+									userID: '={{$value}}',
+								},
+							},
+						},
+					},
+				],
+			},
+
+			// Additional Fields for Phone Scoring
+			{
+				displayName: 'Additional Fields',
+				name: 'additionalFields',
+				type: 'collection',
+				default: {},
+				placeholder: 'Add Field',
+				displayOptions: {
+					show: {
+						resource: ['phoneNumber'],
+						operation: ['phoneScoring'],
+					},
+				},
+				options: [
+					{
+						displayName: 'Mode',
+						name: 'mode',
+						description: 'Environment mode',
+						hint: 'Enable this option to protect your account credits while testing the integration',
+						type: 'options',
+						options: [
+							{ name: 'Live', value: 'live' },
+							{ name: 'Test', value: 'test' },
+						],
+						default: 'live',
+						routing: {
+							request: {
+								qs: {
+									mode: '={{$value}}',
+								},
+							},
+						},
+					},
+					{
+						displayName: 'User ID',
+						name: 'userID',
+						description:
+							'User identifier, used to link requests to a specific user in Greip dashboard',
+						placeholder: 'email@example.com, phone, ID, etc.',
+						type: 'string',
+						default: '',
+						routing: {
+							request: {
+								qs: {
+									userID: '={{$value}}',
+								},
+							},
+						},
+					},
+				],
+			},
+
+			// Additional Fields for Profanity Detection
+			{
+				displayName: 'Additional Fields',
+				name: 'additionalFields',
+				type: 'collection',
+				default: {},
+				placeholder: 'Add Field',
+				displayOptions: {
+					show: {
+						resource: ['text'],
+						operation: ['profanityDetection'],
+					},
+				},
+				options: [
+					{
+						displayName: 'List Profane Words',
+						name: 'listBadWords',
+						description: 'List the profane words in the response',
+						type: 'options',
+						options: [
+							{ name: 'Yes', value: 'yes' },
+							{ name: 'No', value: 'no' },
+						],
+						default: 'no',
+						routing: {
+							request: {
+								qs: {
+									listBadWords: '={{$value}}',
+								},
+							},
+						},
+					},
+					{
+						displayName: 'Mode',
+						name: 'mode',
+						description: 'Environment mode',
+						hint: 'Enable this option to protect your account credits while testing the integration',
+						type: 'options',
+						options: [
+							{ name: 'Live', value: 'live' },
+							{ name: 'Test', value: 'test' },
+						],
+						default: 'live',
+						routing: {
+							request: {
+								qs: {
+									mode: '={{$value}}',
+								},
+							},
+						},
+					},
+					{
+						displayName: 'Score Only',
+						name: 'scoreOnly',
+						description: 'Return only the scoring of the text',
+						type: 'options',
+						options: [
+							{ name: 'Yes', value: 'yes' },
+							{ name: 'No', value: 'no' },
+						],
+						default: 'yes',
+						routing: {
+							request: {
+								qs: {
+									scoreOnly: '={{$value}}',
+								},
+							},
+						},
+					},
+				],
+			},
+
+			// Additional Fields for Payment Fraud Detection
+			{
+				displayName: 'Additional Fields',
+				name: 'additionalFields',
+				type: 'collection',
+				default: {},
+				placeholder: 'Add Field',
+				displayOptions: {
+					show: {
+						resource: ['payment'],
+						operation: ['paymentFraudDetection'],
+					},
+				},
+				options: [
+					{
+						displayName: 'Mode',
+						name: 'mode',
+						description: 'Environment mode',
+						hint: 'Enable this option to protect your account credits while testing the integration',
+						type: 'options',
+						options: [
+							{ name: 'Live', value: 'live' },
+							{ name: 'Test', value: 'test' },
+						],
+						default: 'live',
+						routing: {
+							request: {
+								body: {
+									mode: '={{$value}}',
+								},
+							},
+						},
+					},
+					{
+						displayName: 'User ID',
+						name: 'userID',
+						description:
+							'User identifier, used to link requests to a specific user in Greip dashboard',
+						placeholder: 'email@example.com, phone, ID, etc.',
+						type: 'string',
+						default: '',
+						routing: {
+							request: {
+								body: {
+									userID: '={{$value}}',
+								},
+							},
+						},
+					},
+				],
 			},
 		],
 	};
