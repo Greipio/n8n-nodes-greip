@@ -7,7 +7,7 @@ export class Greip implements INodeType {
 		icon: 'file:Greip.svg',
 		group: ['transform'],
 		version: 1,
-		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
+		subtitle: '={{"Endpoint: " + $parameter["operation"]}}',
 		description: 'Get fraud prevention, threat intelligence, and risk scoring data from Greip.',
 		defaults: {
 			name: 'Greip',
