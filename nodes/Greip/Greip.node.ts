@@ -620,7 +620,8 @@ export class Greip implements INodeType {
 					{
 						displayName: 'User ID',
 						name: 'userID',
-						description: 'User identifier',
+						description:
+							'User identifier, used to link requests to a specific user in Greip dashboard',
 						placeholder: 'email@example.com, phone, ID, etc.',
 						type: 'string',
 						default: '',
@@ -669,7 +670,8 @@ export class Greip implements INodeType {
 					{
 						displayName: 'User ID',
 						name: 'userID',
-						description: 'User identifier',
+						description:
+							'User identifier, used to link requests to a specific user in Greip dashboard',
 						placeholder: 'email@example.com, phone, ID, etc.',
 						type: 'string',
 						default: '',
@@ -756,7 +758,8 @@ export class Greip implements INodeType {
 					{
 						displayName: 'User ID',
 						name: 'userID',
-						description: 'User identifier',
+						description:
+							'User identifier, used to link requests to a specific user in Greip dashboard',
 						placeholder: 'email@example.com, phone, ID, etc.',
 						type: 'string',
 						default: '',
@@ -807,7 +810,8 @@ export class Greip implements INodeType {
 					{
 						displayName: 'User ID',
 						name: 'userID',
-						description: 'User identifier',
+						description:
+							'User identifier, used to link requests to a specific user in Greip dashboard',
 						placeholder: 'email@example.com, phone, ID, etc.',
 						type: 'string',
 						default: '',
@@ -944,7 +948,8 @@ export class Greip implements INodeType {
 					{
 						displayName: 'User ID',
 						name: 'userID',
-						description: 'User identifier',
+						description:
+							'User identifier, used to link requests to a specific user in Greip dashboard',
 						placeholder: 'email@example.com, phone, ID, etc.',
 						type: 'string',
 						default: '',
@@ -995,7 +1000,8 @@ export class Greip implements INodeType {
 					{
 						displayName: 'User ID',
 						name: 'userID',
-						description: 'User identifier',
+						description:
+							'User identifier, used to link requests to a specific user in Greip dashboard',
 						placeholder: 'email@example.com, phone, ID, etc.',
 						type: 'string',
 						default: '',
@@ -1118,7 +1124,8 @@ export class Greip implements INodeType {
 					{
 						displayName: 'User ID',
 						name: 'userID',
-						description: 'User identifier',
+						description:
+							'User identifier, used to link requests to a specific user in Greip dashboard',
 						placeholder: 'email@example.com, phone, ID, etc.',
 						type: 'string',
 						default: '',
