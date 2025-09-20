@@ -9,6 +9,7 @@ export class Greip implements INodeType {
 		version: 1,
 		subtitle: '={{"Endpoint: " + $parameter["operation"]}}',
 		description: 'Get fraud prevention, threat intelligence, and risk scoring data from Greip.',
+		usableAsTool: true,
 		defaults: {
 			name: 'Greip',
 		},
