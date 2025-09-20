@@ -561,20 +561,6 @@ export class Greip implements INodeType {
 				},
 				options: [
 					{
-						displayName: 'Params',
-						name: 'params',
-						description: 'Specify required modules (e.g. security,timezone,currency)',
-						type: 'string',
-						default: '',
-						routing: {
-							request: {
-								qs: {
-									params: '={{$value}}',
-								},
-							},
-						},
-					},
-					{
 						displayName: 'Language',
 						name: 'lang',
 						description: 'Response language',
@@ -599,43 +585,6 @@ export class Greip implements INodeType {
 						},
 					},
 					{
-						displayName: 'Format',
-						name: 'format',
-						description:
-							'The format command is used to get a response in a specific format. For more information please refer to Response Format.',
-						type: 'options',
-						options: [
-							{ name: 'JSON', value: 'JSON' },
-							{ name: 'XML', value: 'XML' },
-							{ name: 'CSV', value: 'CSV' },
-							{ name: 'Newline', value: 'Newline' },
-						],
-						default: 'JSON',
-						routing: {
-							request: {
-								qs: {
-									format: '={{$value}}',
-								},
-							},
-						},
-					},
-					{
-						displayName: 'Callback',
-						name: 'callback',
-						description:
-							'The callback command can help you make the response as a JSONP format. Expected values: any name that can be used as a function name in Javascript, e.g: myFunctionName. For more information please refer to JSONP Callback.',
-						type: 'string',
-						placeholder: 'myFunctionName',
-						default: '',
-						routing: {
-							request: {
-								qs: {
-									callback: '={{$value}}',
-								},
-							},
-						},
-					},
-					{
 						displayName: 'Mode',
 						name: 'mode',
 						description: 'Environment mode',
@@ -650,6 +599,20 @@ export class Greip implements INodeType {
 							request: {
 								qs: {
 									mode: '={{$value}}',
+								},
+							},
+						},
+					},
+					{
+						displayName: 'Params',
+						name: 'params',
+						description: 'Specify required modules (e.g. security,timezone,currency)',
+						type: 'string',
+						default: '',
+						routing: {
+							request: {
+								qs: {
+									params: '={{$value}}',
 								},
 							},
 						},
@@ -718,43 +681,6 @@ export class Greip implements INodeType {
 							},
 						},
 					},
-					{
-						displayName: 'Format',
-						name: 'format',
-						description:
-							'The format command is used to get a response in a specific format. For more information please refer to Response Format.',
-						type: 'options',
-						options: [
-							{ name: 'JSON', value: 'JSON' },
-							{ name: 'XML', value: 'XML' },
-							{ name: 'CSV', value: 'CSV' },
-							{ name: 'Newline', value: 'Newline' },
-						],
-						default: 'JSON',
-						routing: {
-							request: {
-								qs: {
-									format: '={{$value}}',
-								},
-							},
-						},
-					},
-					{
-						displayName: 'Callback',
-						name: 'callback',
-						description:
-							'The callback command can help you make the response as a JSONP format. Expected values: any name that can be used as a function name in Javascript, e.g: myFunctionName. For more information please refer to JSONP Callback.',
-						type: 'string',
-						placeholder: 'myFunctionName',
-						default: '',
-						routing: {
-							request: {
-								qs: {
-									callback: '={{$value}}',
-								},
-							},
-						},
-					},
 				],
 			},
 
@@ -772,43 +698,6 @@ export class Greip implements INodeType {
 					},
 				},
 				options: [
-					{
-						displayName: 'Format',
-						name: 'format',
-						description:
-							'The format command is used to get a response in a specific format. For more information please refer to Response Format.',
-						type: 'options',
-						options: [
-							{ name: 'JSON', value: 'JSON' },
-							{ name: 'XML', value: 'XML' },
-							{ name: 'CSV', value: 'CSV' },
-							{ name: 'Newline', value: 'Newline' },
-						],
-						default: 'JSON',
-						routing: {
-							request: {
-								qs: {
-									format: '={{$value}}',
-								},
-							},
-						},
-					},
-					{
-						displayName: 'Callback',
-						name: 'callback',
-						description:
-							'The callback command can help you make the response as a JSONP format. Expected values: any name that can be used as a function name in Javascript, e.g: myFunctionName. For more information please refer to JSONP Callback.',
-						type: 'string',
-						placeholder: 'myFunctionName',
-						default: '',
-						routing: {
-							request: {
-								qs: {
-									callback: '={{$value}}',
-								},
-							},
-						},
-					},
 					{
 						displayName: 'Mode',
 						name: 'mode',
@@ -845,43 +734,6 @@ export class Greip implements INodeType {
 					},
 				},
 				options: [
-					{
-						displayName: 'Format',
-						name: 'format',
-						description:
-							'The format command is used to get a response in a specific format. For more information please refer to Response Format.',
-						type: 'options',
-						options: [
-							{ name: 'JSON', value: 'JSON' },
-							{ name: 'XML', value: 'XML' },
-							{ name: 'CSV', value: 'CSV' },
-							{ name: 'Newline', value: 'Newline' },
-						],
-						default: 'JSON',
-						routing: {
-							request: {
-								qs: {
-									format: '={{$value}}',
-								},
-							},
-						},
-					},
-					{
-						displayName: 'Callback',
-						name: 'callback',
-						description:
-							'The callback command can help you make the response as a JSONP format. Expected values: any name that can be used as a function name in Javascript, e.g: myFunctionName. For more information please refer to JSONP Callback.',
-						type: 'string',
-						placeholder: 'myFunctionName',
-						default: '',
-						routing: {
-							request: {
-								qs: {
-									callback: '={{$value}}',
-								},
-							},
-						},
-					},
 					{
 						displayName: 'Mode',
 						name: 'mode',
@@ -934,43 +786,6 @@ export class Greip implements INodeType {
 				},
 				options: [
 					{
-						displayName: 'Format',
-						name: 'format',
-						description:
-							'The format command is used to get a response in a specific format. Expected values: JSON, XML, CSV, or Newline. For more information please refer to Response Format.',
-						type: 'options',
-						options: [
-							{ name: 'JSON', value: 'JSON' },
-							{ name: 'XML', value: 'XML' },
-							{ name: 'CSV', value: 'CSV' },
-							{ name: 'Newline', value: 'Newline' },
-						],
-						default: 'JSON',
-						routing: {
-							request: {
-								qs: {
-									format: '={{$value}}',
-								},
-							},
-						},
-					},
-					{
-						displayName: 'Callback',
-						name: 'callback',
-						description:
-							'The callback command can help you make the response as a JSONP format. Expected values: any name that can be used as a function name in Javascript, e.g: myFunctionName. For more information please refer to JSONP Callback.',
-						type: 'string',
-						placeholder: 'myFunctionName',
-						default: '',
-						routing: {
-							request: {
-								qs: {
-									callback: '={{$value}}',
-								},
-							},
-						},
-					},
-					{
 						displayName: 'Mode',
 						name: 'mode',
 						description: 'Environment mode',
@@ -1022,43 +837,6 @@ export class Greip implements INodeType {
 				},
 				options: [
 					{
-						displayName: 'Format',
-						name: 'format',
-						description:
-							'The format command is used to get a response in a specific format. Expected values: JSON, XML, CSV, or Newline. For more information please refer to Response Format.',
-						type: 'options',
-						options: [
-							{ name: 'JSON', value: 'JSON' },
-							{ name: 'XML', value: 'XML' },
-							{ name: 'CSV', value: 'CSV' },
-							{ name: 'Newline', value: 'Newline' },
-						],
-						default: 'JSON',
-						routing: {
-							request: {
-								qs: {
-									format: '={{$value}}',
-								},
-							},
-						},
-					},
-					{
-						displayName: 'Callback',
-						name: 'callback',
-						description:
-							'The callback command can help you make the response as a JSONP format. Expected values: any name that can be used as a function name in Javascript, e.g: myFunctionName. For more information please refer to JSONP Callback.',
-						type: 'string',
-						placeholder: 'myFunctionName',
-						default: '',
-						routing: {
-							request: {
-								qs: {
-									callback: '={{$value}}',
-								},
-							},
-						},
-					},
-					{
 						displayName: 'Params',
 						name: 'params',
 						description: 'Specify required modules (e.g. security,timezone,currency)',
@@ -1109,43 +887,6 @@ export class Greip implements INodeType {
 				},
 				options: [
 					{
-						displayName: 'Format',
-						name: 'format',
-						description:
-							'The format command is used to get a response in a specific format. Expected values: JSON, XML, CSV, or Newline. For more information please refer to Response Format.',
-						type: 'options',
-						options: [
-							{ name: 'JSON', value: 'JSON' },
-							{ name: 'XML', value: 'XML' },
-							{ name: 'CSV', value: 'CSV' },
-							{ name: 'Newline', value: 'Newline' },
-						],
-						default: 'JSON',
-						routing: {
-							request: {
-								qs: {
-									format: '={{$value}}',
-								},
-							},
-						},
-					},
-					{
-						displayName: 'Callback',
-						name: 'callback',
-						description:
-							'The callback command can help you make the response as a JSONP format. Expected values: any name that can be used as a function name in Javascript, e.g: myFunctionName. For more information please refer to JSONP Callback.',
-						type: 'string',
-						placeholder: 'myFunctionName',
-						default: '',
-						routing: {
-							request: {
-								qs: {
-									callback: '={{$value}}',
-								},
-							},
-						},
-					},
-					{
 						displayName: 'Mode',
 						name: 'mode',
 						description: 'Environment mode',
@@ -1181,43 +922,6 @@ export class Greip implements INodeType {
 					},
 				},
 				options: [
-					{
-						displayName: 'Format',
-						name: 'format',
-						description:
-							'The format command is used to get a response in a specific format. Expected values: JSON, XML, CSV, or Newline. For more information please refer to Response Format.',
-						type: 'options',
-						options: [
-							{ name: 'JSON', value: 'JSON' },
-							{ name: 'XML', value: 'XML' },
-							{ name: 'CSV', value: 'CSV' },
-							{ name: 'Newline', value: 'Newline' },
-						],
-						default: 'JSON',
-						routing: {
-							request: {
-								qs: {
-									format: '={{$value}}',
-								},
-							},
-						},
-					},
-					{
-						displayName: 'Callback',
-						name: 'callback',
-						description:
-							'The callback command can help you make the response as a JSONP format. Expected values: any name that can be used as a function name in Javascript, e.g: myFunctionName. For more information please refer to JSONP Callback.',
-						type: 'string',
-						placeholder: 'myFunctionName',
-						default: '',
-						routing: {
-							request: {
-								qs: {
-									callback: '={{$value}}',
-								},
-							},
-						},
-					},
 					{
 						displayName: 'Mode',
 						name: 'mode',
@@ -1270,43 +974,6 @@ export class Greip implements INodeType {
 				},
 				options: [
 					{
-						displayName: 'Format',
-						name: 'format',
-						description:
-							'The format command is used to get a response in a specific format. Expected values: JSON, XML, CSV, or Newline. For more information please refer to Response Format.',
-						type: 'options',
-						options: [
-							{ name: 'JSON', value: 'JSON' },
-							{ name: 'XML', value: 'XML' },
-							{ name: 'CSV', value: 'CSV' },
-							{ name: 'Newline', value: 'Newline' },
-						],
-						default: 'JSON',
-						routing: {
-							request: {
-								qs: {
-									format: '={{$value}}',
-								},
-							},
-						},
-					},
-					{
-						displayName: 'Callback',
-						name: 'callback',
-						description:
-							'The callback command can help you make the response as a JSONP format. Expected values: any name that can be used as a function name in Javascript, e.g: myFunctionName. For more information please refer to JSONP Callback.',
-						type: 'string',
-						placeholder: 'myFunctionName',
-						default: '',
-						routing: {
-							request: {
-								qs: {
-									callback: '={{$value}}',
-								},
-							},
-						},
-					},
-					{
 						displayName: 'Mode',
 						name: 'mode',
 						description: 'Environment mode',
@@ -1358,61 +1025,6 @@ export class Greip implements INodeType {
 				},
 				options: [
 					{
-						displayName: 'Format',
-						name: 'format',
-						description:
-							'The format command is used to get a response in a specific format. Expected values: JSON, XML, CSV, or Newline. For more information please refer to Response Format.',
-						type: 'options',
-						options: [
-							{ name: 'JSON', value: 'JSON' },
-							{ name: 'XML', value: 'XML' },
-							{ name: 'CSV', value: 'CSV' },
-							{ name: 'Newline', value: 'Newline' },
-						],
-						default: 'JSON',
-						routing: {
-							request: {
-								qs: {
-									format: '={{$value}}',
-								},
-							},
-						},
-					},
-					{
-						displayName: 'Callback',
-						name: 'callback',
-						description:
-							'The callback command can help you make the response as a JSONP format. Expected values: any name that can be used as a function name in Javascript, e.g: myFunctionName. For more information please refer to JSONP Callback.',
-						type: 'string',
-						placeholder: 'myFunctionName',
-						default: '',
-						routing: {
-							request: {
-								qs: {
-									callback: '={{$value}}',
-								},
-							},
-						},
-					},
-					{
-						displayName: 'Score Only',
-						name: 'scoreOnly',
-						description: 'Return only the scoring of the text',
-						type: 'options',
-						options: [
-							{ name: 'Yes', value: 'yes' },
-							{ name: 'No', value: 'no' },
-						],
-						default: 'yes',
-						routing: {
-							request: {
-								qs: {
-									scoreOnly: '={{$value}}',
-								},
-							},
-						},
-					},
-					{
 						displayName: 'List Profane Words',
 						name: 'listBadWords',
 						description: 'List the profane words in the response',
@@ -1445,6 +1057,24 @@ export class Greip implements INodeType {
 							request: {
 								qs: {
 									mode: '={{$value}}',
+								},
+							},
+						},
+					},
+					{
+						displayName: 'Score Only',
+						name: 'scoreOnly',
+						description: 'Return only the scoring of the text',
+						type: 'options',
+						options: [
+							{ name: 'Yes', value: 'yes' },
+							{ name: 'No', value: 'no' },
+						],
+						default: 'yes',
+						routing: {
+							request: {
+								qs: {
+									scoreOnly: '={{$value}}',
 								},
 							},
 						},
