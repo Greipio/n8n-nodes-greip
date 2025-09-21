@@ -1,4 +1,37 @@
-import { INodeType, INodeTypeDescription, NodeConnectionType } from 'n8n-workflow';
+import {
+	INodeType,
+	INodeTypeDescription,
+	NodeConnectionType,
+	IExecuteFunctions,
+	INodeExecutionData,
+	NodeOperationError,
+} from 'n8n-workflow';
+
+// Import resource properties
+import {
+	dataLookupOperations,
+	dataLookupFields,
+	dataLookupAdditionalFields,
+	riskScoringOperations,
+	riskScoringFields,
+	riskScoringTransactionData,
+	riskScoringAdditionalFields,
+} from './resources';
+
+// Import operation functions
+import {
+	asnLookup,
+	binLookup,
+	countryLookup,
+	domainLookup,
+	ibanLookup,
+	ipLookup,
+	emailScoring,
+	ipScoring,
+	paymentFraudDetection,
+	phoneScoring,
+	profanityDetection,
+} from './operations';
 
 export class Greip implements INodeType {
 	description: INodeTypeDescription = {
@@ -32,1114 +65,107 @@ export class Greip implements INodeType {
 			},
 		},
 		properties: [
-			// ----------------------------------
-			//         Resources
-			// ----------------------------------
 			{
-				displayName: 'Resource',
+				displayName: 'Category',
 				name: 'resource',
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'ASN', value: 'asn' },
-					{ name: 'BIN', value: 'bin' },
-					{ name: 'Country', value: 'country' },
-					{ name: 'Domain', value: 'domain' },
-					{ name: 'Email Address', value: 'emailAddress' },
-					{ name: 'IBAN', value: 'iban' },
-					{ name: 'IP Address', value: 'ipAddress' },
-					{ name: 'Payment', value: 'payment' },
-					{ name: 'Phone Number', value: 'phoneNumber' },
-					{ name: 'Text', value: 'text' },
+					{ name: 'Data Lookup', value: 'dataLookup' },
+					{ name: 'Risk Scoring', value: 'riskScoring' },
 				],
-
-				default: 'ipAddress',
+				default: 'dataLookup',
 			},
-			{
-				displayName: 'Operation',
-				name: 'operation',
-				type: 'options',
-				noDataExpression: true,
-				displayOptions: { show: { resource: ['ipAddress'] } },
-				options: [
-					{
-						name: 'Lookup',
-						value: 'ipLookup',
-						action: 'IP Lookup',
-						description: 'Retrieve comprehensive information about a given IP address',
-						displayOptions: { show: { resource: ['ipAddress'] } },
-						routing: {
-							request: {
-								baseURL: 'https://greipapi.com',
-								method: 'GET',
-								url: '/lookup/ip',
-								qs: {
-									ip: '={{$parameter["ip"]}}',
-								},
-							},
-						},
-					},
-					{
-						name: 'Scoring',
-						value: 'ipThreats',
-						action: 'IP Scoring',
-						description: 'Get threat intelligence and risk scoring for an IP address',
-						displayOptions: { show: { resource: ['ipAddress'] } },
-						routing: {
-							request: {
-								baseURL: 'https://greipapi.com',
-								method: 'GET',
-								url: '/lookup/ip/threats',
-								qs: {
-									ip: '={{$parameter["ip"]}}',
-								},
-							},
-						},
-					},
-				],
-				default: 'ipLookup',
-			},
-
-			{
-				displayName: 'Operation',
-				name: 'operation',
-				type: 'options',
-				noDataExpression: true,
-				displayOptions: { show: { resource: ['asn'] } },
-				options: [
-					{
-						name: 'Lookup',
-						value: 'asnLookup',
-						action: 'ASN Lookup',
-						description: 'Lookup Autonomous System Number (ASN) data',
-						displayOptions: { show: { resource: ['asn'] } },
-						routing: {
-							request: {
-								baseURL: 'https://greipapi.com',
-								method: 'GET',
-								url: '/lookup/asn',
-								qs: {
-									asn: '={{$parameter["asn"]}}',
-								},
-							},
-						},
-					},
-				],
-				default: 'asnLookup',
-			},
-
-			{
-				displayName: 'Operation',
-				name: 'operation',
-				type: 'options',
-				noDataExpression: true,
-				displayOptions: { show: { resource: ['iban'] } },
-				options: [
-					{
-						name: 'Lookup',
-						value: 'ibanLookup',
-						action: 'IBAN Lookup',
-						description:
-							'Validate a given IBAN and obtain essential information about the issuing country',
-						displayOptions: { show: { resource: ['iban'] } },
-						routing: {
-							request: {
-								baseURL: 'https://greipapi.com',
-								method: 'GET',
-								url: '/lookup/iban',
-								qs: {
-									iban: '={{$parameter["iban"]}}',
-								},
-							},
-						},
-					},
-				],
-				default: 'ibanLookup',
-			},
-
-			{
-				displayName: 'Operation',
-				name: 'operation',
-				type: 'options',
-				noDataExpression: true,
-				displayOptions: { show: { resource: ['bin'] } },
-				options: [
-					{
-						name: 'Lookup',
-						value: 'binLookup',
-						action: 'BIN Lookup',
-						description:
-							'Retrieve comprehensive information associated with a debit or credit card',
-						displayOptions: { show: { resource: ['bin'] } },
-						routing: {
-							request: {
-								baseURL: 'https://greipapi.com',
-								method: 'GET',
-								url: '/lookup/bin',
-								qs: {
-									bin: '={{$parameter["bin"]}}',
-								},
-							},
-						},
-					},
-				],
-				default: 'binLookup',
-			},
-
-			{
-				displayName: 'Operation',
-				name: 'operation',
-				type: 'options',
-				noDataExpression: true,
-				displayOptions: { show: { resource: ['country'] } },
-				options: [
-					{
-						name: 'Lookup',
-						value: 'countryLookup',
-						action: 'Country lookup',
-						description: 'Retrieve detailed information about a given country',
-						displayOptions: { show: { resource: ['country'] } },
-						routing: {
-							request: {
-								baseURL: 'https://greipapi.com',
-								method: 'GET',
-								url: '/lookup/country',
-								qs: {
-									CountryCode: '={{$parameter["CountryCode"]}}',
-								},
-							},
-						},
-					},
-				],
-				default: 'countryLookup',
-			},
-
-			{
-				displayName: 'Operation',
-				name: 'operation',
-				type: 'options',
-				noDataExpression: true,
-				displayOptions: { show: { resource: ['domain'] } },
-				options: [
-					{
-						name: 'Lookup',
-						value: 'domainLookup',
-						action: 'Domain lookup',
-						description:
-							'Lookup any domain name and retrieve associated data and risk evaluation metrics',
-						displayOptions: { show: { resource: ['domain'] } },
-						routing: {
-							request: {
-								baseURL: 'https://greipapi.com',
-								method: 'GET',
-								url: '/lookup/domain',
-								qs: {
-									domain: '={{$parameter["domain"]}}',
-								},
-							},
-						},
-					},
-				],
-				default: 'domainLookup',
-			},
-
-			{
-				displayName: 'Operation',
-				name: 'operation',
-				type: 'options',
-				noDataExpression: true,
-				displayOptions: { show: { resource: ['emailAddress'] } },
-				options: [
-					{
-						name: 'Scoring',
-						value: 'emailScoring',
-						action: 'Email scoring',
-						description: 'Score any email address and retrieve its risk evaluation metrics',
-						displayOptions: { show: { resource: ['emailAddress'] } },
-						routing: {
-							request: {
-								baseURL: 'https://greipapi.com',
-								method: 'GET',
-								url: '/scoring/email',
-								qs: {
-									email: '={{$parameter["email"]}}',
-								},
-							},
-						},
-					},
-				],
-				default: 'emailScoring',
-			},
-
-			{
-				displayName: 'Operation',
-				name: 'operation',
-				type: 'options',
-				noDataExpression: true,
-				displayOptions: { show: { resource: ['phoneNumber'] } },
-				options: [
-					{
-						name: 'Scoring',
-						value: 'phoneScoring',
-						action: 'Phone number scoring',
-						description: 'Score any phone number and retrieve its risk evaluation metrics',
-						displayOptions: { show: { resource: ['phoneNumber'] } },
-						routing: {
-							request: {
-								baseURL: 'https://greipapi.com',
-								method: 'GET',
-								url: '/scoring/phone',
-								qs: {
-									phone: '={{$parameter["phone"]}}',
-									countryCode: '={{$parameter["countryCode"]}}',
-								},
-							},
-						},
-					},
-				],
-				default: 'phoneScoring',
-			},
-
-			{
-				displayName: 'Operation',
-				name: 'operation',
-				type: 'options',
-				noDataExpression: true,
-				displayOptions: { show: { resource: ['text'] } },
-				options: [
-					{
-						name: 'Scoring',
-						value: 'profanityDetection',
-						action: 'Profanity detection',
-						description: 'Detect offensive or inappropriate language in a given text',
-						displayOptions: { show: { resource: ['text'] } },
-						routing: {
-							request: {
-								baseURL: 'https://greipapi.com',
-								method: 'GET',
-								url: '/scoring/profanity',
-								qs: {
-									text: '={{$parameter["text"]}}',
-								},
-							},
-						},
-					},
-				],
-				default: 'profanityDetection',
-			},
-
-			{
-				displayName: 'Operation',
-				name: 'operation',
-				type: 'options',
-				noDataExpression: true,
-				displayOptions: { show: { resource: ['payment'] } },
-				options: [
-					{
-						name: 'Scoring',
-						value: 'paymentFraudDetection',
-						action: 'Payment fraud detection',
-						description: 'Detect and score payment fraud risk for a transaction',
-						displayOptions: { show: { resource: ['payment'] } },
-						routing: {
-							request: {
-								baseURL: 'https://greipapi.com',
-								method: 'POST',
-								url: '/scoring/payment',
-								headers: {
-									'Content-Type': 'application/json',
-								},
-								body: {
-									data: '={{$parameter["data"]}}',
-								},
-								json: true,
-							},
-						},
-					},
-				],
-				default: 'paymentFraudDetection',
-			},
-
-			// --------------------  Management --------------------
-			{
-				displayName: 'Transaction Data',
-				name: 'data',
-				description: 'Transaction, shipment and customer data as JSON object',
-				type: 'json',
-				required: true,
-				default: '{}',
-				displayOptions: {
-					show: {
-						resource: ['payment'],
-						operation: ['paymentFraudDetection'],
-					},
-				},
-			},
-			{
-				displayName: 'Text',
-				name: 'text',
-				description: 'The text to check for profanity',
-				placeholder: 'Enter text here...',
-				type: 'string',
-				required: true,
-				typeOptions: {
-					rows: 4,
-				},
-				default: '',
-				displayOptions: {
-					show: {
-						resource: ['text'],
-						operation: ['profanityDetection'],
-					},
-				},
-			},
-
-			{
-				displayName: 'Phone Number',
-				name: 'phone',
-				description: 'The phone number to validate and score (in international format)',
-				placeholder: '+96612345678',
-				type: 'string',
-				required: true,
-				default: '',
-				displayOptions: {
-					show: {
-						resource: ['phoneNumber'],
-						operation: ['phoneScoring'],
-					},
-				},
-			},
-			{
-				displayName: 'Country Code',
-				name: 'countryCode',
-				description: 'The ISO 3166-1 alpha-2 country code',
-				placeholder: 'US',
-				type: 'string',
-				required: true,
-				default: '',
-				displayOptions: {
-					show: {
-						resource: ['phoneNumber'],
-						operation: ['phoneScoring'],
-					},
-				},
-			},
-			{
-				displayName: 'Email',
-				name: 'email',
-				description: 'The email address to validate and score',
-				placeholder: 'name@email.com',
-				type: 'string',
-				required: true,
-				default: '',
-				displayOptions: {
-					show: {
-						resource: ['emailAddress'],
-						operation: ['emailScoring'],
-					},
-				},
-			},
-			{
-				displayName: 'IP Address',
-				name: 'ip',
-				description: 'The IP address to check for threats (IPv4 or IPv6)',
-				placeholder: '1.1.1.1',
-				type: 'string',
-				required: true,
-				default: '',
-				displayOptions: {
-					show: {
-						resource: ['ipAddress'],
-						operation: ['ipThreats'],
-					},
-				},
-			},
-			{
-				displayName: 'Domain',
-				name: 'domain',
-				description: 'The fully qualified domain name',
-				placeholder: 'example.com',
-				type: 'string',
-				required: true,
-				default: '',
-				displayOptions: {
-					show: {
-						resource: ['domain'],
-						operation: ['domainLookup'],
-					},
-				},
-			},
-			{
-				displayName: 'Country Code',
-				name: 'CountryCode',
-				description: 'The ISO 3166-1 alpha-2 country code',
-				placeholder: 'US',
-				type: 'string',
-				required: true,
-				default: '',
-				displayOptions: {
-					show: {
-						resource: ['country'],
-						operation: ['countryLookup'],
-					},
-				},
-			},
-			{
-				displayName: 'BIN/IIN',
-				name: 'bin',
-				description: 'The BIN/IIN of the card (first 6-11 digits)',
-				placeholder: '424242',
-				type: 'string',
-				required: true,
-				default: '',
-				displayOptions: {
-					show: {
-						resource: ['bin'],
-						operation: ['binLookup'],
-					},
-				},
-			},
-			{
-				displayName: 'IBAN',
-				name: 'iban',
-				description: 'The IBAN to validate or lookup',
-				placeholder: 'AL35202111090000000001234567',
-				type: 'string',
-				required: true,
-				default: '',
-				displayOptions: {
-					show: {
-						resource: ['iban'],
-						operation: ['ibanLookup'],
-					},
-				},
-			},
-			{
-				displayName: 'ASN',
-				name: 'asn',
-				description: 'The AS Number to lookup',
-				placeholder: 'AS9112',
-				type: 'string',
-				required: true,
-				default: '',
-				displayOptions: {
-					show: {
-						resource: ['asn'],
-						operation: ['asnLookup'],
-					},
-				},
-			},
-			{
-				displayName: 'IP Address',
-				name: 'ip',
-				description: 'IP address to lookup',
-				placeholder: '1.1.1.1',
-				type: 'string',
-				default: '',
-				required: true,
-				displayOptions: {
-					show: {
-						resource: ['ipAddress'],
-						operation: ['ipLookup'],
-					},
-				},
-			},
-
-			// ----------------------------------
-			//      Additional Fields
-			// ----------------------------------
-			{
-				displayName: 'Additional Fields',
-				name: 'additionalFields',
-				type: 'collection',
-				default: {},
-				placeholder: 'Add Field',
-				displayOptions: {
-					show: {
-						resource: ['ipAddress'],
-						operation: ['ipLookup'],
-					},
-				},
-				options: [
-					{
-						displayName: 'Language',
-						name: 'lang',
-						description: 'Response language',
-						type: 'options',
-						options: [
-							{ name: 'Arabic', value: 'AR' },
-							{ name: 'Chinese', value: 'ZH' },
-							{ name: 'English', value: 'EN' },
-							{ name: 'French', value: 'FR' },
-							{ name: 'German', value: 'DE' },
-							{ name: 'Japanese', value: 'JA' },
-							{ name: 'Russian', value: 'RU' },
-							{ name: 'Spanish', value: 'ES' },
-						],
-						default: 'EN',
-						routing: {
-							request: {
-								qs: {
-									lang: '={{$value}}',
-								},
-							},
-						},
-					},
-					{
-						displayName: 'Mode',
-						name: 'mode',
-						description: 'Environment mode',
-						hint: 'Enable this option to protect your account credits while testing the integration',
-						type: 'options',
-						options: [
-							{ name: 'Live', value: 'live' },
-							{ name: 'Test', value: 'test' },
-						],
-						default: 'live',
-						routing: {
-							request: {
-								qs: {
-									mode: '={{$value}}',
-								},
-							},
-						},
-					},
-					{
-						displayName: 'Params',
-						name: 'params',
-						description: 'Specify required modules (e.g. security,timezone,currency)',
-						type: 'string',
-						default: '',
-						routing: {
-							request: {
-								qs: {
-									params: '={{$value}}',
-								},
-							},
-						},
-					},
-					{
-						displayName: 'User ID',
-						name: 'userID',
-						description:
-							'User identifier, used to link requests to a specific user in Greip dashboard',
-						placeholder: 'email@example.com, phone, ID, etc.',
-						type: 'string',
-						default: '',
-						routing: {
-							request: {
-								qs: {
-									userID: '={{$value}}',
-								},
-							},
-						},
-					},
-				],
-			},
-			{
-				displayName: 'Additional Fields',
-				name: 'additionalFields',
-				type: 'collection',
-				default: {},
-				placeholder: 'Add Field',
-				displayOptions: {
-					show: {
-						resource: ['ipAddress'],
-						operation: ['ipThreats'],
-					},
-				},
-				options: [
-					{
-						displayName: 'Mode',
-						name: 'mode',
-						description: 'Environment mode',
-						hint: 'Enable this option to protect your account credits while testing the integration',
-						type: 'options',
-						options: [
-							{ name: 'Live', value: 'live' },
-							{ name: 'Test', value: 'test' },
-						],
-						default: 'live',
-						routing: {
-							request: {
-								qs: {
-									mode: '={{$value}}',
-								},
-							},
-						},
-					},
-					{
-						displayName: 'User ID',
-						name: 'userID',
-						description:
-							'User identifier, used to link requests to a specific user in Greip dashboard',
-						placeholder: 'email@example.com, phone, ID, etc.',
-						type: 'string',
-						default: '',
-						routing: {
-							request: {
-								qs: {
-									userID: '={{$value}}',
-								},
-							},
-						},
-					},
-				],
-			},
-
-			// Additional Fields for ASN Lookup
-			{
-				displayName: 'Additional Fields',
-				name: 'additionalFields',
-				type: 'collection',
-				default: {},
-				placeholder: 'Add Field',
-				displayOptions: {
-					show: {
-						resource: ['asn'],
-						operation: ['asnLookup'],
-					},
-				},
-				options: [
-					{
-						displayName: 'Mode',
-						name: 'mode',
-						description: 'Environment mode',
-						hint: 'Enable this option to protect your account credits while testing the integration',
-						type: 'options',
-						options: [
-							{ name: 'Live', value: 'live' },
-							{ name: 'Test', value: 'test' },
-						],
-						default: 'live',
-						routing: {
-							request: {
-								qs: {
-									mode: '={{$value}}',
-								},
-							},
-						},
-					},
-				],
-			},
-
-			// Additional Fields for IBAN Lookup
-			{
-				displayName: 'Additional Fields',
-				name: 'additionalFields',
-				type: 'collection',
-				default: {},
-				placeholder: 'Add Field',
-				displayOptions: {
-					show: {
-						resource: ['iban'],
-						operation: ['ibanLookup'],
-					},
-				},
-				options: [
-					{
-						displayName: 'Mode',
-						name: 'mode',
-						description: 'Environment mode',
-						hint: 'Enable this option to protect your account credits while testing the integration',
-						type: 'options',
-						options: [
-							{ name: 'Live', value: 'live' },
-							{ name: 'Test', value: 'test' },
-						],
-						default: 'live',
-						routing: {
-							request: {
-								qs: {
-									mode: '={{$value}}',
-								},
-							},
-						},
-					},
-					{
-						displayName: 'User ID',
-						name: 'userID',
-						description:
-							'User identifier, used to link requests to a specific user in Greip dashboard',
-						placeholder: 'email@example.com, phone, ID, etc.',
-						type: 'string',
-						default: '',
-						routing: {
-							request: {
-								qs: {
-									userID: '={{$value}}',
-								},
-							},
-						},
-					},
-				],
-			},
-
-			// Additional Fields for BIN Lookup
-			{
-				displayName: 'Additional Fields',
-				name: 'additionalFields',
-				type: 'collection',
-				default: {},
-				placeholder: 'Add Field',
-				displayOptions: {
-					show: {
-						resource: ['bin'],
-						operation: ['binLookup'],
-					},
-				},
-				options: [
-					{
-						displayName: 'Mode',
-						name: 'mode',
-						description: 'Environment mode',
-						hint: 'Enable this option to protect your account credits while testing the integration',
-						type: 'options',
-						options: [
-							{ name: 'Live', value: 'live' },
-							{ name: 'Test', value: 'test' },
-						],
-						default: 'live',
-						routing: {
-							request: {
-								qs: {
-									mode: '={{$value}}',
-								},
-							},
-						},
-					},
-					{
-						displayName: 'User ID',
-						name: 'userID',
-						description:
-							'User identifier, used to link requests to a specific user in Greip dashboard',
-						placeholder: 'email@example.com, phone, ID, etc.',
-						type: 'string',
-						default: '',
-						routing: {
-							request: {
-								qs: {
-									userID: '={{$value}}',
-								},
-							},
-						},
-					},
-				],
-			},
-
-			// Additional Fields for Country Lookup
-			{
-				displayName: 'Additional Fields',
-				name: 'additionalFields',
-				type: 'collection',
-				default: {},
-				placeholder: 'Add Field',
-				displayOptions: {
-					show: {
-						resource: ['country'],
-						operation: ['countryLookup'],
-					},
-				},
-				options: [
-					{
-						displayName: 'Params',
-						name: 'params',
-						description: 'Specify required modules (e.g. security,timezone,currency)',
-						type: 'string',
-						default: '',
-						routing: {
-							request: {
-								qs: {
-									params: '={{$value}}',
-								},
-							},
-						},
-					},
-					{
-						displayName: 'Mode',
-						name: 'mode',
-						description: 'Environment mode',
-						hint: 'Enable this option to protect your account credits while testing the integration',
-						type: 'options',
-						options: [
-							{ name: 'Live', value: 'live' },
-							{ name: 'Test', value: 'test' },
-						],
-						default: 'live',
-						routing: {
-							request: {
-								qs: {
-									mode: '={{$value}}',
-								},
-							},
-						},
-					},
-				],
-			},
-
-			// Additional Fields for Domain Lookup
-			{
-				displayName: 'Additional Fields',
-				name: 'additionalFields',
-				type: 'collection',
-				default: {},
-				placeholder: 'Add Field',
-				displayOptions: {
-					show: {
-						resource: ['domain'],
-						operation: ['domainLookup'],
-					},
-				},
-				options: [
-					{
-						displayName: 'Mode',
-						name: 'mode',
-						description: 'Environment mode',
-						hint: 'Enable this option to protect your account credits while testing the integration',
-						type: 'options',
-						options: [
-							{ name: 'Live', value: 'live' },
-							{ name: 'Test', value: 'test' },
-						],
-						default: 'live',
-						routing: {
-							request: {
-								qs: {
-									mode: '={{$value}}',
-								},
-							},
-						},
-					},
-				],
-			},
-
-			// Additional Fields for Email Scoring
-			{
-				displayName: 'Additional Fields',
-				name: 'additionalFields',
-				type: 'collection',
-				default: {},
-				placeholder: 'Add Field',
-				displayOptions: {
-					show: {
-						resource: ['emailAddress'],
-						operation: ['emailScoring'],
-					},
-				},
-				options: [
-					{
-						displayName: 'Mode',
-						name: 'mode',
-						description: 'Environment mode',
-						hint: 'Enable this option to protect your account credits while testing the integration',
-						type: 'options',
-						options: [
-							{ name: 'Live', value: 'live' },
-							{ name: 'Test', value: 'test' },
-						],
-						default: 'live',
-						routing: {
-							request: {
-								qs: {
-									mode: '={{$value}}',
-								},
-							},
-						},
-					},
-					{
-						displayName: 'User ID',
-						name: 'userID',
-						description:
-							'User identifier, used to link requests to a specific user in Greip dashboard',
-						placeholder: 'email@example.com, phone, ID, etc.',
-						type: 'string',
-						default: '',
-						routing: {
-							request: {
-								qs: {
-									userID: '={{$value}}',
-								},
-							},
-						},
-					},
-				],
-			},
-
-			// Additional Fields for Phone Scoring
-			{
-				displayName: 'Additional Fields',
-				name: 'additionalFields',
-				type: 'collection',
-				default: {},
-				placeholder: 'Add Field',
-				displayOptions: {
-					show: {
-						resource: ['phoneNumber'],
-						operation: ['phoneScoring'],
-					},
-				},
-				options: [
-					{
-						displayName: 'Mode',
-						name: 'mode',
-						description: 'Environment mode',
-						hint: 'Enable this option to protect your account credits while testing the integration',
-						type: 'options',
-						options: [
-							{ name: 'Live', value: 'live' },
-							{ name: 'Test', value: 'test' },
-						],
-						default: 'live',
-						routing: {
-							request: {
-								qs: {
-									mode: '={{$value}}',
-								},
-							},
-						},
-					},
-					{
-						displayName: 'User ID',
-						name: 'userID',
-						description:
-							'User identifier, used to link requests to a specific user in Greip dashboard',
-						placeholder: 'email@example.com, phone, ID, etc.',
-						type: 'string',
-						default: '',
-						routing: {
-							request: {
-								qs: {
-									userID: '={{$value}}',
-								},
-							},
-						},
-					},
-				],
-			},
-
-			// Additional Fields for Profanity Detection
-			{
-				displayName: 'Additional Fields',
-				name: 'additionalFields',
-				type: 'collection',
-				default: {},
-				placeholder: 'Add Field',
-				displayOptions: {
-					show: {
-						resource: ['text'],
-						operation: ['profanityDetection'],
-					},
-				},
-				options: [
-					{
-						displayName: 'List Profane Words',
-						name: 'listBadWords',
-						description: 'List the profane words in the response',
-						type: 'options',
-						options: [
-							{ name: 'Yes', value: 'yes' },
-							{ name: 'No', value: 'no' },
-						],
-						default: 'no',
-						routing: {
-							request: {
-								qs: {
-									listBadWords: '={{$value}}',
-								},
-							},
-						},
-					},
-					{
-						displayName: 'Mode',
-						name: 'mode',
-						description: 'Environment mode',
-						hint: 'Enable this option to protect your account credits while testing the integration',
-						type: 'options',
-						options: [
-							{ name: 'Live', value: 'live' },
-							{ name: 'Test', value: 'test' },
-						],
-						default: 'live',
-						routing: {
-							request: {
-								qs: {
-									mode: '={{$value}}',
-								},
-							},
-						},
-					},
-					{
-						displayName: 'Score Only',
-						name: 'scoreOnly',
-						description: 'Return only the scoring of the text',
-						type: 'options',
-						options: [
-							{ name: 'Yes', value: 'yes' },
-							{ name: 'No', value: 'no' },
-						],
-						default: 'yes',
-						routing: {
-							request: {
-								qs: {
-									scoreOnly: '={{$value}}',
-								},
-							},
-						},
-					},
-				],
-			},
-
-			// Additional Fields for Payment Fraud Detection
-			{
-				displayName: 'Additional Fields',
-				name: 'additionalFields',
-				type: 'collection',
-				default: {},
-				placeholder: 'Add Field',
-				displayOptions: {
-					show: {
-						resource: ['payment'],
-						operation: ['paymentFraudDetection'],
-					},
-				},
-				options: [
-					{
-						displayName: 'Mode',
-						name: 'mode',
-						description: 'Environment mode',
-						hint: 'Enable this option to protect your account credits while testing the integration',
-						type: 'options',
-						options: [
-							{ name: 'Live', value: 'live' },
-							{ name: 'Test', value: 'test' },
-						],
-						default: 'live',
-						routing: {
-							request: {
-								body: {
-									mode: '={{$value}}',
-								},
-							},
-						},
-					},
-					{
-						displayName: 'User ID',
-						name: 'userID',
-						description:
-							'User identifier, used to link requests to a specific user in Greip dashboard',
-						placeholder: 'email@example.com, phone, ID, etc.',
-						type: 'string',
-						default: '',
-						routing: {
-							request: {
-								body: {
-									userID: '={{$value}}',
-								},
-							},
-						},
-					},
-				],
-			},
+			// Operations
+			...dataLookupOperations,
+			...riskScoringOperations,
+			// Fields
+			...dataLookupFields,
+			...riskScoringFields,
+			...riskScoringTransactionData,
+			// Additional Fields
+			...dataLookupAdditionalFields,
+			...riskScoringAdditionalFields,
 		],
 	};
+
+	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
+		const items = this.getInputData();
+		const returnData: INodeExecutionData[] = [];
+
+		for (let i = 0; i < items.length; i++) {
+			try {
+				const resource = this.getNodeParameter('resource', i) as string;
+				const operation = this.getNodeParameter('operation', i) as string;
+
+				let result: INodeExecutionData;
+
+				if (resource === 'dataLookup') {
+					switch (operation) {
+						case 'asnLookup':
+							result = await asnLookup.call(this, i);
+							break;
+						case 'binLookup':
+							result = await binLookup.call(this, i);
+							break;
+						case 'countryLookup':
+							result = await countryLookup.call(this, i);
+							break;
+						case 'domainLookup':
+							result = await domainLookup.call(this, i);
+							break;
+						case 'ibanLookup':
+							result = await ibanLookup.call(this, i);
+							break;
+						case 'ipLookup':
+							result = await ipLookup.call(this, i);
+							break;
+						default:
+							throw new NodeOperationError(
+								this.getNode(),
+								`Unknown data lookup operation: ${operation}`,
+							);
+					}
+				} else if (resource === 'riskScoring') {
+					switch (operation) {
+						case 'emailScoring':
+							result = await emailScoring.call(this, i);
+							break;
+						case 'ipThreats':
+							result = await ipScoring.call(this, i);
+							break;
+						case 'paymentFraudDetection':
+							result = await paymentFraudDetection.call(this, i);
+							break;
+						case 'phoneScoring':
+							result = await phoneScoring.call(this, i);
+							break;
+						case 'profanityDetection':
+							result = await profanityDetection.call(this, i);
+							break;
+						default:
+							throw new NodeOperationError(
+								this.getNode(),
+								`Unknown risk scoring operation: ${operation}`,
+							);
+					}
+				} else {
+					throw new NodeOperationError(this.getNode(), `Unknown resource: ${resource}`);
+				}
+
+				returnData.push(result);
+			} catch (error) {
+				if (this.continueOnFail()) {
+					returnData.push({
+						json: { error: error.message },
+						pairedItem: { item: i },
+					});
+				} else {
+					throw error;
+				}
+			}
+		}
+
+		return [returnData];
+	}
 }
