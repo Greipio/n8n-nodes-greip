@@ -4,6 +4,7 @@ import {
 	NodeConnectionType,
 	IExecuteFunctions,
 	INodeExecutionData,
+	NodeOperationError,
 } from 'n8n-workflow';
 
 // Import resource properties
@@ -120,7 +121,10 @@ export class Greip implements INodeType {
 							result = await ipLookup.call(this, i);
 							break;
 						default:
-							throw new Error(`Unknown data lookup operation: ${operation}`);
+							throw new NodeOperationError(
+								this.getNode(),
+								`Unknown data lookup operation: ${operation}`,
+							);
 					}
 				} else if (resource === 'riskScoring') {
 					switch (operation) {
@@ -140,10 +144,13 @@ export class Greip implements INodeType {
 							result = await profanityDetection.call(this, i);
 							break;
 						default:
-							throw new Error(`Unknown risk scoring operation: ${operation}`);
+							throw new NodeOperationError(
+								this.getNode(),
+								`Unknown risk scoring operation: ${operation}`,
+							);
 					}
 				} else {
-					throw new Error(`Unknown resource: ${resource}`);
+					throw new NodeOperationError(this.getNode(), `Unknown resource: ${resource}`);
 				}
 
 				returnData.push(result);

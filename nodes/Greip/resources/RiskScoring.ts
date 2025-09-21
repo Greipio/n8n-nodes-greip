@@ -160,240 +160,17 @@ export const riskScoringTransactionData: INodeProperties[] = [
 						default: 'action',
 						description: 'Select the field to send to Greip API',
 						options: [
+							// Fully alphabetized by 'name'
 							{
 								name: 'Action',
 								value: 'action',
 								description: 'Accepts: purchase, deposit, or withdrawal',
 							},
-							{
-								name: 'Website Domain',
-								value: 'website_domain',
-								description: 'Example: domain.com',
-							},
-							{
-								name: 'Website Name',
-								value: 'website_name',
-								description: 'Example: Nike Store, California',
-							},
-							{
-								name: 'Merchant ID',
-								value: 'merchant_id',
-								description: 'Unique ID for sub-websites (Shopify style)',
-							},
-							{
-								name: 'Shipment ID',
-								value: 'shipment_id',
-								description: 'Shipment identification code',
-							},
-							{
-								name: 'Transaction ID',
-								value: 'transaction_id',
-								description: 'Transaction ID in your system',
-							},
-							{
-								name: 'Transaction Amount',
-								value: 'transaction_amount',
-								description: 'Total transaction amount (number/float)',
-							},
-							{
-								name: 'Transaction Currency',
-								value: 'transaction_currency',
-								description: 'Currency code (e.g. GBP, USD, EUR)',
-							},
-							{
-								name: 'Cart Items',
-								value: 'cart_items',
-								description: 'Array of cart items (JSON format)',
-							},
-							{ name: 'Item ID', value: 'item_id', description: 'Product/item identification' },
-							{ name: 'Item Name', value: 'item_name', description: 'Product/item name' },
-							{
-								name: 'Item Quantity',
-								value: 'item_quantity',
-								description: 'Quantity of the item (integer)',
-							},
-							{
-								name: 'Item Price',
-								value: 'item_price',
-								description: 'Price per item (float/number)',
-							},
-							{
-								name: 'Item Category ID',
-								value: 'item_category_id',
-								description: 'Product category identifier',
-							},
-							{
-								name: 'Is Digital Products',
-								value: 'isDigitalProducts',
-								description: 'Boolean: true for digital products',
-							},
-							{ name: 'Coupon', value: 'coupon', description: 'Promo code used for checkout' },
-							{
-								name: 'Customer ID',
-								value: 'customer_id',
-								description: 'Customer ID in your system',
-							},
-							{
-								name: 'Customer First Name',
-								value: 'customer_firstname',
-								description: 'Customer first name',
-							},
-							{
-								name: 'Customer Last Name',
-								value: 'customer_lastname',
-								description: 'Customer family name',
-							},
-							{
-								name: 'Customer Place of Birth',
-								value: 'customer_pob',
-								description: 'Customer place of birth',
-							},
-							{ name: 'Customer IP', value: 'customer_ip', description: 'Customer IP address' },
-							{
-								name: 'Customer Country',
-								value: 'customer_country',
-								description: 'ISO 3166-1 alpha-2 country code',
-							},
-							{
-								name: 'Customer Region',
-								value: 'customer_region',
-								description: 'Customer region/state name',
-							},
-							{
-								name: 'Customer City',
-								value: 'customer_city',
-								description: 'Customer city name',
-							},
-							{
-								name: 'Customer ZIP',
-								value: 'customer_zip',
-								description: 'Customer ZIP/postal code',
-							},
-							{
-								name: 'Customer Street',
-								value: 'customer_street',
-								description: 'Customer address line 1',
-							},
-							{
-								name: 'Customer Street 2',
-								value: 'customer_street2',
-								description: 'Customer address line 2',
-							},
-							{
-								name: 'Customer Latitude',
-								value: 'customer_latitude',
-								description: 'GPS latitude (float)',
-							},
-							{
-								name: 'Customer Longitude',
-								value: 'customer_longitude',
-								description: 'GPS longitude (float)',
-							},
-							{
-								name: 'Customer Device ID',
-								value: 'customer_device_id',
-								description: 'Device identification code',
-							},
-							{
-								name: 'Customer Phone',
-								value: 'customer_phone',
-								description: 'Phone number (international format)',
-							},
-							{
-								name: 'Customer Registration Date',
-								value: 'customer_registration_date',
-								description: 'Registration date (UNIX timestamp)',
-							},
-							{
-								name: 'Customer Balance',
-								value: 'customer_balance',
-								description: 'Wallet balance (if applicable)',
-							},
-							{
-								name: 'Customer Date of Birth',
-								value: 'customer_dob',
-								description: 'Date of birth (YYYY-MM-DD format)',
-							},
-							{
-								name: 'Customer Email',
-								value: 'customer_email',
-								description: 'Customer email address',
-							},
-							{
-								name: 'Customer 2FA',
-								value: 'customer_2fa',
-								description: 'Boolean: true if 2FA enabled',
-							},
-							{
-								name: 'Customer User Agent',
-								value: 'customer_useragent',
-								description: 'Browser user agent string',
-							},
-							{
-								name: 'Shipping Country',
-								value: 'shipping_country',
-								description: 'Shipping country (ISO 3166-1 alpha-2)',
-							},
-							{
-								name: 'Shipping Region',
-								value: 'shipping_region',
-								description: 'Shipping region/state name',
-							},
-							{
-								name: 'Shipping City',
-								value: 'shipping_city',
-								description: 'Shipping city name',
-							},
-							{
-								name: 'Shipping ZIP',
-								value: 'shipping_zip',
-								description: 'Shipping ZIP/postal code',
-							},
-							{
-								name: 'Shipping Street',
-								value: 'shipping_street',
-								description: 'Shipping address line 1',
-							},
-							{
-								name: 'Shipping Street 2',
-								value: 'shipping_street2',
-								description: 'Shipping address line 2',
-							},
-							{
-								name: 'Shipping Latitude',
-								value: 'shipping_latitude',
-								description: 'Shipping GPS latitude (float)',
-							},
-							{
-								name: 'Shipping Longitude',
-								value: 'shipping_longitude',
-								description: 'Shipping GPS longitude (float)',
-							},
+							{ name: 'Billing City', value: 'billing_city', description: 'Billing city name' },
 							{
 								name: 'Billing Country',
 								value: 'billing_country',
 								description: 'Billing country (ISO 3166-1 alpha-2)',
-							},
-							{
-								name: 'Billing Region',
-								value: 'billing_region',
-								description: 'Billing region/state name',
-							},
-							{ name: 'Billing City', value: 'billing_city', description: 'Billing city name' },
-							{
-								name: 'Billing ZIP',
-								value: 'billing_zip',
-								description: 'Billing ZIP/postal code',
-							},
-							{
-								name: 'Billing Street',
-								value: 'billing_street',
-								description: 'Billing address line 1',
-							},
-							{
-								name: 'Billing Street 2',
-								value: 'billing_street2',
-								description: 'Billing address line 2',
 							},
 							{
 								name: 'Billing Latitude',
@@ -406,10 +183,25 @@ export const riskScoringTransactionData: INodeProperties[] = [
 								description: 'Billing GPS longitude (float)',
 							},
 							{
-								name: 'Payment Type',
-								value: 'payment_type',
-								description:
-									'Accepts: cards, cards_mada, applepay, stcpay, bank, crypto, wallet, cod',
+								name: 'Billing Region',
+								value: 'billing_region',
+								description: 'Billing region/state name',
+							},
+							{
+								name: 'Billing Street',
+								value: 'billing_street',
+								description: 'Billing address line 1',
+							},
+							{
+								name: 'Billing Street 2',
+								value: 'billing_street2',
+								description: 'Billing address line 2',
+							},
+							{ name: 'Billing ZIP', value: 'billing_zip', description: 'Billing ZIP/postal code' },
+							{
+								name: 'Card Expiry',
+								value: 'card_expiry',
+								description: 'Card expiry date (MM/YY format, e.g. 12/25)',
 							},
 							{ name: 'Card Name', value: 'card_name', description: 'Cardholder name on card' },
 							{
@@ -418,14 +210,203 @@ export const riskScoringTransactionData: INodeProperties[] = [
 								description: 'Card number (minimum 6 digits)',
 							},
 							{
-								name: 'Card Expiry',
-								value: 'card_expiry',
-								description: 'Card expiry date (MM/YY format, e.g. 12/25)',
+								name: 'Cart Items',
+								value: 'cart_items',
+								description: 'Array of cart items (JSON format)',
+							},
+							{ name: 'Coupon', value: 'coupon', description: 'Promo code used for checkout' },
+							{
+								name: 'Customer 2FA',
+								value: 'customer_2fa',
+								description: 'Boolean: true if 2FA enabled',
+							},
+							{
+								name: 'Customer Balance',
+								value: 'customer_balance',
+								description: 'Wallet balance (if applicable)',
+							},
+							{ name: 'Customer City', value: 'customer_city', description: 'Customer city name' },
+							{
+								name: 'Customer Country',
+								value: 'customer_country',
+								description: 'ISO 3166-1 alpha-2 country code',
+							},
+							{
+								name: 'Customer Date of Birth',
+								value: 'customer_dob',
+								description: 'Date of birth (YYYY-MM-DD format)',
+							},
+							{
+								name: 'Customer Device ID',
+								value: 'customer_device_id',
+								description: 'Device identification code',
+							},
+							{
+								name: 'Customer Email',
+								value: 'customer_email',
+								description: 'Customer email address',
+							},
+							{ name: 'Customer First Name', value: 'customer_firstname' },
+							{
+								name: 'Customer ID',
+								value: 'customer_id',
+								description: 'Customer ID in your system',
+							},
+							{ name: 'Customer IP', value: 'customer_ip', description: 'Customer IP address' },
+							{
+								name: 'Customer Last Name',
+								value: 'customer_lastname',
+								description: 'Customer family name',
+							},
+							{
+								name: 'Customer Latitude',
+								value: 'customer_latitude',
+								description: 'GPS latitude (float)',
+							},
+							{
+								name: 'Customer Longitude',
+								value: 'customer_longitude',
+								description: 'GPS longitude (float)',
+							},
+							{
+								name: 'Customer Phone',
+								value: 'customer_phone',
+								description: 'Phone number (international format)',
+							},
+							{ name: 'Customer Place of Birth', value: 'customer_pob' },
+							{
+								name: 'Customer Region',
+								value: 'customer_region',
+								description: 'Customer region/state name',
+							},
+							{
+								name: 'Customer Registration Date',
+								value: 'customer_registration_date',
+								description: 'Registration date (UNIX timestamp)',
+							},
+							{
+								name: 'Customer Street',
+								value: 'customer_street',
+								description: 'Customer address line 1',
+							},
+							{
+								name: 'Customer Street 2',
+								value: 'customer_street2',
+								description: 'Customer address line 2',
+							},
+							{
+								name: 'Customer User Agent',
+								value: 'customer_useragent',
+								description: 'Browser user agent string',
+							},
+							{
+								name: 'Customer ZIP',
+								value: 'customer_zip',
+								description: 'Customer ZIP/postal code',
 							},
 							{
 								name: 'CVV Result',
 								value: 'cvv_result',
 								description: 'Boolean: true if CVV/CSV verification passed',
+							},
+							{
+								name: 'Is Digital Products',
+								value: 'isDigitalProducts',
+								description: 'Boolean: true for digital products',
+							},
+							{
+								name: 'Item Category ID',
+								value: 'item_category_id',
+								description: 'Product category identifier',
+							},
+							{ name: 'Item ID', value: 'item_id', description: 'Product/item identification' },
+							{ name: 'Item Name', value: 'item_name', description: 'Product/item name' },
+							{
+								name: 'Item Price',
+								value: 'item_price',
+								description: 'Price per item (float/number)',
+							},
+							{
+								name: 'Item Quantity',
+								value: 'item_quantity',
+								description: 'Quantity of the item (integer)',
+							},
+							{
+								name: 'Merchant ID',
+								value: 'merchant_id',
+								description: 'Unique ID for sub-websites (Shopify style)',
+							},
+							{
+								name: 'Payment Type',
+								value: 'payment_type',
+								description:
+									'Accepts: cards, cards_mada, applepay, stcpay, bank, crypto, wallet, cod',
+							},
+							{
+								name: 'Shipment ID',
+								value: 'shipment_id',
+								description: 'Shipment identification code',
+							},
+							{ name: 'Shipping City', value: 'shipping_city', description: 'Shipping city name' },
+							{
+								name: 'Shipping Country',
+								value: 'shipping_country',
+								description: 'Shipping country (ISO 3166-1 alpha-2)',
+							},
+							{
+								name: 'Shipping Latitude',
+								value: 'shipping_latitude',
+								description: 'Shipping GPS latitude (float)',
+							},
+							{
+								name: 'Shipping Longitude',
+								value: 'shipping_longitude',
+								description: 'Shipping GPS longitude (float)',
+							},
+							{
+								name: 'Shipping Region',
+								value: 'shipping_region',
+								description: 'Shipping region/state name',
+							},
+							{
+								name: 'Shipping Street',
+								value: 'shipping_street',
+								description: 'Shipping address line 1',
+							},
+							{
+								name: 'Shipping Street 2',
+								value: 'shipping_street2',
+								description: 'Shipping address line 2',
+							},
+							{
+								name: 'Shipping ZIP',
+								value: 'shipping_zip',
+								description: 'Shipping ZIP/postal code',
+							},
+							{
+								name: 'Transaction Amount',
+								value: 'transaction_amount',
+								description: 'Total transaction amount (number/float)',
+							},
+							{
+								name: 'Transaction Currency',
+								value: 'transaction_currency',
+								description: 'Currency code (e.g. GBP, USD, EUR)',
+							},
+							{
+								name: 'Transaction ID',
+								value: 'transaction_id',
+								description: 'Transaction ID in your system',
+							},
+							{
+								name: 'Website Domain',
+								value: 'website_domain',
+								description: 'Example: domain.com',
+							},
+							{
+								name: 'Website Name',
+								value: 'website_name',
+								description: 'Example: Nike Store, California',
 							},
 						],
 					},
@@ -436,21 +417,21 @@ export const riskScoringTransactionData: INodeProperties[] = [
 						default: '',
 						placeholder: 'Enter field value',
 						description: 'The value for this field',
-						displayOptions: {
+                        displayOptions: {
 							hide: {
 								name: ['isDigitalProducts', 'cvv_result', 'customer_2fa'],
 							},
 						},
 					},
-					{
-						displayName: 'Is Digital Product',
+                    {
+						displayName: 'Customer 2FA Status',
 						name: 'value',
 						type: 'boolean',
 						default: false,
-						description: 'Set to true for digital products, false otherwise',
-						displayOptions: {
+						description: 'Whether 2FA is enabled for the customer',
+                        displayOptions: {
 							show: {
-								name: ['isDigitalProducts'],
+								name: ['customer_2fa'],
 							},
 						},
 					},
@@ -459,22 +440,22 @@ export const riskScoringTransactionData: INodeProperties[] = [
 						name: 'value',
 						type: 'boolean',
 						default: false,
-						description: 'Set to true if CVV/CSV verification passed, false otherwise',
-						displayOptions: {
+						description: 'Whether CVV/CSV verification passed',
+                        displayOptions: {
 							show: {
 								name: ['cvv_result'],
 							},
 						},
 					},
 					{
-						displayName: 'Customer 2FA Status',
+						displayName: 'Is Digital Product',
 						name: 'value',
 						type: 'boolean',
 						default: false,
-						description: 'Set to true if 2FA is enabled for customer, false otherwise',
-						displayOptions: {
+						description: 'Whether this is a digital product',
+                        displayOptions: {
 							show: {
-								name: ['customer_2fa'],
+								name: ['isDigitalProducts'],
 							},
 						},
 					},
@@ -512,22 +493,23 @@ export const riskScoringTransactionData: INodeProperties[] = [
 						default: 'item_id',
 						description: 'Select the cart item field',
 						options: [
+							// Alphabetized by 'name'
+							{
+								name: 'Item Category ID',
+								value: 'item_category_id',
+								description: 'Product category identifier',
+							},
 							{ name: 'Item ID', value: 'item_id', description: 'Product/item identification' },
 							{ name: 'Item Name', value: 'item_name', description: 'Product/item name' },
-							{
-								name: 'Item Quantity',
-								value: 'item_quantity',
-								description: 'Quantity of the item (integer)',
-							},
 							{
 								name: 'Item Price',
 								value: 'item_price',
 								description: 'Price per item (float/number)',
 							},
 							{
-								name: 'Item Category ID',
-								value: 'item_category_id',
-								description: 'Product category identifier',
+								name: 'Item Quantity',
+								value: 'item_quantity',
+								description: 'Quantity of the item (integer)',
 							},
 						],
 					},
