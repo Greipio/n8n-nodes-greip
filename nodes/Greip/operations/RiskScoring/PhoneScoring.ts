@@ -7,7 +7,7 @@ export async function phoneScoring(
 	const phone = this.getNodeParameter('phone', index) as string;
 	const countryCode = this.getNodeParameter('countryCode', index) as string;
 	const additionalFields = this.getNodeParameter('additionalFields', index, {}) as {
-		mode?: string;
+		mode?: boolean;
 		userID?: string;
 	};
 
@@ -18,8 +18,10 @@ export async function phoneScoring(
 		countryCode,
 	};
 
-	if (additionalFields.mode) {
-		qs.mode = additionalFields.mode;
+	if (typeof additionalFields.mode === 'boolean') {
+		if (additionalFields.mode) {
+			qs.mode = 'test';
+		}
 	}
 	if (additionalFields.userID) {
 		qs.userID = additionalFields.userID;
@@ -40,7 +42,10 @@ export async function phoneScoring(
 	const response = await this.helpers.httpRequest(options);
 
 	return {
-		json: response,
+		json: {
+			debug: { phone, countryCode, additionalFields, qs, options },
+			response,
+		},
 		pairedItem: { item: index },
 	};
 }

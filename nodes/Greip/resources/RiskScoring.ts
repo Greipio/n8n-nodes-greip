@@ -131,7 +131,19 @@ export const riskScoringFields: INodeProperties[] = [
 ];
 
 export const riskScoringTransactionData: INodeProperties[] = [
-	// Transaction Data for Payment Fraud Detection
+	{
+		displayName: 'Include Cart Items',
+		name: 'includeCartItems',
+		type: 'boolean',
+		default: false,
+		description: 'Enable to provide cart items data',
+		displayOptions: {
+			show: {
+				resource: ['riskScoring'],
+				operation: ['paymentFraudDetection'],
+			},
+		},
+	},
 	{
 		displayName: 'Transaction Data',
 		name: 'transactionData',
@@ -160,7 +172,6 @@ export const riskScoringTransactionData: INodeProperties[] = [
 						default: 'action',
 						description: 'Select the field to send to Greip API',
 						options: [
-							// Fully alphabetized by 'name'
 							{
 								name: 'Action',
 								value: 'action',
@@ -208,11 +219,6 @@ export const riskScoringTransactionData: INodeProperties[] = [
 								name: 'Card Number',
 								value: 'card_number',
 								description: 'Card number (minimum 6 digits)',
-							},
-							{
-								name: 'Cart Items',
-								value: 'cart_items',
-								description: 'Array of cart items (JSON format)',
 							},
 							{ name: 'Coupon', value: 'coupon', description: 'Promo code used for checkout' },
 							{
@@ -417,19 +423,19 @@ export const riskScoringTransactionData: INodeProperties[] = [
 						default: '',
 						placeholder: 'Enter field value',
 						description: 'The value for this field',
-                        displayOptions: {
+						displayOptions: {
 							hide: {
 								name: ['isDigitalProducts', 'cvv_result', 'customer_2fa'],
 							},
 						},
 					},
-                    {
+					{
 						displayName: 'Customer 2FA Status',
-						name: 'value',
+						name: 'customer2faValue',
 						type: 'boolean',
 						default: false,
 						description: 'Whether 2FA is enabled for the customer',
-                        displayOptions: {
+						displayOptions: {
 							show: {
 								name: ['customer_2fa'],
 							},
@@ -437,11 +443,11 @@ export const riskScoringTransactionData: INodeProperties[] = [
 					},
 					{
 						displayName: 'CVV Verification Result',
-						name: 'value',
+						name: 'cvvResultValue',
 						type: 'boolean',
 						default: false,
 						description: 'Whether CVV/CSV verification passed',
-                        displayOptions: {
+						displayOptions: {
 							show: {
 								name: ['cvv_result'],
 							},
@@ -449,11 +455,11 @@ export const riskScoringTransactionData: INodeProperties[] = [
 					},
 					{
 						displayName: 'Is Digital Product',
-						name: 'value',
+						name: 'isDigitalProductsValue',
 						type: 'boolean',
 						default: false,
 						description: 'Whether this is a digital product',
-                        displayOptions: {
+						displayOptions: {
 							show: {
 								name: ['isDigitalProducts'],
 							},
@@ -463,7 +469,7 @@ export const riskScoringTransactionData: INodeProperties[] = [
 			},
 		],
 	},
-	// Cart Items Data - appears when "Cart Items" is selected in Transaction Data
+	// Cart Items Data
 	{
 		displayName: 'Cart Items Data',
 		name: 'cartItemsData',
@@ -479,6 +485,7 @@ export const riskScoringTransactionData: INodeProperties[] = [
 			show: {
 				resource: ['riskScoring'],
 				operation: ['paymentFraudDetection'],
+				includeCartItems: [true],
 			},
 		},
 		options: [
@@ -493,7 +500,6 @@ export const riskScoringTransactionData: INodeProperties[] = [
 						default: 'item_id',
 						description: 'Select the cart item field',
 						options: [
-							// Alphabetized by 'name'
 							{
 								name: 'Item Category ID',
 								value: 'item_category_id',
@@ -543,16 +549,11 @@ export const riskScoringAdditionalFields: INodeProperties[] = [
 		},
 		options: [
 			{
-				displayName: 'Mode',
+				displayName: 'Development Environment',
 				name: 'mode',
-				description: 'Environment mode',
-				hint: 'Enable this option to protect your account credits while testing the integration',
-				type: 'options',
-				options: [
-					{ name: 'Live', value: 'live' },
-					{ name: 'Test', value: 'test' },
-				],
-				default: 'live',
+				description: 'Enable to use test mode (mode=test), disable for live mode',
+				type: 'boolean',
+				default: false,
 			},
 			{
 				displayName: 'User ID',
@@ -579,16 +580,11 @@ export const riskScoringAdditionalFields: INodeProperties[] = [
 		},
 		options: [
 			{
-				displayName: 'Mode',
+				displayName: 'Development Environment',
 				name: 'mode',
-				description: 'Environment mode',
-				hint: 'Enable this option to protect your account credits while testing the integration',
-				type: 'options',
-				options: [
-					{ name: 'Live', value: 'live' },
-					{ name: 'Test', value: 'test' },
-				],
-				default: 'live',
+				description: 'Enable to use test mode (mode=test), disable for live mode',
+				type: 'boolean',
+				default: false,
 			},
 			{
 				displayName: 'User ID',
@@ -615,16 +611,11 @@ export const riskScoringAdditionalFields: INodeProperties[] = [
 		},
 		options: [
 			{
-				displayName: 'Mode',
+				displayName: 'Development Environment',
 				name: 'mode',
-				description: 'Environment mode',
-				hint: 'Enable this option to protect your account credits while testing the integration',
-				type: 'options',
-				options: [
-					{ name: 'Live', value: 'live' },
-					{ name: 'Test', value: 'test' },
-				],
-				default: 'live',
+				description: 'Enable to use test mode (mode=test), disable for live mode',
+				type: 'boolean',
+				default: false,
 			},
 			{
 				displayName: 'User ID',
@@ -654,35 +645,22 @@ export const riskScoringAdditionalFields: INodeProperties[] = [
 				displayName: 'List Profane Words',
 				name: 'listBadWords',
 				description: 'List the profane words in the response',
-				type: 'options',
-				options: [
-					{ name: 'Yes', value: 'yes' },
-					{ name: 'No', value: 'no' },
-				],
-				default: 'no',
+				type: 'boolean',
+				default: false,
 			},
 			{
-				displayName: 'Mode',
+				displayName: 'Development Environment',
 				name: 'mode',
-				description: 'Environment mode',
-				hint: 'Enable this option to protect your account credits while testing the integration',
-				type: 'options',
-				options: [
-					{ name: 'Live', value: 'live' },
-					{ name: 'Test', value: 'test' },
-				],
-				default: 'live',
+				description: 'Enable to use test mode (mode=test), disable for live mode',
+				type: 'boolean',
+				default: false,
 			},
 			{
 				displayName: 'Score Only',
 				name: 'scoreOnly',
 				description: 'Return only the scoring of the text',
-				type: 'options',
-				options: [
-					{ name: 'Yes', value: 'yes' },
-					{ name: 'No', value: 'no' },
-				],
-				default: 'yes',
+				type: 'boolean',
+				default: false,
 			},
 		],
 	},
@@ -701,16 +679,11 @@ export const riskScoringAdditionalFields: INodeProperties[] = [
 		},
 		options: [
 			{
-				displayName: 'Mode',
+				displayName: 'Development Environment',
 				name: 'mode',
-				description: 'Environment mode',
-				hint: 'Enable this option to protect your account credits while testing the integration',
-				type: 'options',
-				options: [
-					{ name: 'Live', value: 'live' },
-					{ name: 'Test', value: 'test' },
-				],
-				default: 'live',
+				description: 'Enable to use test mode (mode=test), disable for live mode',
+				type: 'boolean',
+				default: false,
 			},
 			{
 				displayName: 'User ID',

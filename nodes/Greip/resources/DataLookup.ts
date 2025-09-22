@@ -183,16 +183,11 @@ export const dataLookupAdditionalFields: INodeProperties[] = [
 				default: 'EN',
 			},
 			{
-				displayName: 'Mode',
+				displayName: 'Development Environment',
 				name: 'mode',
-				description: 'Environment mode',
-				hint: 'Enable this option to protect your account credits while testing the integration',
-				type: 'options',
-				options: [
-					{ name: 'Live', value: 'live' },
-					{ name: 'Test', value: 'test' },
-				],
-				default: 'live',
+				description: 'Enable to use test mode (mode=test), disable for live mode',
+				type: 'boolean',
+				default: false,
 			},
 			{
 				displayName: 'Params',
@@ -226,16 +221,11 @@ export const dataLookupAdditionalFields: INodeProperties[] = [
 		},
 		options: [
 			{
-				displayName: 'Mode',
+				displayName: 'Development Environment',
 				name: 'mode',
-				description: 'Environment mode',
-				hint: 'Enable this option to protect your account credits while testing the integration',
-				type: 'options',
-				options: [
-					{ name: 'Live', value: 'live' },
-					{ name: 'Test', value: 'test' },
-				],
-				default: 'live',
+				description: 'Enable to use test mode (mode=test), disable for live mode',
+				type: 'boolean',
+				default: false,
 			},
 		],
 	},
@@ -254,16 +244,11 @@ export const dataLookupAdditionalFields: INodeProperties[] = [
 		},
 		options: [
 			{
-				displayName: 'Mode',
+				displayName: 'Development Environment',
 				name: 'mode',
-				description: 'Environment mode',
-				hint: 'Enable this option to protect your account credits while testing the integration',
-				type: 'options',
-				options: [
-					{ name: 'Live', value: 'live' },
-					{ name: 'Test', value: 'test' },
-				],
-				default: 'live',
+				description: 'Enable to use test mode (mode=test), disable for live mode',
+				type: 'boolean',
+				default: false,
 			},
 			{
 				displayName: 'User ID',
@@ -290,16 +275,11 @@ export const dataLookupAdditionalFields: INodeProperties[] = [
 		},
 		options: [
 			{
-				displayName: 'Mode',
+				displayName: 'Development Environment',
 				name: 'mode',
-				description: 'Environment mode',
-				hint: 'Enable this option to protect your account credits while testing the integration',
-				type: 'options',
-				options: [
-					{ name: 'Live', value: 'live' },
-					{ name: 'Test', value: 'test' },
-				],
-				default: 'live',
+				description: 'Enable to use test mode (mode=test), disable for live mode',
+				type: 'boolean',
+				default: false,
 			},
 			{
 				displayName: 'User ID',
@@ -333,16 +313,11 @@ export const dataLookupAdditionalFields: INodeProperties[] = [
 				default: '',
 			},
 			{
-				displayName: 'Mode',
+				displayName: 'Development Environment',
 				name: 'mode',
-				description: 'Environment mode',
-				hint: 'Enable this option to protect your account credits while testing the integration',
-				type: 'options',
-				options: [
-					{ name: 'Live', value: 'live' },
-					{ name: 'Test', value: 'test' },
-				],
-				default: 'live',
+				description: 'Enable to use test mode (mode=test), disable for live mode',
+				type: 'boolean',
+				default: false,
 			},
 		],
 	},
@@ -361,16 +336,11 @@ export const dataLookupAdditionalFields: INodeProperties[] = [
 		},
 		options: [
 			{
-				displayName: 'Mode',
+				displayName: 'Development Environment',
 				name: 'mode',
-				description: 'Environment mode',
-				hint: 'Enable this option to protect your account credits while testing the integration',
-				type: 'options',
-				options: [
-					{ name: 'Live', value: 'live' },
-					{ name: 'Test', value: 'test' },
-				],
-				default: 'live',
+				description: 'Enable to use test mode (mode=test), disable for live mode',
+				type: 'boolean',
+				default: false,
 			},
 		],
 	},

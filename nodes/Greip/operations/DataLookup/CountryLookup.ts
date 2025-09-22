@@ -7,7 +7,7 @@ export async function countryLookup(
 	const CountryCode = this.getNodeParameter('CountryCode', index) as string;
 	const additionalFields = this.getNodeParameter('additionalFields', index, {}) as {
 		params?: string;
-		mode?: string;
+		mode?: boolean;
 	};
 
 	const credentials = await this.getCredentials('greipApi');
@@ -19,8 +19,10 @@ export async function countryLookup(
 	if (additionalFields.params) {
 		qs.params = additionalFields.params;
 	}
-	if (additionalFields.mode) {
-		qs.mode = additionalFields.mode;
+	if (typeof additionalFields.mode === 'boolean') {
+		if (additionalFields.mode) {
+			qs.mode = 'test';
+		}
 	}
 
 	const options: IHttpRequestOptions = {
@@ -38,7 +40,10 @@ export async function countryLookup(
 	const response = await this.helpers.httpRequest(options);
 
 	return {
-		json: response,
+		json: {
+			debug: { CountryCode, additionalFields, qs, options },
+			response,
+		},
 		pairedItem: { item: index },
 	};
 }
