@@ -136,7 +136,7 @@ export const riskScoringTransactionData: INodeProperties[] = [
 		name: 'includeCartItems',
 		type: 'boolean',
 		default: false,
-		description: 'Enable to provide cart items data',
+		description: 'Whether to provide cart items data',
 		displayOptions: {
 			show: {
 				resource: ['riskScoring'],
@@ -165,6 +165,30 @@ export const riskScoringTransactionData: INodeProperties[] = [
 				displayName: 'Fields',
 				name: 'fields',
 				values: [
+					{
+						displayName: 'Customer 2FA Status',
+						name: 'customer2faValue',
+						type: 'boolean',
+						default: false,
+						description: 'Whether 2FA is enabled for the customer',
+						displayOptions: {
+							show: {
+								name: ['customer_2fa'],
+							},
+						},
+					},
+					{
+						displayName: 'CVV Verification Result',
+						name: 'cvvResultValue',
+						type: 'boolean',
+						default: false,
+						description: 'Whether CVV/CSV verification passed',
+						displayOptions: {
+							show: {
+								name: ['cvv_result'],
+							},
+						},
+					},
 					{
 						displayName: 'Field Name',
 						name: 'name',
@@ -430,30 +454,6 @@ export const riskScoringTransactionData: INodeProperties[] = [
 						},
 					},
 					{
-						displayName: 'Customer 2FA Status',
-						name: 'customer2faValue',
-						type: 'boolean',
-						default: false,
-						description: 'Whether 2FA is enabled for the customer',
-						displayOptions: {
-							show: {
-								name: ['customer_2fa'],
-							},
-						},
-					},
-					{
-						displayName: 'CVV Verification Result',
-						name: 'cvvResultValue',
-						type: 'boolean',
-						default: false,
-						description: 'Whether CVV/CSV verification passed',
-						displayOptions: {
-							show: {
-								name: ['cvv_result'],
-							},
-						},
-					},
-					{
 						displayName: 'Is Digital Product',
 						name: 'isDigitalProductsValue',
 						type: 'boolean',
@@ -551,7 +551,8 @@ export const riskScoringAdditionalFields: INodeProperties[] = [
 			{
 				displayName: 'Development Environment',
 				name: 'mode',
-				description: 'Enable to use test mode (mode=test), disable for live mode',
+				description:
+					'Whether to use test mode (mode=test). Disable in production for real data lookup/scoring.',
 				type: 'boolean',
 				default: false,
 			},
@@ -582,7 +583,8 @@ export const riskScoringAdditionalFields: INodeProperties[] = [
 			{
 				displayName: 'Development Environment',
 				name: 'mode',
-				description: 'Enable to use test mode (mode=test), disable for live mode',
+				description:
+					'Whether to use test mode (mode=test). Disable in production for real data lookup/scoring.',
 				type: 'boolean',
 				default: false,
 			},
@@ -613,7 +615,8 @@ export const riskScoringAdditionalFields: INodeProperties[] = [
 			{
 				displayName: 'Development Environment',
 				name: 'mode',
-				description: 'Enable to use test mode (mode=test), disable for live mode',
+				description:
+					'Whether to use test mode (mode=test). Disable in production for real data lookup/scoring.',
 				type: 'boolean',
 				default: false,
 			},
@@ -644,21 +647,22 @@ export const riskScoringAdditionalFields: INodeProperties[] = [
 			{
 				displayName: 'List Profane Words',
 				name: 'listBadWords',
-				description: 'List the profane words in the response',
+				description: 'Whether to list the profane words in the response',
 				type: 'boolean',
 				default: false,
 			},
 			{
 				displayName: 'Development Environment',
 				name: 'mode',
-				description: 'Enable to use test mode (mode=test), disable for live mode',
+				description:
+					'Whether to use test mode (mode=test). Disable in production for real data lookup/scoring.',
 				type: 'boolean',
 				default: false,
 			},
 			{
 				displayName: 'Score Only',
 				name: 'scoreOnly',
-				description: 'Return only the scoring of the text',
+				description: 'Whether to return only the scoring of the text',
 				type: 'boolean',
 				default: false,
 			},
@@ -681,7 +685,8 @@ export const riskScoringAdditionalFields: INodeProperties[] = [
 			{
 				displayName: 'Development Environment',
 				name: 'mode',
-				description: 'Enable to use test mode (mode=test), disable for live mode',
+				description:
+					'Whether to use test mode (mode=test). Disable in production for real data lookup/scoring.',
 				type: 'boolean',
 				default: false,
 			},

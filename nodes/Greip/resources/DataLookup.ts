@@ -185,7 +185,8 @@ export const dataLookupAdditionalFields: INodeProperties[] = [
 			{
 				displayName: 'Development Environment',
 				name: 'mode',
-				description: 'Enable to use test mode (mode=test), disable for live mode',
+				description:
+					'Whether to use test mode (mode=test). Disable in production for real data lookup/scoring.',
 				type: 'boolean',
 				default: false,
 			},
@@ -223,7 +224,8 @@ export const dataLookupAdditionalFields: INodeProperties[] = [
 			{
 				displayName: 'Development Environment',
 				name: 'mode',
-				description: 'Enable to use test mode (mode=test), disable for live mode',
+				description:
+					'Whether to use test mode (mode=test). Disable in production for real data lookup/scoring.',
 				type: 'boolean',
 				default: false,
 			},
@@ -246,7 +248,8 @@ export const dataLookupAdditionalFields: INodeProperties[] = [
 			{
 				displayName: 'Development Environment',
 				name: 'mode',
-				description: 'Enable to use test mode (mode=test), disable for live mode',
+				description:
+					'Whether to use test mode (mode=test). Disable in production for real data lookup/scoring.',
 				type: 'boolean',
 				default: false,
 			},
@@ -277,7 +280,8 @@ export const dataLookupAdditionalFields: INodeProperties[] = [
 			{
 				displayName: 'Development Environment',
 				name: 'mode',
-				description: 'Enable to use test mode (mode=test), disable for live mode',
+				description:
+					'Whether to use test mode (mode=test). Disable in production for real data lookup/scoring.',
 				type: 'boolean',
 				default: false,
 			},
@@ -315,7 +319,8 @@ export const dataLookupAdditionalFields: INodeProperties[] = [
 			{
 				displayName: 'Development Environment',
 				name: 'mode',
-				description: 'Enable to use test mode (mode=test), disable for live mode',
+				description:
+					'Whether to use test mode (mode=test). Disable in production for real data lookup/scoring.',
 				type: 'boolean',
 				default: false,
 			},
@@ -338,7 +343,8 @@ export const dataLookupAdditionalFields: INodeProperties[] = [
 			{
 				displayName: 'Development Environment',
 				name: 'mode',
-				description: 'Enable to use test mode (mode=test), disable for live mode',
+				description:
+					'Whether to use test mode (mode=test). Disable in production for real data lookup/scoring.',
 				type: 'boolean',
 				default: false,
 			},
