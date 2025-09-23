@@ -338,7 +338,7 @@ export const riskScoringTransactionData: INodeProperties[] = [
 								name: 'Customer Place of Birth',
 								value: 'customer_pob',
 								description: 'The Place of Birth of the customer',
-								placeholder: 'New York, USA',
+								placeholder: 'New York',
 							},
 							{
 								name: 'Customer Region',
@@ -937,7 +937,7 @@ export const riskScoringTransactionData: INodeProperties[] = [
 						name: 'value',
 						type: 'string',
 						default: '',
-						placeholder: 'New York, USA',
+						placeholder: 'New York',
 						description: 'The Place of Birth of the customer',
 						displayOptions: {
 							show: {
