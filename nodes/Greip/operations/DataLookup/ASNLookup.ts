@@ -36,10 +36,7 @@ export async function asnLookup(
 	const response = await this.helpers.httpRequest(options);
 
 	return {
-		json: {
-			debug: { asn, additionalFields, qs, options },
-			response,
-		},
+		json: response,
 		pairedItem: { item: index },
 	};
 }

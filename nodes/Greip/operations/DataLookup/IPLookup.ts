@@ -48,10 +48,7 @@ export async function ipLookup(
 	const response = await this.helpers.httpRequest(options);
 
 	return {
-		json: {
-			debug: { ip, additionalFields, qs, options },
-			response,
-		},
+		json: response,
 		pairedItem: { item: index },
 	};
 }

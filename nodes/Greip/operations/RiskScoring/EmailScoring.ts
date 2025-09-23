@@ -40,10 +40,7 @@ export async function emailScoring(
 	const response = await this.helpers.httpRequest(options);
 
 	return {
-		json: {
-			debug: { email, additionalFields, qs, options },
-			response,
-		},
+		json: response,
 		pairedItem: { item: index },
 	};
 }

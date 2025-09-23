@@ -42,10 +42,7 @@ export async function phoneScoring(
 	const response = await this.helpers.httpRequest(options);
 
 	return {
-		json: {
-			debug: { phone, countryCode, additionalFields, qs, options },
-			response,
-		},
+		json: response,
 		pairedItem: { item: index },
 	};
 }

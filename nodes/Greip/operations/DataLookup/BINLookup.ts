@@ -40,10 +40,7 @@ export async function binLookup(
 	const response = await this.helpers.httpRequest(options);
 
 	return {
-		json: {
-			debug: { bin, additionalFields, qs, options },
-			response,
-		},
+		json: response,
 		pairedItem: { item: index },
 	};
 }

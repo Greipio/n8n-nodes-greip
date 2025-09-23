@@ -40,10 +40,7 @@ export async function ibanLookup(
 	const response = await this.helpers.httpRequest(options);
 
 	return {
-		json: {
-			debug: { iban, additionalFields, qs, options },
-			response,
-		},
+		json: response,
 		pairedItem: { item: index },
 	};
 }

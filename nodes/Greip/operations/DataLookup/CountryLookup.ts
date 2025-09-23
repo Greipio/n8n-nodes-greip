@@ -40,10 +40,7 @@ export async function countryLookup(
 	const response = await this.helpers.httpRequest(options);
 
 	return {
-		json: {
-			debug: { CountryCode, additionalFields, qs, options },
-			response,
-		},
+		json: response,
 		pairedItem: { item: index },
 	};
 }

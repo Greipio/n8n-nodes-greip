@@ -4,7 +4,6 @@ export async function paymentFraudDetection(
 	this: IExecuteFunctions,
 	index: number,
 ): Promise<INodeExecutionData> {
-
 	const transactionDataFields = this.getNodeParameter(
 		'transactionData.fields',
 		index,
@@ -15,11 +14,17 @@ export async function paymentFraudDetection(
 		customer2faValue?: boolean;
 		cvvResultValue?: boolean;
 		isDigitalProductsValue?: boolean;
+		actionValue?: string;
+		paymentTypeValue?: string;
 	}>;
 
-	const cartItemsData = this.getNodeParameter('cartItemsData.fields', index, []) as Array<{
-		name: string;
-		value: string;
+	const cartItemsData = this.getNodeParameter('cartItems.cartItem', index, []) as Array<{
+		itemFields: {
+			field: Array<{
+				name: string;
+				value: string;
+			}>;
+		};
 	}>;
 
 	const includeCartItems = this.getNodeParameter('includeCartItems', index, false) as boolean;
@@ -39,6 +44,10 @@ export async function paymentFraudDetection(
 				data[field.name] = field.cvvResultValue;
 			} else if (field.name === 'isDigitalProducts' && field.isDigitalProductsValue !== undefined) {
 				data[field.name] = field.isDigitalProductsValue;
+			} else if (field.name === 'action' && field.actionValue !== undefined) {
+				data[field.name] = field.actionValue;
+			} else if (field.name === 'payment_type' && field.paymentTypeValue !== undefined) {
+				data[field.name] = field.paymentTypeValue;
 			} else if (field.value) {
 				data[field.name] = field.value;
 			}
@@ -46,14 +55,26 @@ export async function paymentFraudDetection(
 	}
 
 	if (includeCartItems && cartItemsData && cartItemsData.length > 0) {
-		const cartItem: { [key: string]: any } = {};
-		for (const field of cartItemsData) {
-			if (field.name && field.value) {
-				cartItem[field.name] = field.value;
+		const cartItemsArray: Array<{ [key: string]: any }> = [];
+
+		for (const cartItemEntry of cartItemsData) {
+			const cartItem: { [key: string]: any } = {};
+
+			if (cartItemEntry.itemFields && cartItemEntry.itemFields.field) {
+				for (const field of cartItemEntry.itemFields.field) {
+					if (field.name && field.value) {
+						cartItem[field.name] = field.value;
+					}
+				}
+			}
+
+			if (Object.keys(cartItem).length > 0) {
+				cartItemsArray.push(cartItem);
 			}
 		}
-		if (Object.keys(cartItem).length > 0) {
-			data.cart_items = cartItem;
+
+		if (cartItemsArray.length > 0) {
+			data.cart_items = cartItemsArray;
 		}
 	}
 
@@ -88,10 +109,7 @@ export async function paymentFraudDetection(
 	const response = await this.helpers.httpRequest(options);
 
 	return {
-		json: {
-			debug: { transactionDataFields, cartItemsData, additionalFields, options },
-			response,
-		},
+		json: response,
 		pairedItem: { item: index },
 	};
 }
