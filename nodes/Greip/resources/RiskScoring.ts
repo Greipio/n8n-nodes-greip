@@ -166,6 +166,476 @@ export const riskScoringTransactionData: INodeProperties[] = [
 				name: 'fields',
 				values: [
 					{
+						displayName: 'Action Value',
+						name: 'actionValue',
+						type: 'options',
+						default: 'purchase',
+						description: 'The action your customer is trying to implement',
+						options: [
+							{
+								name: 'Purchase',
+								value: 'purchase',
+								description: 'Customer is making a purchase',
+							},
+							{
+								name: 'Deposit',
+								value: 'deposit',
+								description: 'Customer is making a deposit',
+							},
+							{
+								name: 'Withdrawal',
+								value: 'withdrawal',
+								description: 'Customer is making a withdrawal',
+							},
+						],
+						displayOptions: {
+							show: {
+								name: ['action'],
+							},
+						},
+					},
+					{
+						displayName: 'Billing City',
+						name: 'value',
+						type: 'string',
+						default: '',
+						placeholder: 'New York',
+						description: 'The billing city name of the customer',
+						displayOptions: {
+							show: {
+								name: ['billing_city'],
+							},
+						},
+					},
+					{
+						displayName: 'Billing Country',
+						name: 'value',
+						type: 'string',
+						default: '',
+						placeholder: 'US',
+						description: 'The billing country code (ISO 3166-1 alpha-2)',
+						displayOptions: {
+							show: {
+								name: ['billing_country'],
+							},
+						},
+					},
+					{
+						displayName: 'Billing Latitude',
+						name: 'value',
+						type: 'string',
+						default: '',
+						placeholder: '40.7128',
+						description: "The latitude of the customer's billing address (GPS Coordinates)",
+						displayOptions: {
+							show: {
+								name: ['billing_latitude'],
+							},
+						},
+					},
+					{
+						displayName: 'Billing Longitude',
+						name: 'value',
+						type: 'string',
+						default: '',
+						placeholder: '-74.0060',
+						description: "The longitude of the customer's billing address (GPS Coordinates)",
+						displayOptions: {
+							show: {
+								name: ['billing_longitude'],
+							},
+						},
+					},
+					{
+						displayName: 'Billing Region',
+						name: 'value',
+						type: 'string',
+						default: '',
+						placeholder: 'New York',
+						description: 'The billing region name of the customer',
+						displayOptions: {
+							show: {
+								name: ['billing_region'],
+							},
+						},
+					},
+					{
+						displayName: 'Billing Street',
+						name: 'value',
+						type: 'string',
+						default: '',
+						placeholder: '123 Main Street',
+						description: 'The billing "address 1" of the customer',
+						displayOptions: {
+							show: {
+								name: ['billing_street'],
+							},
+						},
+					},
+					{
+						displayName: 'Billing Street 2',
+						name: 'value',
+						type: 'string',
+						default: '',
+						placeholder: 'Apt 4B',
+						description: 'The billing "address 2" of the customer',
+						displayOptions: {
+							show: {
+								name: ['billing_street2'],
+							},
+						},
+					},
+					{
+						displayName: 'Billing ZIP',
+						name: 'value',
+						type: 'string',
+						default: '',
+						placeholder: '10001',
+						description: "The zip code of the customer's billing address",
+						displayOptions: {
+							show: {
+								name: ['billing_zip'],
+							},
+						},
+					},
+					{
+						displayName: 'Card Expiry',
+						name: 'value',
+						type: 'string',
+						default: '',
+						placeholder: '12/25',
+						description: 'The expiry date of the customer debit/credit card',
+						displayOptions: {
+							show: {
+								name: ['card_expiry'],
+							},
+						},
+					},
+					{
+						displayName: 'Card Name',
+						name: 'value',
+						type: 'string',
+						default: '',
+						placeholder: 'John Doe',
+						description: 'The name on the card (Cardholder Name)',
+						displayOptions: {
+							show: {
+								name: ['card_name'],
+							},
+						},
+					},
+					{
+						displayName: 'Card Number',
+						name: 'value',
+						type: 'string',
+						default: '',
+						placeholder: '4111111111111111',
+						description: 'The card number (min: 6 digits)',
+						displayOptions: {
+							show: {
+								name: ['card_number'],
+							},
+						},
+					},
+					{
+						displayName: 'Coupon',
+						name: 'value',
+						type: 'string',
+						default: '',
+						placeholder: 'SAVE20',
+						description: 'The promo code used by the customer to complete the checkout',
+						displayOptions: {
+							show: {
+								name: ['coupon'],
+							},
+						},
+					},
+					{
+						displayName: 'Customer 2FA Status',
+						name: 'customer2faValue',
+						type: 'boolean',
+						default: false,
+						description: 'Whether 2FA is enabled for the customer',
+						displayOptions: {
+							show: {
+								name: ['customer_2fa'],
+							},
+						},
+					},
+					{
+						displayName: 'Customer Balance',
+						name: 'value',
+						type: 'string',
+						default: '',
+						placeholder: '250.50',
+						description: 'If you offer a Wallet feature, pass the user balance to this parameter',
+						displayOptions: {
+							show: {
+								name: ['customer_balance'],
+							},
+						},
+					},
+					{
+						displayName: 'Customer City',
+						name: 'value',
+						type: 'string',
+						default: '',
+						placeholder: 'New York',
+						description: 'The name of the city where the customer live',
+						displayOptions: {
+							show: {
+								name: ['customer_city'],
+							},
+						},
+					},
+					{
+						displayName: 'Customer Country',
+						name: 'value',
+						type: 'string',
+						default: '',
+						placeholder: 'US',
+						description:
+							'The ISO 3166-1 alpha-2 code format of the country where the customer live',
+						displayOptions: {
+							show: {
+								name: ['customer_country'],
+							},
+						},
+					},
+					{
+						displayName: 'Customer Date of Birth',
+						name: 'value',
+						type: 'string',
+						default: '',
+						placeholder: '1985-12-27',
+						description: "The customer's date of birth",
+						displayOptions: {
+							show: {
+								name: ['customer_dob'],
+							},
+						},
+					},
+					{
+						displayName: 'Customer Device ID',
+						name: 'value',
+						type: 'string',
+						default: '',
+						placeholder: 'ABC123DEF456',
+						description: 'The device identification code of the customer',
+						displayOptions: {
+							show: {
+								name: ['customer_device_id'],
+							},
+						},
+					},
+					{
+						displayName: 'Customer Email',
+						name: 'value',
+						type: 'string',
+						default: '',
+						placeholder: 'customer@example.com',
+						description: 'The email address of the customer',
+						displayOptions: {
+							show: {
+								name: ['customer_email'],
+							},
+						},
+					},
+					{
+						displayName: 'Customer First Name',
+						name: 'value',
+						type: 'string',
+						default: '',
+						placeholder: 'John',
+						description: 'The first name of the customer',
+						displayOptions: {
+							show: {
+								name: ['customer_firstname'],
+							},
+						},
+					},
+					{
+						displayName: 'Customer ID',
+						name: 'value',
+						type: 'string',
+						default: '',
+						placeholder: '12345',
+						description: 'The identification number of the customer in your system',
+						displayOptions: {
+							show: {
+								name: ['customer_id'],
+							},
+						},
+					},
+					{
+						displayName: 'Customer IP',
+						name: 'value',
+						type: 'string',
+						default: '',
+						placeholder: '192.168.1.1',
+						description: 'The IP address of the customer',
+						displayOptions: {
+							show: {
+								name: ['customer_ip'],
+							},
+						},
+					},
+					{
+						displayName: 'Customer Last Name',
+						name: 'value',
+						type: 'string',
+						default: '',
+						placeholder: 'Doe',
+						description: 'The last name of the customer (Family Name)',
+						displayOptions: {
+							show: {
+								name: ['customer_lastname'],
+							},
+						},
+					},
+					{
+						displayName: 'Customer Latitude',
+						name: 'value',
+						type: 'string',
+						default: '',
+						placeholder: '40.7128',
+						description: 'The customer latitude on the map (GPS Coordinates)',
+						displayOptions: {
+							show: {
+								name: ['customer_latitude'],
+							},
+						},
+					},
+					{
+						displayName: 'Customer Longitude',
+						name: 'value',
+						type: 'string',
+						default: '',
+						placeholder: '-74.0060',
+						description: 'The customer longitude on the map (GPS Coordinates)',
+						displayOptions: {
+							show: {
+								name: ['customer_longitude'],
+							},
+						},
+					},
+					{
+						displayName: 'Customer Phone',
+						name: 'value',
+						type: 'string',
+						default: '',
+						placeholder: '+1234567890',
+						description: 'The phone number of the customer (international format)',
+						displayOptions: {
+							show: {
+								name: ['customer_phone'],
+							},
+						},
+					},
+					{
+						displayName: 'Customer Place of Birth',
+						name: 'value',
+						type: 'string',
+						default: '',
+						placeholder: 'New York',
+						description: 'The Place of Birth of the customer',
+						displayOptions: {
+							show: {
+								name: ['customer_pob'],
+							},
+						},
+					},
+					{
+						displayName: 'Customer Region',
+						name: 'value',
+						type: 'string',
+						default: '',
+						placeholder: 'New York',
+						description: 'The name of the region where the customer live',
+						displayOptions: {
+							show: {
+								name: ['customer_region'],
+							},
+						},
+					},
+					{
+						displayName: 'Customer Registration Date',
+						name: 'value',
+						type: 'string',
+						default: '',
+						placeholder: '1672531200',
+						description: 'The registration date of the customer (UNIX Timestamp)',
+						displayOptions: {
+							show: {
+								name: ['customer_registration_date'],
+							},
+						},
+					},
+					{
+						displayName: 'Customer Street',
+						name: 'value',
+						type: 'string',
+						default: '',
+						placeholder: '123 Main Street',
+						description: 'The "address line 1" of the customer',
+						displayOptions: {
+							show: {
+								name: ['customer_street'],
+							},
+						},
+					},
+					{
+						displayName: 'Customer Street 2',
+						name: 'value',
+						type: 'string',
+						default: '',
+						placeholder: 'Apt 4B',
+						description: 'The "address line 2" of the customer',
+						displayOptions: {
+							show: {
+								name: ['customer_street2'],
+							},
+						},
+					},
+					{
+						displayName: 'Customer User Agent',
+						name: 'value',
+						type: 'string',
+						default: '',
+						placeholder: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+						description: 'Pass the User Agent of the customer to this parameter',
+						displayOptions: {
+							show: {
+								name: ['customer_useragent'],
+							},
+						},
+					},
+					{
+						displayName: 'Customer ZIP',
+						name: 'value',
+						type: 'string',
+						default: '',
+						placeholder: '10001',
+						description: 'The name of the zip code of customer location',
+						displayOptions: {
+							show: {
+								name: ['customer_zip'],
+							},
+						},
+					},
+					{
+						displayName: 'CVV Verification Result',
+						name: 'cvvResultValue',
+						type: 'boolean',
+						default: false,
+						description: 'Whether CVV/CSV verification passed',
+						displayOptions: {
+							show: {
+								name: ['cvv_result'],
+							},
+						},
+					},
+					{
 						displayName: 'Field Name',
 						name: 'name',
 						type: 'options',
@@ -487,539 +957,14 @@ export const riskScoringTransactionData: INodeProperties[] = [
 						],
 					},
 					{
-						displayName: 'Action Value',
-						name: 'actionValue',
-						type: 'options',
-						default: 'purchase',
-						description: 'The action your customer is trying to implement',
-						options: [
-							{
-								name: 'Purchase',
-								value: 'purchase',
-								description: 'Customer is making a purchase',
-							},
-							{
-								name: 'Deposit',
-								value: 'deposit',
-								description: 'Customer is making a deposit',
-							},
-							{
-								name: 'Withdrawal',
-								value: 'withdrawal',
-								description: 'Customer is making a withdrawal',
-							},
-						],
-						displayOptions: {
-							show: {
-								name: ['action'],
-							},
-						},
-					},
-					{
-						displayName: 'Customer 2FA Status',
-						name: 'customer2faValue',
+						displayName: 'Is Digital Product',
+						name: 'isDigitalProductsValue',
 						type: 'boolean',
 						default: false,
-						description: 'Whether 2FA is enabled for the customer',
+						description: 'Whether this is a digital product',
 						displayOptions: {
 							show: {
-								name: ['customer_2fa'],
-							},
-						},
-					},
-					{
-						displayName: 'Payment Type Value',
-						name: 'paymentTypeValue',
-						type: 'options',
-						default: 'cards',
-						description: 'The payment method used to complete this transaction',
-						options: [
-							{
-								name: 'Cards',
-								value: 'cards',
-								description: 'Credit/debit cards',
-							},
-							{
-								name: 'Cards (Mada)',
-								value: 'cards_mada',
-								description: 'Mada cards (Saudi Arabia)',
-							},
-							{
-								name: 'Apple Pay',
-								value: 'applepay',
-								description: 'Apple Pay payment method',
-							},
-							{
-								name: 'STC Pay',
-								value: 'stcpay',
-								description: 'STC Pay digital wallet',
-							},
-							{
-								name: 'Bank Transfer',
-								value: 'bank',
-								description: 'Bank transfer or direct debit',
-							},
-							{
-								name: 'Cryptocurrency',
-								value: 'crypto',
-								description: 'Cryptocurrency payment',
-							},
-							{
-								name: 'Digital Wallet',
-								value: 'wallet',
-								description: 'Digital wallet payment',
-							},
-							{
-								name: 'Cash on Delivery',
-								value: 'cod',
-								description: 'Cash on delivery',
-							},
-						],
-						displayOptions: {
-							show: {
-								name: ['payment_type'],
-							},
-						},
-					},
-					{
-						displayName: 'CVV Verification Result',
-						name: 'cvvResultValue',
-						type: 'boolean',
-						default: false,
-						description: 'Whether CVV/CSV verification passed',
-						displayOptions: {
-							show: {
-								name: ['cvv_result'],
-							},
-						},
-					},
-					/* {
-						displayName: 'Field Value',
-						name: 'value',
-						type: 'string',
-						default: '',
-						placeholder: 'Enter field value',
-						description: 'The value for this field',
-						displayOptions: {
-							hide: {
-								name: ['isDigitalProducts', 'cvv_result', 'customer_2fa', 'action', 'payment_type'],
-							},
-						},
-					}, */
-					{
-						displayName: 'Billing City',
-						name: 'value',
-						type: 'string',
-						default: '',
-						placeholder: 'New York',
-						description: 'The billing city name of the customer',
-						displayOptions: {
-							show: {
-								name: ['billing_city'],
-							},
-						},
-					},
-					{
-						displayName: 'Billing Country',
-						name: 'value',
-						type: 'string',
-						default: '',
-						placeholder: 'US',
-						description: 'The billing country code (ISO 3166-1 alpha-2)',
-						displayOptions: {
-							show: {
-								name: ['billing_country'],
-							},
-						},
-					},
-					{
-						displayName: 'Billing Latitude',
-						name: 'value',
-						type: 'string',
-						default: '',
-						placeholder: '40.7128',
-						description: "The latitude of the customer's billing address (GPS Coordinates)",
-						displayOptions: {
-							show: {
-								name: ['billing_latitude'],
-							},
-						},
-					},
-					{
-						displayName: 'Billing Longitude',
-						name: 'value',
-						type: 'string',
-						default: '',
-						placeholder: '-74.0060',
-						description: "The longitude of the customer's billing address (GPS Coordinates)",
-						displayOptions: {
-							show: {
-								name: ['billing_longitude'],
-							},
-						},
-					},
-					{
-						displayName: 'Billing Region',
-						name: 'value',
-						type: 'string',
-						default: '',
-						placeholder: 'New York',
-						description: 'The billing region name of the customer',
-						displayOptions: {
-							show: {
-								name: ['billing_region'],
-							},
-						},
-					},
-					{
-						displayName: 'Billing Street',
-						name: 'value',
-						type: 'string',
-						default: '',
-						placeholder: '123 Main Street',
-						description: 'The billing "address 1" of the customer',
-						displayOptions: {
-							show: {
-								name: ['billing_street'],
-							},
-						},
-					},
-					{
-						displayName: 'Billing Street 2',
-						name: 'value',
-						type: 'string',
-						default: '',
-						placeholder: 'Apt 4B',
-						description: 'The billing "address 2" of the customer',
-						displayOptions: {
-							show: {
-								name: ['billing_street2'],
-							},
-						},
-					},
-					{
-						displayName: 'Billing ZIP',
-						name: 'value',
-						type: 'string',
-						default: '',
-						placeholder: '10001',
-						description: "The zip code of the customer's billing address",
-						displayOptions: {
-							show: {
-								name: ['billing_zip'],
-							},
-						},
-					},
-					{
-						displayName: 'Card Expiry',
-						name: 'value',
-						type: 'string',
-						default: '',
-						placeholder: '12/25',
-						description: 'The expiry date of the customer debit/credit card',
-						displayOptions: {
-							show: {
-								name: ['card_expiry'],
-							},
-						},
-					},
-					{
-						displayName: 'Card Name',
-						name: 'value',
-						type: 'string',
-						default: '',
-						placeholder: 'John Doe',
-						description: 'The name on the card (Cardholder Name)',
-						displayOptions: {
-							show: {
-								name: ['card_name'],
-							},
-						},
-					},
-					{
-						displayName: 'Card Number',
-						name: 'value',
-						type: 'string',
-						default: '',
-						placeholder: '4111111111111111',
-						description: 'The card number (min: 6 digits)',
-						displayOptions: {
-							show: {
-								name: ['card_number'],
-							},
-						},
-					},
-					{
-						displayName: 'Coupon',
-						name: 'value',
-						type: 'string',
-						default: '',
-						placeholder: 'SAVE20',
-						description: 'The promo code used by the customer to complete the checkout',
-						displayOptions: {
-							show: {
-								name: ['coupon'],
-							},
-						},
-					},
-					{
-						displayName: 'Customer Balance',
-						name: 'value',
-						type: 'string',
-						default: '',
-						placeholder: '250.50',
-						description: 'If you offer a Wallet feature, pass the user balance to this parameter',
-						displayOptions: {
-							show: {
-								name: ['customer_balance'],
-							},
-						},
-					},
-					{
-						displayName: 'Customer City',
-						name: 'value',
-						type: 'string',
-						default: '',
-						placeholder: 'New York',
-						description: 'The name of the city where the customer live',
-						displayOptions: {
-							show: {
-								name: ['customer_city'],
-							},
-						},
-					},
-					{
-						displayName: 'Customer Country',
-						name: 'value',
-						type: 'string',
-						default: '',
-						placeholder: 'US',
-						description:
-							'The ISO 3166-1 alpha-2 code format of the country where the customer live',
-						displayOptions: {
-							show: {
-								name: ['customer_country'],
-							},
-						},
-					},
-					{
-						displayName: 'Customer Date of Birth',
-						name: 'value',
-						type: 'string',
-						default: '',
-						placeholder: '1985-12-27',
-						description: "The customer's date of birth",
-						displayOptions: {
-							show: {
-								name: ['customer_dob'],
-							},
-						},
-					},
-					{
-						displayName: 'Customer Device ID',
-						name: 'value',
-						type: 'string',
-						default: '',
-						placeholder: 'ABC123DEF456',
-						description: 'The device identification code of the customer',
-						displayOptions: {
-							show: {
-								name: ['customer_device_id'],
-							},
-						},
-					},
-					{
-						displayName: 'Customer Email',
-						name: 'value',
-						type: 'string',
-						default: '',
-						placeholder: 'customer@example.com',
-						description: 'The email address of the customer',
-						displayOptions: {
-							show: {
-								name: ['customer_email'],
-							},
-						},
-					},
-					{
-						displayName: 'Customer First Name',
-						name: 'value',
-						type: 'string',
-						default: '',
-						placeholder: 'John',
-						description: 'The first name of the customer',
-						displayOptions: {
-							show: {
-								name: ['customer_firstname'],
-							},
-						},
-					},
-					{
-						displayName: 'Customer ID',
-						name: 'value',
-						type: 'string',
-						default: '',
-						placeholder: '12345',
-						description: 'The identification number of the customer in your system',
-						displayOptions: {
-							show: {
-								name: ['customer_id'],
-							},
-						},
-					},
-					{
-						displayName: 'Customer IP',
-						name: 'value',
-						type: 'string',
-						default: '',
-						placeholder: '192.168.1.1',
-						description: 'The IP address of the customer',
-						displayOptions: {
-							show: {
-								name: ['customer_ip'],
-							},
-						},
-					},
-					{
-						displayName: 'Customer Last Name',
-						name: 'value',
-						type: 'string',
-						default: '',
-						placeholder: 'Doe',
-						description: 'The last name of the customer (Family Name)',
-						displayOptions: {
-							show: {
-								name: ['customer_lastname'],
-							},
-						},
-					},
-					{
-						displayName: 'Customer Latitude',
-						name: 'value',
-						type: 'string',
-						default: '',
-						placeholder: '40.7128',
-						description: 'The customer latitude on the map (GPS Coordinates)',
-						displayOptions: {
-							show: {
-								name: ['customer_latitude'],
-							},
-						},
-					},
-					{
-						displayName: 'Customer Longitude',
-						name: 'value',
-						type: 'string',
-						default: '',
-						placeholder: '-74.0060',
-						description: 'The customer longitude on the map (GPS Coordinates)',
-						displayOptions: {
-							show: {
-								name: ['customer_longitude'],
-							},
-						},
-					},
-					{
-						displayName: 'Customer Phone',
-						name: 'value',
-						type: 'string',
-						default: '',
-						placeholder: '+1234567890',
-						description: 'The phone number of the customer (international format)',
-						displayOptions: {
-							show: {
-								name: ['customer_phone'],
-							},
-						},
-					},
-					{
-						displayName: 'Customer Place of Birth',
-						name: 'value',
-						type: 'string',
-						default: '',
-						placeholder: 'New York',
-						description: 'The Place of Birth of the customer',
-						displayOptions: {
-							show: {
-								name: ['customer_pob'],
-							},
-						},
-					},
-					{
-						displayName: 'Customer Region',
-						name: 'value',
-						type: 'string',
-						default: '',
-						placeholder: 'New York',
-						description: 'The name of the region where the customer live',
-						displayOptions: {
-							show: {
-								name: ['customer_region'],
-							},
-						},
-					},
-					{
-						displayName: 'Customer Registration Date',
-						name: 'value',
-						type: 'string',
-						default: '',
-						placeholder: '1672531200',
-						description: 'The registration date of the customer (UNIX Timestamp)',
-						displayOptions: {
-							show: {
-								name: ['customer_registration_date'],
-							},
-						},
-					},
-					{
-						displayName: 'Customer Street',
-						name: 'value',
-						type: 'string',
-						default: '',
-						placeholder: '123 Main Street',
-						description: 'The "address line 1" of the customer',
-						displayOptions: {
-							show: {
-								name: ['customer_street'],
-							},
-						},
-					},
-					{
-						displayName: 'Customer Street 2',
-						name: 'value',
-						type: 'string',
-						default: '',
-						placeholder: 'Apt 4B',
-						description: 'The "address line 2" of the customer',
-						displayOptions: {
-							show: {
-								name: ['customer_street2'],
-							},
-						},
-					},
-					{
-						displayName: 'Customer User Agent',
-						name: 'value',
-						type: 'string',
-						default: '',
-						placeholder: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-						description: 'Pass the User Agent of the customer to this parameter',
-						displayOptions: {
-							show: {
-								name: ['customer_useragent'],
-							},
-						},
-					},
-					{
-						displayName: 'Customer ZIP',
-						name: 'value',
-						type: 'string',
-						default: '',
-						placeholder: '10001',
-						description: 'The name of the zip code of customer location',
-						displayOptions: {
-							show: {
-								name: ['customer_zip'],
+								name: ['isDigitalProducts'],
 							},
 						},
 					},
@@ -1034,6 +979,60 @@ export const riskScoringTransactionData: INodeProperties[] = [
 						displayOptions: {
 							show: {
 								name: ['merchant_id'],
+							},
+						},
+					},
+					{
+						displayName: 'Payment Type Value',
+						name: 'paymentTypeValue',
+						type: 'options',
+						default: 'cards',
+						description: 'The payment method used to complete this transaction',
+						options: [
+							{
+								name: 'Apple Pay',
+								value: 'applepay',
+								description: 'Apple Pay payment method',
+							},
+							{
+								name: 'Bank Transfer',
+								value: 'bank',
+								description: 'Bank transfer or direct debit',
+							},
+							{
+								name: 'Cards',
+								value: 'cards',
+								description: 'Credit/debit cards',
+							},
+							{
+								name: 'Cards (Mada)',
+								value: 'cards_mada',
+								description: 'Mada cards (Saudi Arabia)',
+							},
+							{
+								name: 'Cash on Delivery',
+								value: 'cod',
+								description: 'Cash on delivery payment',
+							},
+							{
+								name: 'Cryptocurrency',
+								value: 'crypto',
+								description: 'Cryptocurrency payment',
+							},
+							{
+								name: 'Digital Wallet',
+								value: 'wallet',
+								description: 'Digital wallet payment',
+							},
+							{
+								name: 'STC Pay',
+								value: 'stcpay',
+								description: 'STC Pay digital wallet',
+							},
+						],
+						displayOptions: {
+							show: {
+								name: ['payment_type'],
 							},
 						},
 					},
@@ -1219,18 +1218,6 @@ export const riskScoringTransactionData: INodeProperties[] = [
 							},
 						},
 					},
-					{
-						displayName: 'Is Digital Product',
-						name: 'isDigitalProductsValue',
-						type: 'boolean',
-						default: false,
-						description: 'Whether this is a digital product',
-						displayOptions: {
-							show: {
-								name: ['isDigitalProducts'],
-							},
-						},
-					},
 				],
 			},
 		],
@@ -1313,12 +1300,25 @@ export const riskScoringTransactionData: INodeProperties[] = [
 										displayOptions: {
 											hide: {
 												name: [
+													'item_category_id',
 													'item_id',
 													'item_name',
 													'item_price',
 													'item_quantity',
-													'item_category_id',
 												],
+											},
+										},
+									},
+									{
+										displayName: 'Item Category ID',
+										name: 'value',
+										type: 'string',
+										default: '',
+										placeholder: 'CAT001',
+										description: 'Category ID of the item',
+										displayOptions: {
+											show: {
+												name: ['item_category_id'],
 											},
 										},
 									},
@@ -1371,19 +1371,6 @@ export const riskScoringTransactionData: INodeProperties[] = [
 										displayOptions: {
 											show: {
 												name: ['item_quantity'],
-											},
-										},
-									},
-									{
-										displayName: 'Item Category ID',
-										name: 'value',
-										type: 'string',
-										default: '',
-										placeholder: 'CAT001',
-										description: 'Category ID of the item',
-										displayOptions: {
-											show: {
-												name: ['item_category_id'],
 											},
 										},
 									},

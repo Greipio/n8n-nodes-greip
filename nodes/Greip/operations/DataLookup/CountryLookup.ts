@@ -6,7 +6,7 @@ export async function countryLookup(
 ): Promise<INodeExecutionData> {
 	const CountryCode = this.getNodeParameter('CountryCode', index) as string;
 	const additionalFields = this.getNodeParameter('additionalFields', index, {}) as {
-		params?: string;
+		params?: string[];
 		mode?: boolean;
 	};
 
@@ -16,8 +16,8 @@ export async function countryLookup(
 		CountryCode,
 	};
 
-	if (additionalFields.params) {
-		qs.params = additionalFields.params;
+	if (additionalFields.params && additionalFields.params.length > 0) {
+		qs.params = additionalFields.params.join(',');
 	}
 	if (typeof additionalFields.mode === 'boolean') {
 		if (additionalFields.mode) {

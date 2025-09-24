@@ -193,9 +193,15 @@ export const dataLookupAdditionalFields: INodeProperties[] = [
 			{
 				displayName: 'Params',
 				name: 'params',
-				description: 'Specify required modules (e.g. security,timezone,currency)',
-				type: 'string',
-				default: '',
+				description: 'Specify required modules',
+				type: 'multiOptions',
+				options: [
+					{ name: 'Security', value: 'security' },
+					{ name: 'Currency', value: 'currency' },
+					{ name: 'Timezone', value: 'timezone' },
+					{ name: 'Location', value: 'location' },
+				],
+				default: [],
 			},
 			{
 				displayName: 'User ID',
@@ -312,9 +318,15 @@ export const dataLookupAdditionalFields: INodeProperties[] = [
 			{
 				displayName: 'Params',
 				name: 'params',
-				description: 'Specify required modules (e.g. security,timezone,currency)',
-				type: 'string',
-				default: '',
+				description: 'Specify required modules',
+				type: 'multiOptions',
+				options: [
+					{ name: 'Language', value: 'language' },
+					{ name: 'Flag', value: 'flag' },
+					{ name: 'Currency', value: 'currency' },
+					{ name: 'Timezone', value: 'timezone' },
+				],
+				default: [],
 			},
 			{
 				displayName: 'Development Environment',
