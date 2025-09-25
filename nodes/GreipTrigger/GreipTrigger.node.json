@@ -1,0 +1,4 @@
+{
+	"node": "dist/nodes/GreipTrigger/GreipTrigger.node.js",
+	"nodeVersion": "1.0.0"
+}
