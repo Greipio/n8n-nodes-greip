@@ -1,4 +1,5 @@
 {
 	"node": "dist/nodes/GreipTrigger/GreipTrigger.node.js",
-	"nodeVersion": "1.0.0"
+	"nodeVersion": "1.0.0",
+	"displayName": "Fraud Trigger"
 }

@@ -10,7 +10,7 @@
 
 export class GreipTrigger implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'Greip Trigger',
+		displayName: 'Fraud Trigger',
 		name: 'greipTrigger',
 		icon: 'file:greip.svg',
 		group: ['trigger'],
@@ -18,7 +18,7 @@ export class GreipTrigger implements INodeType {
 		description:
 			'Receive real-time notifications from Greip via webhooks for fraud detection, proxy detection, profanity detection, and more',
 		defaults: {
-			name: 'Greip Trigger',
+			name: 'Fraud Trigger',
 		},
 		inputs: [],
 		outputs: [
@@ -57,12 +57,14 @@ export class GreipTrigger implements INodeType {
 		if (!userAgent || !userAgent.includes('Greip-Protocol/v1')) {
 			return {
 				workflowData: [
-					this.helpers.returnJsonArray([{
-						source: 'Greip',
-						node: 'GreipTrigger',
-						error: 'Unauthorized: Invalid user agent',
-						timestamp: new Date().toISOString(),
-					}]),
+					this.helpers.returnJsonArray([
+						{
+							source: 'Greip',
+							node: 'GreipTrigger',
+							error: 'Unauthorized: Invalid user agent',
+							timestamp: new Date().toISOString(),
+						},
+					]),
 				],
 				webhookResponse: {
 					status: 401,
@@ -83,13 +85,15 @@ export class GreipTrigger implements INodeType {
 		if (!receivedEvent || !validEvents.includes(receivedEvent)) {
 			return {
 				workflowData: [
-					this.helpers.returnJsonArray([{
-						source: 'Greip',
-						node: 'GreipTrigger',
-						error: 'Invalid or missing event type',
-						timestamp: new Date().toISOString(),
-						rawEvent: receivedEvent,
-					}]),
+					this.helpers.returnJsonArray([
+						{
+							source: 'Greip',
+							node: 'GreipTrigger',
+							error: 'Invalid or missing event type',
+							timestamp: new Date().toISOString(),
+							rawEvent: receivedEvent,
+						},
+					]),
 				],
 				webhookResponse: {
 					status: 400,
