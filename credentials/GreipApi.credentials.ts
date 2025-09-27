@@ -1,4 +1,9 @@
-import { IAuthenticateGeneric, ICredentialType, INodeProperties } from 'n8n-workflow';
+import {
+	IAuthenticateGeneric,
+	ICredentialTestRequest,
+	ICredentialType,
+	INodeProperties,
+} from 'n8n-workflow';
 
 export class GreipApi implements ICredentialType {
 	name = 'greipApi';
@@ -21,6 +26,16 @@ export class GreipApi implements ICredentialType {
 		properties: {
 			headers: {
 				Authorization: '=Bearer {{$credentials.apiKey}}',
+			},
+		},
+	};
+
+	test: ICredentialTestRequest = {
+		request: {
+			url: 'https://greipapi.com/bearer',
+			method: 'GET',
+			qs: {
+				source: 'n8n',
 			},
 		},
 	};
