@@ -33,6 +33,8 @@ export async function profanityDetection(
 		}
 	}
 
+	qs.source = 'n8n';
+
 	const options: IHttpRequestOptions = {
 		method: 'GET',
 		url: 'https://greipapi.com/scoring/profanity',

@@ -25,6 +25,8 @@ export async function countryLookup(
 		}
 	}
 
+	qs.source = 'n8n';
+
 	const options: IHttpRequestOptions = {
 		method: 'GET',
 		url: 'https://greipapi.com/lookup/country',

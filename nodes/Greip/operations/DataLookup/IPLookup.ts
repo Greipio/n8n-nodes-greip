@@ -33,6 +33,8 @@ export async function ipLookup(
 		qs.userID = additionalFields.userID;
 	}
 
+	qs.source = 'n8n';
+
 	const options: IHttpRequestOptions = {
 		method: 'GET',
 		url: 'https://greipapi.com/lookup/ip',

@@ -92,6 +92,8 @@ export async function paymentFraudDetection(
 		requestBody.userID = additionalFields.userID;
 	}
 
+	requestBody.source = 'n8n';
+
 	const credentials = await this.getCredentials('greipApi');
 
 	const options: IHttpRequestOptions = {

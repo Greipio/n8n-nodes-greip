@@ -25,6 +25,8 @@ export async function emailScoring(
 		qs.userID = additionalFields.userID;
 	}
 
+	qs.source = 'n8n';
+
 	const options: IHttpRequestOptions = {
 		method: 'GET',
 		url: 'https://greipapi.com/scoring/email',

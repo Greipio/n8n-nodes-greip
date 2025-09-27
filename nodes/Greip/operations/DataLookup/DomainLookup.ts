@@ -21,6 +21,8 @@ export async function domainLookup(
 		}
 	}
 
+	qs.source = 'n8n';
+
 	const options: IHttpRequestOptions = {
 		method: 'GET',
 		url: 'https://greipapi.com/lookup/domain',
