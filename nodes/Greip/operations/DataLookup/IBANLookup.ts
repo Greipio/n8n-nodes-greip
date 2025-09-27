@@ -6,7 +6,7 @@ export async function ibanLookup(
 ): Promise<INodeExecutionData> {
 	const iban = this.getNodeParameter('iban', index) as string;
 	const additionalFields = this.getNodeParameter('additionalFields', index, {}) as {
-		mode?: string;
+		mode?: boolean;
 		userID?: string;
 	};
 
@@ -16,8 +16,10 @@ export async function ibanLookup(
 		iban,
 	};
 
-	if (additionalFields.mode) {
-		qs.mode = additionalFields.mode;
+	if (typeof additionalFields.mode === 'boolean') {
+		if (additionalFields.mode) {
+			qs.mode = 'test';
+		}
 	}
 	if (additionalFields.userID) {
 		qs.userID = additionalFields.userID;

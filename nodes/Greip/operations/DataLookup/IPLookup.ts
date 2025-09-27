@@ -7,8 +7,8 @@ export async function ipLookup(
 	const ip = this.getNodeParameter('ip', index) as string;
 	const additionalFields = this.getNodeParameter('additionalFields', index, {}) as {
 		lang?: string;
-		mode?: string;
-		params?: string;
+		mode?: boolean;
+		params?: string[];
 		userID?: string;
 	};
 
@@ -21,11 +21,13 @@ export async function ipLookup(
 	if (additionalFields.lang) {
 		qs.lang = additionalFields.lang;
 	}
-	if (additionalFields.mode) {
-		qs.mode = additionalFields.mode;
+	if (typeof additionalFields.mode === 'boolean') {
+		if (additionalFields.mode) {
+			qs.mode = 'test';
+		}
 	}
-	if (additionalFields.params) {
-		qs.params = additionalFields.params;
+	if (additionalFields.params && additionalFields.params.length > 0) {
+		qs.params = additionalFields.params.join(',');
 	}
 	if (additionalFields.userID) {
 		qs.userID = additionalFields.userID;
@@ -46,7 +48,10 @@ export async function ipLookup(
 	const response = await this.helpers.httpRequest(options);
 
 	return {
-		json: response,
+		json: {
+			debug: { ip, qs, additionalFields, options },
+			response,
+		},
 		pairedItem: { item: index },
 	};
 }

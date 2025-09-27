@@ -6,7 +6,7 @@ export async function domainLookup(
 ): Promise<INodeExecutionData> {
 	const domain = this.getNodeParameter('domain', index) as string;
 	const additionalFields = this.getNodeParameter('additionalFields', index, {}) as {
-		mode?: string;
+		mode?: boolean;
 	};
 
 	const credentials = await this.getCredentials('greipApi');
@@ -15,8 +15,10 @@ export async function domainLookup(
 		domain,
 	};
 
-	if (additionalFields.mode) {
-		qs.mode = additionalFields.mode;
+	if (typeof additionalFields.mode === 'boolean') {
+		if (additionalFields.mode) {
+			qs.mode = 'test';
+		}
 	}
 
 	const options: IHttpRequestOptions = {

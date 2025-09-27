@@ -6,9 +6,9 @@ export async function profanityDetection(
 ): Promise<INodeExecutionData> {
 	const text = this.getNodeParameter('text', index) as string;
 	const additionalFields = this.getNodeParameter('additionalFields', index, {}) as {
-		listBadWords?: string;
-		mode?: string;
-		scoreOnly?: string;
+		listBadWords?: boolean;
+		mode?: boolean;
+		scoreOnly?: boolean;
 	};
 
 	const credentials = await this.getCredentials('greipApi');
@@ -17,14 +17,20 @@ export async function profanityDetection(
 		text,
 	};
 
-	if (additionalFields.listBadWords) {
-		qs.listBadWords = additionalFields.listBadWords;
+	if (typeof additionalFields.listBadWords === 'boolean') {
+		if (additionalFields.listBadWords) {
+			qs.listBadWords = 'yes';
+		}
 	}
-	if (additionalFields.mode) {
-		qs.mode = additionalFields.mode;
+	if (typeof additionalFields.mode === 'boolean') {
+		if (additionalFields.mode) {
+			qs.mode = 'test';
+		}
 	}
-	if (additionalFields.scoreOnly) {
-		qs.scoreOnly = additionalFields.scoreOnly;
+	if (typeof additionalFields.scoreOnly === 'boolean') {
+		if (additionalFields.scoreOnly) {
+			qs.scoreOnly = 'yes';
+		}
 	}
 
 	const options: IHttpRequestOptions = {

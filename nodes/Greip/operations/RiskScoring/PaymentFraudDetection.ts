@@ -4,56 +4,77 @@ export async function paymentFraudDetection(
 	this: IExecuteFunctions,
 	index: number,
 ): Promise<INodeExecutionData> {
-	// Get transaction data fields
 	const transactionDataFields = this.getNodeParameter(
 		'transactionData.fields',
 		index,
 		[],
 	) as Array<{
 		name: string;
-		value: string;
+		value?: string;
+		customer2faValue?: boolean;
+		cvvResultValue?: boolean;
+		isDigitalProductsValue?: boolean;
+		actionValue?: string;
+		paymentTypeValue?: string;
 	}>;
 
-	// Get cart items data if available
-	const cartItemsData = this.getNodeParameter('cartItemsData.fields', index, []) as Array<{
-		name: string;
-		value: string;
+	const cartItemsData = this.getNodeParameter('cartItems.cartItem', index, []) as Array<{
+		itemFields: {
+			field: Array<{
+				name: string;
+				value: string;
+			}>;
+		};
 	}>;
 
-	// Get additional fields
+	const includeCartItems = this.getNodeParameter('includeCartItems', index, false) as boolean;
+
 	const additionalFields = this.getNodeParameter('additionalFields', index, {}) as {
-		mode?: string;
+		mode?: boolean;
 		userID?: string;
 	};
 
-	// Build the data object from fields
 	const data: { [key: string]: any } = {};
 
-	// Check if cart_items is selected in transaction data
-	let hasCartItems = false;
-
-	// Process transaction data fields
 	for (const field of transactionDataFields) {
-		if (field.name && field.value) {
-			if (field.name === 'cart_items') {
-				hasCartItems = true;
-				// Don't add cart_items value directly, we'll build it from cartItemsData
-			} else {
+		if (field.name) {
+			if (field.name === 'customer_2fa' && field.customer2faValue !== undefined) {
+				data[field.name] = field.customer2faValue;
+			} else if (field.name === 'cvv_result' && field.cvvResultValue !== undefined) {
+				data[field.name] = field.cvvResultValue;
+			} else if (field.name === 'isDigitalProducts' && field.isDigitalProductsValue !== undefined) {
+				data[field.name] = field.isDigitalProductsValue;
+			} else if (field.name === 'action' && field.actionValue !== undefined) {
+				data[field.name] = field.actionValue;
+			} else if (field.name === 'payment_type' && field.paymentTypeValue !== undefined) {
+				data[field.name] = field.paymentTypeValue;
+			} else if (field.value) {
 				data[field.name] = field.value;
 			}
 		}
 	}
 
-	// Build cart_items object if cart_items was selected and cart items data exists
-	if (hasCartItems && cartItemsData && cartItemsData.length > 0) {
-		const cartItems: { [key: string]: any } = {};
-		for (const field of cartItemsData) {
-			if (field.name && field.value) {
-				cartItems[field.name] = field.value;
+	if (includeCartItems && cartItemsData && cartItemsData.length > 0) {
+		const cartItemsArray: Array<{ [key: string]: any }> = [];
+
+		for (const cartItemEntry of cartItemsData) {
+			const cartItem: { [key: string]: any } = {};
+
+			if (cartItemEntry.itemFields && cartItemEntry.itemFields.field) {
+				for (const field of cartItemEntry.itemFields.field) {
+					if (field.name && field.value) {
+						cartItem[field.name] = field.value;
+					}
+				}
+			}
+
+			if (Object.keys(cartItem).length > 0) {
+				cartItemsArray.push(cartItem);
 			}
 		}
-		if (Object.keys(cartItems).length > 0) {
-			data.cart_items = cartItems;
+
+		if (cartItemsArray.length > 0) {
+			data.cart_items = cartItemsArray;
 		}
 	}
 
@@ -62,8 +83,10 @@ export async function paymentFraudDetection(
 		data: data,
 	};
 
-	if (additionalFields.mode) {
-		requestBody.mode = additionalFields.mode;
+	if (typeof additionalFields.mode === 'boolean') {
+		if (additionalFields.mode) {
+			requestBody.mode = 'test';
+		}
 	}
 	if (additionalFields.userID) {
 		requestBody.userID = additionalFields.userID;

@@ -6,7 +6,7 @@ export async function asnLookup(
 ): Promise<INodeExecutionData> {
 	const asn = this.getNodeParameter('asn', index) as string;
 	const additionalFields = this.getNodeParameter('additionalFields', index, {}) as {
-		mode?: string;
+		mode?: boolean;
 	};
 
 	const credentials = await this.getCredentials('greipApi');
@@ -15,8 +15,10 @@ export async function asnLookup(
 		asn,
 	};
 
-	if (additionalFields.mode) {
-		qs.mode = additionalFields.mode;
+	if (typeof additionalFields.mode === 'boolean') {
+		if (additionalFields.mode) {
+			qs.mode = 'test';
+		}
 	}
 
 	const options: IHttpRequestOptions = {
