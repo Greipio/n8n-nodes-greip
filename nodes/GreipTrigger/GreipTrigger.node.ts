@@ -10,7 +10,7 @@
 
 export class GreipTrigger implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'Fraud Trigger',
+		displayName: 'fraud Trigger',
 		name: 'greipTrigger',
 		icon: 'file:greip.svg',
 		group: ['trigger'],
