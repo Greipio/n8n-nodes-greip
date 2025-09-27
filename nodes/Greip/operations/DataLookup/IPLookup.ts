@@ -49,7 +49,7 @@ export async function ipLookup(
 
 	return {
 		json: {
-			debug: { ip, qs, additionalFields, options },
+			// debug: { ip, qs, additionalFields, options },
 			response,
 		},
 		pairedItem: { item: index },
