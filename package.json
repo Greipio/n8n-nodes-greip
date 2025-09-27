@@ -37,7 +37,8 @@
 			"dist/credentials/GreipApi.credentials.js"
 		],
 		"nodes": [
-			"dist/nodes/Greip/Greip.node.js"
+			"dist/nodes/Greip/Greip.node.js",
+			"dist/nodes/GreipTrigger/GreipTrigger.node.js"
 		]
 	},
 	"devDependencies": {
