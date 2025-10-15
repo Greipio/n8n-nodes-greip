@@ -55,15 +55,6 @@ export class Greip implements INodeType {
 				required: true,
 			},
 		],
-		requestDefaults: {
-			baseURL: 'https://greipapi.com',
-			url: '',
-			headers: {
-				Accept: 'application/json',
-				'Content-Type': 'application/json',
-				Authorization: '=Bearer {{$credentials.greipApi.apiKey}}',
-			},
-		},
 		properties: [
 			{
 				displayName: 'Category',

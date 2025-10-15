@@ -71,7 +71,7 @@ export const dataLookupFields: INodeProperties[] = [
 	// Country Code field
 	{
 		displayName: 'Country Code',
-		name: 'CountryCode',
+		name: 'countryCode',
 		description: 'The ISO 3166-1 alpha-2 country code',
 		placeholder: 'US',
 		type: 'string',

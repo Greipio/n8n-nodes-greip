@@ -94,21 +94,18 @@ export async function paymentFraudDetection(
 
 	requestBody.source = 'n8n';
 
-	const credentials = await this.getCredentials('greipApi');
-
 	const options: IHttpRequestOptions = {
 		method: 'POST',
 		url: 'https://greipapi.com/scoring/payment',
 		headers: {
 			Accept: 'application/json',
 			'Content-Type': 'application/json',
-			Authorization: `Bearer ${credentials.apiKey}`,
 		},
 		body: requestBody,
 		json: true,
 	};
 
-	const response = await this.helpers.httpRequest(options);
+	const response = await this.helpers.requestWithAuthentication.call(this, 'greipApi', options);
 
 	return {
 		json: response,

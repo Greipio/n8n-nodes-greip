@@ -11,8 +11,6 @@ export async function phoneScoring(
 		userID?: string;
 	};
 
-	const credentials = await this.getCredentials('greipApi');
-
 	const qs: { [key: string]: string } = {
 		phone,
 		countryCode,
@@ -35,13 +33,12 @@ export async function phoneScoring(
 		headers: {
 			Accept: 'application/json',
 			'Content-Type': 'application/json',
-			Authorization: `Bearer ${credentials.apiKey}`,
 		},
 		qs,
 		json: true,
 	};
 
-	const response = await this.helpers.httpRequest(options);
+	const response = await this.helpers.requestWithAuthentication.call(this, 'greipApi', options);
 
 	return {
 		json: response,

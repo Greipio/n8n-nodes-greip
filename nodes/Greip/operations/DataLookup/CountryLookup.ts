@@ -4,16 +4,14 @@ export async function countryLookup(
 	this: IExecuteFunctions,
 	index: number,
 ): Promise<INodeExecutionData> {
-	const CountryCode = this.getNodeParameter('CountryCode', index) as string;
+	const countryCode = this.getNodeParameter('countryCode', index) as string;
 	const additionalFields = this.getNodeParameter('additionalFields', index, {}) as {
 		params?: string[];
 		mode?: boolean;
 	};
 
-	const credentials = await this.getCredentials('greipApi');
-
 	const qs: { [key: string]: string } = {
-		CountryCode,
+		CountryCode: countryCode,
 	};
 
 	if (additionalFields.params && additionalFields.params.length > 0) {
@@ -33,13 +31,12 @@ export async function countryLookup(
 		headers: {
 			Accept: 'application/json',
 			'Content-Type': 'application/json',
-			Authorization: `Bearer ${credentials.apiKey}`,
 		},
 		qs,
 		json: true,
 	};
 
-	const response = await this.helpers.httpRequest(options);
+	const response = await this.helpers.requestWithAuthentication.call(this, 'greipApi', options);
 
 	return {
 		json: response,
