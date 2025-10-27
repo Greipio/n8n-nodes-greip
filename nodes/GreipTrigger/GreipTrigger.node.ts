@@ -44,7 +44,15 @@ export class GreipTrigger implements INodeType {
 				path: 'greip-webhook',
 			},
 		],
-		properties: [],
+		properties: [
+			{
+				displayName:
+					'You\'ll need to add the Production URL in your Greip dashboard under "Webhooks" to start receiving events.',
+				name: 'notice',
+				type: 'notice',
+				default: '',
+			},
+		],
 	};
 
 	async webhook(this: IWebhookFunctions): Promise<IWebhookResponseData> {

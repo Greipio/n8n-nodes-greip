@@ -105,7 +105,7 @@ export async function paymentFraudDetection(
 		json: true,
 	};
 
-	const response = await this.helpers.requestWithAuthentication.call(this, 'greipApi', options);
+	const response = await this.helpers.httpRequestWithAuthentication.call(this, 'greipApi', options);
 
 	return {
 		json: response,
