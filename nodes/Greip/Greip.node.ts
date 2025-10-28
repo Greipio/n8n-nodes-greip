@@ -57,7 +57,7 @@ export class Greip implements INodeType {
 		],
 		properties: [
 			{
-				displayName: 'Category',
+				displayName: 'Resources',
 				name: 'resource',
 				type: 'options',
 				noDataExpression: true,
