@@ -4,6 +4,8 @@ This is an n8n community node that integrates with the Greip API, allowing users
 
 [Greip](https://greip.io) is a platform that provides various services for fraud detection, proxy detection, content moderation, and more.
 
+This package targets **[Greip API v2](https://v2.greipapi.com)**. Requests use **Bearer** authentication (configured in credentials). Responses use the v2 envelope (`success`, `data`, `execution_ms`); read fields from `data` (for example `data.geo.country_code`, `data.risk_level`).
+
 ## Table of contents
 
 ## Installation (self-hosted)

@@ -32,9 +32,10 @@ export class GreipApi implements ICredentialType {
 
 	test: ICredentialTestRequest = {
 		request: {
-			url: 'https://greipapi.com/bearer',
+			url: 'https://v2.greipapi.com/geo/ip',
 			method: 'GET',
 			qs: {
+				mode: 'test',
 				source: 'n8n',
 			},
 		},

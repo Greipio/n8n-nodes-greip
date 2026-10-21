@@ -4,7 +4,6 @@
 	INodeType,
 	INodeTypeDescription,
 	IWebhookResponseData,
-	NodeConnectionType,
 	INodeExecutionData,
 } from 'n8n-workflow';
 
@@ -22,11 +21,11 @@ export class GreipTrigger implements INodeType {
 		},
 		inputs: [],
 		outputs: [
-			NodeConnectionType.Main, // 0 => Proxy Detection
-			NodeConnectionType.Main, // 1 => Fraud Payment
-			NodeConnectionType.Main, // 2 => Profanity
-			NodeConnectionType.Main, // 3 => Spam Email
-			NodeConnectionType.Main, // 4 => Spam Phone
+			'main', // 0 => Proxy Detection
+			'main', // 1 => Fraud Payment
+			'main', // 2 => Profanity
+			'main', // 3 => Spam Email
+			'main', // 4 => Spam Phone
 		],
 		outputNames: ['Proxy Detection', 'Fraud Payment', 'Profanity', 'Spam Email', 'Spam Phone'],
 		credentials: [

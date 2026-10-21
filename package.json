@@ -1,6 +1,6 @@
 {
 	"name": "n8n-nodes-greip",
-	"version": "1.0.7",
+	"version": "2.0.0",
 	"description": "N8N nodes for Greip API, a fraud prevention service.",
 	"keywords": [
 		"n8n-community-node-package",
@@ -18,6 +18,9 @@
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/Greipio/n8n-nodes-greip.git"
+	},
+	"publishConfig": {
+		"access": "public"
 	},
 	"main": "index.js",
 	"scripts": {
@@ -45,10 +48,14 @@
 		"@typescript-eslint/parser": "~5.45",
 		"eslint-plugin-n8n-nodes-base": "^1.11.0",
 		"gulp": "^4.0.2",
+		"n8n-workflow": "1.120.33",
 		"prettier": "^2.7.1",
 		"typescript": "~4.8.4"
 	},
 	"peerDependencies": {
 		"n8n-workflow": "*"
+	},
+	"overrides": {
+		"zod": "3.24.2"
 	}
 }

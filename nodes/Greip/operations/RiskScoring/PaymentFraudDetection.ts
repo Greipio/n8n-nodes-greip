@@ -1,4 +1,6 @@
-import { IExecuteFunctions, IHttpRequestOptions, INodeExecutionData } from 'n8n-workflow';
+import { IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
+
+import { greipApiPost } from '../../helpers/api';
 
 export async function paymentFraudDetection(
 	this: IExecuteFunctions,
@@ -34,7 +36,7 @@ export async function paymentFraudDetection(
 		userID?: string;
 	};
 
-	const data: { [key: string]: any } = {};
+	const data: { [key: string]: unknown } = {};
 
 	for (const field of transactionDataFields) {
 		if (field.name) {
@@ -55,10 +57,10 @@ export async function paymentFraudDetection(
 	}
 
 	if (includeCartItems && cartItemsData && cartItemsData.length > 0) {
-		const cartItemsArray: Array<{ [key: string]: any }> = [];
+		const cartItemsArray: Array<{ [key: string]: unknown }> = [];
 
 		for (const cartItemEntry of cartItemsData) {
-			const cartItem: { [key: string]: any } = {};
+			const cartItem: { [key: string]: unknown } = {};
 
 			if (cartItemEntry.itemFields && cartItemEntry.itemFields.field) {
 				for (const field of cartItemEntry.itemFields.field) {
@@ -78,37 +80,17 @@ export async function paymentFraudDetection(
 		}
 	}
 
-	// Build request body
-	const requestBody: { [key: string]: any } = {
-		data: data,
+	const requestBody: Record<string, unknown> = {
+		data,
+		source: 'n8n',
 	};
 
-	if (typeof additionalFields.mode === 'boolean') {
-		if (additionalFields.mode) {
-			requestBody.mode = 'test';
-		}
+	if (typeof additionalFields.mode === 'boolean' && additionalFields.mode) {
+		requestBody.mode = 'test';
 	}
 	if (additionalFields.userID) {
-		requestBody.userID = additionalFields.userID;
+		requestBody.user_id = additionalFields.userID;
 	}
 
-	requestBody.source = 'n8n';
-
-	const options: IHttpRequestOptions = {
-		method: 'POST',
-		url: 'https://greipapi.com/scoring/payment',
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json',
-		},
-		body: requestBody,
-		json: true,
-	};
-
-	const response = await this.helpers.httpRequestWithAuthentication.call(this, 'greipApi', options);
-
-	return {
-		json: response,
-		pairedItem: { item: index },
-	};
+	return greipApiPost(this, 'score/payments', requestBody, index);
 }

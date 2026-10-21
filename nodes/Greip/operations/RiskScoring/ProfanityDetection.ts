@@ -1,4 +1,6 @@
-import { IExecuteFunctions, IHttpRequestOptions, INodeExecutionData } from 'n8n-workflow';
+import { IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
+
+import { greipApiPost } from '../../helpers/api';
 
 export async function profanityDetection(
 	this: IExecuteFunctions,
@@ -6,48 +8,17 @@ export async function profanityDetection(
 ): Promise<INodeExecutionData> {
 	const text = this.getNodeParameter('text', index) as string;
 	const additionalFields = this.getNodeParameter('additionalFields', index, {}) as {
-		listBadWords?: boolean;
 		mode?: boolean;
-		scoreOnly?: boolean;
 	};
 
-	const qs: { [key: string]: string } = {
+	const body: Record<string, string> = {
 		text,
+		source: 'n8n',
 	};
 
-	if (typeof additionalFields.listBadWords === 'boolean') {
-		if (additionalFields.listBadWords) {
-			qs.listBadWords = 'yes';
-		}
-	}
-	if (typeof additionalFields.mode === 'boolean') {
-		if (additionalFields.mode) {
-			qs.mode = 'test';
-		}
-	}
-	if (typeof additionalFields.scoreOnly === 'boolean') {
-		if (additionalFields.scoreOnly) {
-			qs.scoreOnly = 'yes';
-		}
+	if (typeof additionalFields.mode === 'boolean' && additionalFields.mode) {
+		body.mode = 'test';
 	}
 
-	qs.source = 'n8n';
-
-	const options: IHttpRequestOptions = {
-		method: 'GET',
-		url: 'https://greipapi.com/scoring/profanity',
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json',
-		},
-		qs,
-		json: true,
-	};
-
-	const response = await this.helpers.httpRequestWithAuthentication.call(this, 'greipApi', options);
-
-	return {
-		json: response,
-		pairedItem: { item: index },
-	};
+	return greipApiPost(this, 'score/text', body, index);
 }

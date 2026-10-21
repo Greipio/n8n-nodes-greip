@@ -1,4 +1,6 @@
-import { IExecuteFunctions, IHttpRequestOptions, INodeExecutionData } from 'n8n-workflow';
+import { IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
+
+import { applyCommonQueryParams, greipApiGet } from '../../helpers/api';
 
 export async function ipLookup(
 	this: IExecuteFunctions,
@@ -12,44 +14,15 @@ export async function ipLookup(
 		userID?: string;
 	};
 
-	const qs: { [key: string]: string } = {
-		ip,
-	};
+	const qs: Record<string, string> = {};
 
 	if (additionalFields.lang) {
 		qs.lang = additionalFields.lang;
 	}
-	if (typeof additionalFields.mode === 'boolean') {
-		if (additionalFields.mode) {
-			qs.mode = 'test';
-		}
-	}
 	if (additionalFields.params && additionalFields.params.length > 0) {
 		qs.params = additionalFields.params.join(',');
 	}
-	if (additionalFields.userID) {
-		qs.userID = additionalFields.userID;
-	}
+	applyCommonQueryParams(qs, additionalFields);
 
-	qs.source = 'n8n';
-
-	const options: IHttpRequestOptions = {
-		method: 'GET',
-		url: 'https://greipapi.com/lookup/ip',
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json',
-		},
-		qs,
-		json: true,
-	};
-
-	const response = await this.helpers.httpRequestWithAuthentication.call(this, 'greipApi', options);
-
-	return {
-		json: {
-			response,
-		},
-		pairedItem: { item: index },
-	};
+	return greipApiGet(this, `lookup/ip/${encodeURIComponent(ip)}`, qs, index);
 }

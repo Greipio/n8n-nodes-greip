@@ -1,4 +1,6 @@
-import { IExecuteFunctions, IHttpRequestOptions, INodeExecutionData } from 'n8n-workflow';
+import { IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
+
+import { applyCommonQueryParams, greipApiGet } from '../../helpers/api';
 
 export async function emailScoring(
 	this: IExecuteFunctions,
@@ -10,36 +12,8 @@ export async function emailScoring(
 		userID?: string;
 	};
 
-	const qs: { [key: string]: string } = {
-		email,
-	};
+	const qs: Record<string, string> = {};
+	applyCommonQueryParams(qs, additionalFields);
 
-	if (typeof additionalFields.mode === 'boolean') {
-		if (additionalFields.mode) {
-			qs.mode = 'test';
-		}
-	}
-	if (additionalFields.userID) {
-		qs.userID = additionalFields.userID;
-	}
-
-	qs.source = 'n8n';
-
-	const options: IHttpRequestOptions = {
-		method: 'GET',
-		url: 'https://greipapi.com/scoring/email',
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json',
-		},
-		qs,
-		json: true,
-	};
-
-	const response = await this.helpers.httpRequestWithAuthentication.call(this, 'greipApi', options);
-
-	return {
-		json: response,
-		pairedItem: { item: index },
-	};
+	return greipApiGet(this, `score/email/${encodeURIComponent(email)}`, qs, index);
 }

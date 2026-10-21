@@ -1,7 +1,6 @@
 import {
 	INodeType,
 	INodeTypeDescription,
-	NodeConnectionType,
 	IExecuteFunctions,
 	INodeExecutionData,
 	NodeOperationError,
@@ -39,15 +38,15 @@ export class Greip implements INodeType {
 		name: 'greip',
 		icon: 'file:Greip.svg',
 		group: ['transform'],
-		version: 1,
+		version: 2,
 		subtitle: '={{"Endpoint: " + $parameter["operation"]}}',
 		description: 'Get fraud prevention, threat intelligence, and risk scoring data from Greip.',
 		usableAsTool: true,
 		defaults: {
 			name: 'Greip',
 		},
-		inputs: [NodeConnectionType.Main],
-		outputs: [NodeConnectionType.Main],
+		inputs: ['main'],
+		outputs: ['main'],
 		credentials: [
 			{
 				displayName: 'Greip API Key',

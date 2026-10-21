@@ -1,45 +1,28 @@
-import { IExecuteFunctions, IHttpRequestOptions, INodeExecutionData } from 'n8n-workflow';
+import { IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
+
+import { applyCommonQueryParams, greipApiGet } from '../../helpers/api';
 
 export async function countryLookup(
 	this: IExecuteFunctions,
 	index: number,
 ): Promise<INodeExecutionData> {
-	const countryCode = this.getNodeParameter('countryCode', index) as string;
+	const countryCode = (this.getNodeParameter('countryCode', index) as string).toUpperCase();
 	const additionalFields = this.getNodeParameter('additionalFields', index, {}) as {
 		params?: string[];
 		mode?: boolean;
 	};
 
-	const qs: { [key: string]: string } = {
-		CountryCode: countryCode,
-	};
+	const qs: Record<string, string> = {};
 
 	if (additionalFields.params && additionalFields.params.length > 0) {
 		qs.params = additionalFields.params.join(',');
 	}
-	if (typeof additionalFields.mode === 'boolean') {
-		if (additionalFields.mode) {
-			qs.mode = 'test';
-		}
-	}
+	applyCommonQueryParams(qs, additionalFields);
 
-	qs.source = 'n8n';
-
-	const options: IHttpRequestOptions = {
-		method: 'GET',
-		url: 'https://greipapi.com/lookup/country',
-		headers: {
-			Accept: 'application/json',
-			'Content-Type': 'application/json',
-		},
+	return greipApiGet(
+		this,
+		`lookup/countries/${encodeURIComponent(countryCode)}`,
 		qs,
-		json: true,
-	};
-
-	const response = await this.helpers.httpRequestWithAuthentication.call(this, 'greipApi', options);
-
-	return {
-		json: response,
-		pairedItem: { item: index },
-	};
+		index,
+	);
 }

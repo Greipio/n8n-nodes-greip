@@ -1496,24 +1496,10 @@ export const riskScoringAdditionalFields: INodeProperties[] = [
 		},
 		options: [
 			{
-				displayName: 'List Profane Words',
-				name: 'listBadWords',
-				description: 'Whether to list the profane words in the response',
-				type: 'boolean',
-				default: false,
-			},
-			{
 				displayName: 'Development Environment',
 				name: 'mode',
 				description:
 					'Whether to use test mode (mode=test). Disable in production for real data lookup/scoring.',
-				type: 'boolean',
-				default: false,
-			},
-			{
-				displayName: 'Score Only',
-				name: 'scoreOnly',
-				description: 'Whether to return only the scoring of the text',
 				type: 'boolean',
 				default: false,
 			},
