@@ -1,6 +1,6 @@
 {
 	"name": "n8n-nodes-greip",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"description": "N8N nodes for Greip API, a fraud prevention service.",
 	"keywords": [
 		"n8n-community-node-package",
@@ -29,6 +29,7 @@
 		"format": "prettier nodes credentials --write",
 		"lint": "eslint nodes credentials package.json",
 		"lintfix": "eslint nodes credentials package.json --fix",
+		"release": "n8n-node release",
 		"prepublishOnly": "npm run build && npm run lint -c .eslintrc.prepublish.js nodes credentials package.json"
 	},
 	"files": [
@@ -45,6 +46,7 @@
 		]
 	},
 	"devDependencies": {
+		"@n8n/node-cli": "^0.53.4",
 		"@typescript-eslint/parser": "~5.45",
 		"eslint-plugin-n8n-nodes-base": "^1.11.0",
 		"gulp": "^4.0.2",
