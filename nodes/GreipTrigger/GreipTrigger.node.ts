@@ -1,11 +1,19 @@
 ﻿import {
-	IWebhookFunctions,
+	IHookFunctions,
 	IDataObject,
 	INodeType,
 	INodeTypeDescription,
+	IWebhookFunctions,
 	IWebhookResponseData,
+	NodeConnectionTypes,
 	INodeExecutionData,
 } from 'n8n-workflow';
+
+import {
+	checkGreipWebhookExists,
+	createGreipWebhook,
+	deleteGreipWebhook,
+} from './helpers/webhooks';
 
 export class GreipTrigger implements INodeType {
 	description: INodeTypeDescription = {
@@ -14,6 +22,7 @@ export class GreipTrigger implements INodeType {
 		icon: 'file:greip.svg',
 		group: ['trigger'],
 		version: 1,
+		subtitle: '={{$parameter["event"]}}',
 		description:
 			'Receive real-time notifications from Greip via webhooks for fraud detection, proxy detection, profanity detection, and more',
 		defaults: {
@@ -21,18 +30,18 @@ export class GreipTrigger implements INodeType {
 		},
 		inputs: [],
 		outputs: [
-			'main', // 0 => Proxy Detection
-			'main', // 1 => Fraud Payment
-			'main', // 2 => Profanity
-			'main', // 3 => Spam Email
-			'main', // 4 => Spam Phone
+			NodeConnectionTypes.Main, // 0 => Proxy Detection
+			NodeConnectionTypes.Main, // 1 => Fraud Payment
+			NodeConnectionTypes.Main, // 2 => Profanity
+			NodeConnectionTypes.Main, // 3 => Spam Email
+			NodeConnectionTypes.Main, // 4 => Spam Phone
 		],
 		outputNames: ['Proxy Detection', 'Fraud Payment', 'Profanity', 'Spam Email', 'Spam Phone'],
 		credentials: [
 			{
 				displayName: 'Greip API Key',
 				name: 'greipApi',
-				required: false,
+				required: true,
 			},
 		],
 		webhooks: [
@@ -45,13 +54,41 @@ export class GreipTrigger implements INodeType {
 		],
 		properties: [
 			{
+				displayName: 'Event',
+				name: 'event',
+				type: 'options',
+				default: 'all',
+				options: [
+					{ name: 'All Events', value: 'all' },
+					{ name: 'Fraud Payment', value: 'fraud_payment' },
+					{ name: 'Profanity', value: 'profanity' },
+					{ name: 'Proxy Detection', value: 'proxy_detected' },
+					{ name: 'Spam Email', value: 'spam_email' },
+					{ name: 'Spam Phone', value: 'spam_phone' },
+				],
+			},
+			{
 				displayName:
-					'You\'ll need to add the Production URL in your Greip dashboard under "Webhooks" to start receiving events.',
+					'When this workflow is activated, the production webhook URL is registered with your Greip account automatically.',
 				name: 'notice',
 				type: 'notice',
 				default: '',
 			},
 		],
+	};
+
+	webhookMethods = {
+		default: {
+			async checkExists(this: IHookFunctions): Promise<boolean> {
+				return checkGreipWebhookExists(this);
+			},
+			async create(this: IHookFunctions): Promise<boolean> {
+				return createGreipWebhook(this);
+			},
+			async delete(this: IHookFunctions): Promise<boolean> {
+				return deleteGreipWebhook(this);
+			},
+		},
 	};
 
 	async webhook(this: IWebhookFunctions): Promise<IWebhookResponseData> {

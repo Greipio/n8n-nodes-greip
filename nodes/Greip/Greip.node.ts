@@ -3,6 +3,9 @@ import {
 	INodeTypeDescription,
 	IExecuteFunctions,
 	INodeExecutionData,
+	JsonObject,
+	NodeApiError,
+	NodeConnectionTypes,
 	NodeOperationError,
 } from 'n8n-workflow';
 
@@ -45,8 +48,8 @@ export class Greip implements INodeType {
 		defaults: {
 			name: 'Greip',
 		},
-		inputs: ['main'],
-		outputs: ['main'],
+		inputs: [NodeConnectionTypes.Main],
+		outputs: [NodeConnectionTypes.Main],
 		credentials: [
 			{
 				displayName: 'Greip API Key',
@@ -151,7 +154,7 @@ export class Greip implements INodeType {
 						pairedItem: { item: i },
 					});
 				} else {
-					throw error;
+					throw new NodeApiError(this.getNode(), error as JsonObject);
 				}
 			}
 		}

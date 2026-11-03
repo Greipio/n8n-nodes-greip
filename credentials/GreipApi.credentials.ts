@@ -8,6 +8,7 @@ import {
 export class GreipApi implements ICredentialType {
 	name = 'greipApi';
 	displayName = 'Greip API';
+	icon = 'file:Greip.svg' as const;
 	documentationUrl = 'https://docs.greip.io/knowledge-base/account-management/obtaining-api-key';
 	properties: INodeProperties[] = [
 		{
