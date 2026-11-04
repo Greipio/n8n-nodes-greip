@@ -39,7 +39,7 @@ export class Greip implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Greip',
 		name: 'greip',
-		icon: 'file:Greip.svg',
+		icon: { light: 'file:Greip.svg', dark: 'file:Greip.dark.svg' },
 		group: ['transform'],
 		version: 2,
 		subtitle: '={{"Endpoint: " + $parameter["operation"]}}',

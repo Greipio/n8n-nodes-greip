@@ -17,9 +17,9 @@ import {
 
 export class GreipTrigger implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'fraud Trigger',
+		displayName: 'Greip Trigger',
 		name: 'greipTrigger',
-		icon: 'file:greip.svg',
+		icon: { light: 'file:greip.svg', dark: 'file:greip.dark.svg' },
 		group: ['trigger'],
 		version: 1,
 		subtitle: '={{$parameter["event"]}}',
@@ -142,6 +142,21 @@ export class GreipTrigger implements INodeType {
 				webhookResponse: {
 					status: 400,
 					body: { error: 'Invalid or missing event type' },
+				},
+			};
+		}
+
+		const selectedEvent = this.getNodeParameter('event') as string;
+		if (selectedEvent !== 'all' && selectedEvent !== receivedEvent) {
+			return {
+				webhookResponse: {
+					status: 200,
+					body: {
+						message: 'Greip webhook acknowledged; event ignored by filter',
+						eventType: receivedEvent,
+						filter: selectedEvent,
+						processed: false,
+					},
 				},
 			};
 		}

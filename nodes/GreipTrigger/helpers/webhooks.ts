@@ -18,6 +18,40 @@ function v2Url(path: string): string {
 	return `${GREIP_API_BASE_URL}/${path.replace(/^\//, '')}`;
 }
 
+function getHttpStatusCode(error: unknown): number | undefined {
+	if (error instanceof NodeApiError) {
+		const code = error.httpCode;
+		if (typeof code === 'number') {
+			return code;
+		}
+		if (typeof code === 'string') {
+			const parsed = Number.parseInt(code, 10);
+			if (!Number.isNaN(parsed)) {
+				return parsed;
+			}
+		}
+	}
+
+	const json = error as JsonObject;
+	if (typeof json.statusCode === 'number') {
+		return json.statusCode;
+	}
+	if (typeof json.httpCode === 'number') {
+		return json.httpCode;
+	}
+
+	const response = json.response as IDataObject | undefined;
+	if (response && typeof response.statusCode === 'number') {
+		return response.statusCode;
+	}
+
+	return undefined;
+}
+
+function isWebhookNotFoundError(error: unknown): boolean {
+	return getHttpStatusCode(error) === 404;
+}
+
 async function greipApiRequest(
 	ctx: IHookFunctions,
 	method: IHttpRequestOptions['method'],
@@ -32,24 +66,23 @@ async function greipApiRequest(
 		body,
 	};
 
+	let response: IDataObject;
+
 	try {
-		const response = (await ctx.helpers.httpRequestWithAuthentication.call(
+		response = (await ctx.helpers.httpRequestWithAuthentication.call(
 			ctx,
 			'greipApi',
 			options,
 		)) as IDataObject;
-
-		if (response.success === false) {
-			throw new NodeApiError(ctx.getNode(), response as JsonObject);
-		}
-
-		return response;
 	} catch (error) {
-		if (error instanceof NodeApiError) {
-			throw error;
-		}
 		throw new NodeApiError(ctx.getNode(), error as JsonObject);
 	}
+
+	if (response.success === false) {
+		throw new NodeApiError(ctx.getNode(), response as JsonObject);
+	}
+
+	return response;
 }
 
 function getWebhooksFromResponse(response: IDataObject): GreipWebhookRecord[] {
@@ -137,7 +170,13 @@ export async function deleteGreipWebhook(ctx: IHookFunctions): Promise<boolean> 
 	try {
 		await greipApiRequest(ctx, 'DELETE', `account/webhooks/${webhookId}`);
 	} catch (error) {
-		return false;
+		// Greip may already have removed this webhook (404); treat as success.
+		if (isWebhookNotFoundError(error)) {
+			delete webhookData.webhookId;
+			return true;
+		}
+
+		throw error;
 	}
 
 	delete webhookData.webhookId;
