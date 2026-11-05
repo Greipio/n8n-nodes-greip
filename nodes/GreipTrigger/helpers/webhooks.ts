@@ -176,7 +176,7 @@ export async function deleteGreipWebhook(ctx: IHookFunctions): Promise<boolean> 
 			return true;
 		}
 
-		throw error;
+		throw new NodeApiError(ctx.getNode(), error as JsonObject);
 	}
 
 	delete webhookData.webhookId;
